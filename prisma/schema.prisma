@@ -1,0 +1,125 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// In Prisma 6/7, datasource configuration is moved to prisma.config.ts for Migrate
+// but standard schema files still use it for generation in many docs.
+// However, the error says: "The datasource property `url` is no longer supported in schema files."
+// So we must remove it if we use prisma.config.ts, OR we are using a very new version that behaves differently.
+// Let's try removing the url property and keeping provider.
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  CLINIC
+  USER
+  EDITOR
+}
+
+enum ClinicStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  fullName      String
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  reviews       Review[]
+  favorites     Favorite[]
+  clinic        Clinic?   @relation("ClinicOwner") // One user can own one clinic (for MVP simple model)
+}
+
+model Clinic {
+  id            String        @id @default(uuid())
+  name          String
+  description   String?
+  address       Json?         // Stores { province, city, addressLine, postalCode, lat, lng }
+  contactPhone  String?
+  contactEmail  String?
+  status        ClinicStatus  @default(PENDING)
+  verifiedAt    DateTime?
+  averageRating Float?
+
+  ownerId       String?       @unique // Linked to User
+  owner         User?         @relation("ClinicOwner", fields: [ownerId], references: [id])
+
+  services      Service[]
+  reviews       Review[]
+  favoritedBy   Favorite[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  clinicId    String
+  clinic      Clinic   @relation(fields: [clinicId], references: [id])
+  name        String
+  category    String
+  description String?
+
+  // Transparency Fields
+  priceMin    Decimal?
+  priceMax    Decimal?
+  currency    String   @default("IRR")
+
+  // Educational Content
+  preparation String?
+  documents   String[] // Array of strings
+  faq         Json?    // Array of { question, answer }
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Review {
+  id          String       @id @default(uuid())
+  clinicId    String
+  clinic      Clinic       @relation(fields: [clinicId], references: [id])
+  userId      String
+  user        User         @relation(fields: [userId], references: [id])
+
+  rating      Int
+  comment     String?
+
+  // Sub-scores
+  cleanliness Int?
+  staff       Int?
+  waitingTime Int?
+  overall     Int?
+
+  status      ReviewStatus @default(PENDING)
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Favorite {
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  clinicId  String
+  clinic    Clinic   @relation(fields: [clinicId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@id([userId, clinicId])
+}
