@@ -1,7 +1,7 @@
 # LLM Instructions & Workflow
 use bun and postgresql
 This document defines how an LLM (or developer) should interact with this project structure to ensure consistent, high-quality progress.
-
+always use bun
 ## Core Philosophy
 
 1.  **Plan First:** Never write code without a clear task from the `plan/` directory.
