@@ -16,6 +16,7 @@ interface TranslationData {
 }
 
 interface ClinicFormProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     initialData?: any;
 }
 
@@ -33,6 +34,7 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
     });
 
     const getInitialTranslation = (locale: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const trans = initialData?.translations?.find((t: any) => t.locale === locale);
         return {
             name: trans?.name || '',
@@ -90,6 +92,7 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
             if (!res.ok) throw new Error(t('form.error'));
 
             router.push('/clinics');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             setError(err.message);
         } finally {

@@ -69,6 +69,7 @@ export async function GET(request: Request) {
     const isAdmin = session?.user?.role === 'ADMIN';
 
     // If clinicId is provided, filters by clinic. Otherwise, logic depends on role.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {};
     if (clinicId) {
         where.clinicId = clinicId;
@@ -83,7 +84,8 @@ export async function GET(request: Request) {
 
     try {
         const reviews = await prisma.review.findMany({
-            where,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            where: where as any,
             include: {
                 user: {
                     select: {

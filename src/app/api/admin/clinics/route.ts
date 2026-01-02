@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: Request) {
     const session = await auth();
 
@@ -23,7 +24,15 @@ export async function GET(request: Request) {
             orderBy: { createdAt: 'desc' }
         });
 
-        const formattedClinics = clinics.map((clinic: any) => ({
+        const formattedClinics = clinics.map((clinic: {
+            id: string;
+            name: string;
+            translations: { name?: string; city?: string | null }[];
+            city: string | null;
+            isVerified: boolean;
+            _count: { reviews: number; services: number };
+            createdAt: Date;
+        }) => ({
             id: clinic.id,
             name: clinic.translations[0]?.name || clinic.name,
             city: clinic.translations[0]?.city || clinic.city,

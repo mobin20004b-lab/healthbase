@@ -54,7 +54,7 @@ export async function GET(
 
     // Apply translations in memory
     const translation = clinic.translations[0];
-    const services = clinic.services.map((service: any) => {
+    const services = clinic.services.map((service: { translations: { name?: string; description?: string | null }[]; name: string; description: string | null }) => {
         const sTranslation = service.translations[0];
         return {
             ...service,
@@ -108,10 +108,12 @@ export async function PUT(
             data: {
                 ...body,
                 translations: translations ? {
-                    upsert: Object.entries(translations).map(([locale, data]: [string, any]) => ({
+                    upsert: Object.entries(translations).map(([locale, data]: [string, unknown]) => ({
                         where: { clinicId_locale: { clinicId: id, locale } },
-                        create: { locale, ...data },
-                        update: { ...data }
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        create: { locale, ...(data as any) },
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        update: { ...(data as any) }
                     }))
                 } : undefined
             },

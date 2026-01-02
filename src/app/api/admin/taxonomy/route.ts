@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         const data = {
             name,
             translations: {
-                create: translations.map((t: any) => ({
+                create: translations.map((t: { locale: string; name: string }) => ({
                     locale: t.locale,
                     name: t.name,
                 })),

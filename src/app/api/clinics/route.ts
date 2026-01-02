@@ -86,6 +86,7 @@ export async function GET(request: Request) {
 
     const [clinics, total] = await Promise.all([
         prisma.clinic.findMany({
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             where: where as any,
             skip,
             take: limit,
@@ -105,15 +106,26 @@ export async function GET(request: Request) {
                 },
                 favoritedBy: session?.user?.id ? { where: { id: session.user.id }, select: { id: true } } : false
             },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             orderBy: orderBy as any,
         }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         prisma.clinic.count({ where: where as any }),
     ]);
 
     // Apply translations in memory for simple response
-    const clinicsWithTranslations = clinics.map((clinic: any) => {
+    const clinicsWithTranslations = clinics.map((clinic: {
+        translations: { name?: string; description?: string | null; address?: string | null; city?: string | null }[];
+        services: { translations: { name?: string; description?: string | null }[]; name: string; description: string | null }[];
+        reviews: { rating: number }[];
+        name: string;
+        description: string | null;
+        address: string | null;
+        city: string | null;
+        favoritedBy?: unknown[];
+    }) => {
         const translation = clinic.translations[0];
-        const services = clinic.services.map((service: any) => {
+        const services = clinic.services.map((service: { translations: { name?: string; description?: string | null }[]; name: string; description: string | null }) => {
             const sTranslation = service.translations[0];
             return {
                 ...service,
@@ -123,7 +135,7 @@ export async function GET(request: Request) {
             };
         });
 
-        const totalRating = clinic.reviews.reduce((acc: number, review: any) => acc + review.rating, 0);
+        const totalRating = clinic.reviews.reduce((acc: number, review: { rating: number }) => acc + review.rating, 0);
         const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
 
         return {
@@ -134,7 +146,7 @@ export async function GET(request: Request) {
             city: translation?.city || clinic.city,
             services,
             averageRating,
-            isFavorited: clinic.favoritedBy?.length > 0,
+            isFavorited: Array.isArray(clinic.favoritedBy) && clinic.favoritedBy.length > 0,
             translations: undefined,
             reviews: undefined,
             favoritedBy: undefined
@@ -143,7 +155,7 @@ export async function GET(request: Request) {
 
     // Handle rating sorting in memory for MVP
     if (sort === 'rating_desc') {
-        clinicsWithTranslations.sort((a: any, b: any) => b.averageRating - a.averageRating);
+        clinicsWithTranslations.sort((a: { averageRating: number }, b: { averageRating: number }) => b.averageRating - a.averageRating);
     }
 
     return NextResponse.json({
@@ -175,9 +187,10 @@ export async function POST(request: Request) {
             data: {
                 ...body,
                 translations: {
-                    create: Object.entries(translations || {}).map(([locale, data]: [string, any]) => ({
+                    create: Object.entries(translations || {}).map(([locale, data]: [string, unknown]) => ({
                         locale,
-                        ...data
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        ...(data as any)
                     }))
                 }
             },

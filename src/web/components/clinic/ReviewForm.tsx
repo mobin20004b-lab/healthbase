@@ -13,6 +13,7 @@ interface ReviewFormProps {
 }
 
 export function ReviewForm({ clinicId }: ReviewFormProps) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const t = useTranslations('ClinicDetail');
     const router = useRouter();
     const [rating, setRating] = useState(0);
@@ -55,6 +56,7 @@ export function ReviewForm({ clinicId }: ReviewFormProps) {
                 router.push(`/clinics/${clinicId}`);
                 router.refresh();
             }, 2000);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             setError(err.message);
         } finally {
