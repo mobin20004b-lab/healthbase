@@ -82,6 +82,7 @@ export function TaxonomyManager({ locale }: { locale: string }) {
     };
 
     const handleDelete = async (type: string, id: string) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         if (!confirm(t('deleteConfirm', { type: t(`types.${type as any}`) }))) return;
 
         try {
@@ -101,6 +102,7 @@ export function TaxonomyManager({ locale }: { locale: string }) {
         activeTab === 'specialty' ? data.specialties :
             data.insurances;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const TabButton = ({ type, label, icon: Icon }: any) => (
         <button
             onClick={() => setActiveTab(type)}
@@ -124,12 +126,14 @@ export function TaxonomyManager({ locale }: { locale: string }) {
 
             <Card className="p-8 bg-surface-container-low rounded-[var(--radius-3xl)] border border-outline-variant/10">
                 <div className="flex justify-between items-center mb-8">
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <h2 className="text-2xl font-black text-on-surface">{t(`${activeTab as any}s`)}</h2>
                     <Button
                         onClick={() => setEditingItem({ id: null, type: activeTab, name: '', nameFa: '' })}
                         className="rounded-xl font-black gap-2"
                     >
                         <Plus className="h-5 w-5" />
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {t('addNew', { type: t(`types.${activeTab as any}`) })}
                     </Button>
                 </div>

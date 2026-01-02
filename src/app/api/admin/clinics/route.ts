@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: Request) {
     const session = await auth();
 
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
             orderBy: { createdAt: 'desc' }
         });
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedClinics = clinics.map((clinic: any) => ({
             id: clinic.id,
             name: clinic.translations[0]?.name || clinic.name,

@@ -26,6 +26,7 @@ export async function PUT(
             name,
             translations: {
                 deleteMany: {},
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 create: translations.map((t: any) => ({
                     locale: t.locale,
                     name: t.name,

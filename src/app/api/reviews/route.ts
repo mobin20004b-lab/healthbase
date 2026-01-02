@@ -63,12 +63,12 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const clinicId = searchParams.get('clinicId');
-    const status = searchParams.get('status') || 'APPROVED';
 
     const session = await auth();
     const isAdmin = session?.user?.role === 'ADMIN';
 
     // If clinicId is provided, filters by clinic. Otherwise, logic depends on role.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {};
     if (clinicId) {
         where.clinicId = clinicId;

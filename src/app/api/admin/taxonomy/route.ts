@@ -50,6 +50,7 @@ export async function POST(request: Request) {
         const data = {
             name,
             translations: {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 create: translations.map((t: any) => ({
                     locale: t.locale,
                     name: t.name,

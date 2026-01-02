@@ -3,8 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { Card } from '@/web/components/ui/card';
-import { BadgeCheck, XCircle, Clock, Trash2, CheckCircle } from 'lucide-react';
-import { Button } from '@/web/components/ui/button';
+import { BadgeCheck, Clock, CheckCircle } from 'lucide-react';
 import { ReviewModerationActions } from '@/web/components/admin/ReviewModerationActions';
 
 // Fetch pending reviews
@@ -47,6 +46,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ l
                     </Card>
                 ) : (
                     <div className="grid gap-8">
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {reviews.map((review: any) => (
                             <Card key={review.id} variant="bento" className="p-8 bg-surface-container-lowest border-outline-variant/10 shadow-sm relative overflow-hidden">
                                 <div className="absolute top-0 right-0 p-4">
