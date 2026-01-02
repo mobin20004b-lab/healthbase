@@ -193,7 +193,7 @@ enum InquiryStatus {
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
-  password  String   // In real app, hash this or use NextAuth for auth verification
+  password  String   // Hashed using bcrypt
   fullName  String
   role      Role     @default(PATIENT)
   reviews   Review[]
