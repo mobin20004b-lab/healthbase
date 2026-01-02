@@ -1,6 +1,6 @@
-# Frontend Development Plan
+# Frontend Development Plan: Topmedica
 
-This document outlines the frontend development tasks for the Yazd Health Transparency Platform MVP. The frontend is built using Next.js 14+ (App Router), Tailwind CSS, and `next-intl`.
+This document outlines the frontend development tasks for the Topmedica platform MVP. The frontend is built using Next.js 15 (App Router), Tailwind CSS v4, and `next-intl`.
 
 ## 1. Project Scaffolding & Design System
 
@@ -8,9 +8,14 @@ This document outlines the frontend development tasks for the Yazd Health Transp
 - **Steps:**
     1.  Setup folder structure (`app/[locale]/`, `components/`, `lib/`).
     2.  Configure `next-intl` for Internationalization (fa/en) and RTL support.
-    3.  Setup Tailwind CSS with a custom theme (colors, typography for Persian/English).
-    4.  Create base UI components: `Button`, `Input`, `Card`, `Modal`, `Badge`.
-    5.  Implement `Navbar` and `Footer` (responsive).
+    3.  Setup Tailwind CSS with a custom theme:
+        - Apply Material 3 color palette from `plan/mataill3.md`.
+        - Configure font-family for **Vazirmatn**, **Matn**, and **IRANSansX**.
+    4.  Setup Media Storage Strategy:
+        - Use `public/uploads/` for all user-generated and dynamic content.
+        - Structure: `/blogs`, `/clinics`, `/users`, `/contents`.
+    5.  Create base UI components: `Button`, `Input`, `Card`, `Modal`, `Badge`.
+    6.  Implement `Navbar` and `Footer` (responsive) with **Topmedica** branding.
 - **Checks:**
     - `npm run dev` works.
     - Layout switches direction (RTL/LTR) based on locale.

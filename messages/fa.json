@@ -1,0 +1,167 @@
+{
+    "HomePage": {
+        "title": "یافتن مراکز درمانی معتبر در یزد",
+        "subtitle": "شفافیت در قیمت، کیفیت و خدمات",
+        "searchPlaceholder": "جستجوی کلینیک‌ها، خدمات...",
+        "searchCity": "شهر",
+        "searchButton": "جستجو",
+        "login": "ورود",
+        "register": "ثبت نام",
+        "stats": {
+            "verified": "کلینیک معتبر",
+            "trust": "اطلاعات رسمی",
+            "users": "کاربر راضی"
+        },
+        "valueProps": {
+            "transparency": "شفافیت کامل",
+            "transparencyDesc": "قیمت‌ها و خدمات را پیش از مراجعه ببینید.",
+            "quality": "تضمین کیفیت",
+            "qualityDesc": "کلینیک‌های تایید شده و نظرات واقعی.",
+            "choice": "انتخاب شما",
+            "choiceDesc": "بهترین گزینه را مقایسه و انتخاب کنید."
+        }
+    },
+    "Clinics": {
+        "title": "کلینیک‌ها",
+        "subtitle": "ارائه‌دهندگان خدمات درمانی تایید شده در منطقه شما",
+        "noResults": "کلینیکی یافت نشد",
+        "verified": "تایید شده",
+        "services": "خدمات",
+        "reviews": "نظرات",
+        "contact": "تماس",
+        "viewDetails": "مشاهده جزئیات",
+        "filters": "فیلترها",
+        "specialty": "تخصص",
+        "city": "شهر",
+        "insurance": "بیمه",
+        "priceRange": "محدوده قیمت",
+        "clearAll": "پاک کردن همه",
+        "applyFilters": "اعمال",
+        "all": "همه",
+        "search": "جستجو",
+        "cities": {
+            "Yazd": "یزد",
+            "Meybod": "میبد",
+            "Ardakan": "اردکان"
+        },
+        "specialties": {
+            "Dentistry": "دندانپزشکی",
+            "Cardiology": "قلب و عروق",
+            "Dermatology": "پوست و مو",
+            "Neurology": "مغز و اعصاب"
+        },
+        "insurances": {
+            "Salamat": "بیمه سلامت",
+            "Tamin": "تأمین اجتماعی",
+            "NiroohayeMosallah": "نیروهای مسلح"
+        }
+    },
+    "ClinicDetail": {
+        "services": "خدمات و قیمت‌ها",
+        "reviews": "نظرات بیماران",
+        "writeReview": "ثبت نظر",
+        "noServices": "خدماتی ثبت نشده",
+        "noReviews": "هنوز نظری ثبت نشده",
+        "verified": "کلینیک تایید شده",
+        "phone": "تلفن",
+        "website": "وب‌سایت",
+        "address": "آدرس",
+        "save": "ذخیره",
+        "saved": "ذخیره شده"
+    },
+    "Navigation": {
+        "clinics": "کلینیک‌ها",
+        "services": "خدمات",
+        "favorites": "علاقه‌مندی‌ها",
+        "about": "درباره ما",
+        "login": "ورود",
+        "register": "ثبت نام",
+        "language": "فارسی"
+    },
+    "Footer": {
+        "links": "دسترسی سریع",
+        "legal": "قوانین",
+        "privacy": "حریم خصوصی",
+        "terms": "شرایط استفاده",
+        "rights": "تمامی حقوق محفوظ است"
+    },
+    "Admin": {
+        "reviews": {
+            "title": "مدیریت نظرات",
+            "subtitle": "مدیریت نظرات در انتظار تایید",
+            "noPending": "همه نظرات بررسی شده‌اند! نظر جدیدی نیست.",
+            "pending": "در انتظار تایید",
+            "anonymous": "کاربر ناشناس",
+            "submitted": "ارسال شده",
+            "for": "برای"
+        },
+        "clinics": {
+            "title": "مدیریت کلینیک‌ها",
+            "addNew": "افزودن کلینیک جدید",
+            "edit": "ویرایش کلینیک",
+            "list": {
+                "name": "نام",
+                "status": "وضعیت",
+                "actions": "عملیات",
+                "verified": "تایید شده",
+                "pending": "در انتظار تایید",
+                "verify": "تایید کردن",
+                "edit": "ویرایش",
+                "delete": "حذف",
+                "noClinics": "کلینیکی یافت نشد."
+            },
+            "form": {
+                "name": "نام کلینیک",
+                "description": "توضیحات",
+                "address": "آدرس",
+                "city": "شهر",
+                "phone": "تلفن",
+                "website": "وب‌سایت",
+                "submit": "ذخیره کلینیک",
+                "success": "کلینیک با موفقیت ذخیره شد",
+                "error": "خطا در ذخیره کلینیک"
+            },
+            "languages": {
+                "fa": "فارسی (پیش‌فرض)",
+                "en": "انگلیسی"
+            }
+        },
+        "dashboard": {
+            "title": "پنل مدیریت",
+            "subtitle": "نمای کلی از آمار و عملکرد پلتفرم",
+            "clinics": "مدیریت کلینیک‌ها",
+            "reviews": "مدیریت نظرات",
+            "users": "مدیریت کاربران",
+            "welcome": "خوش آمدید، مدیر",
+            "stats": {
+                "totalClinics": "کل کلینیک‌ها",
+                "pendingReviews": "نظرات در انتظار",
+                "totalReviews": "کل نظرات",
+                "verified": "کلینیک‌های تایید شده"
+            }
+        },
+        "taxonomy": {
+            "title": "مدیریت طبقه‌بندی‌ها",
+            "subtitle": "مدیریت دسته‌بندی‌ها، تخصص‌ها و بیمه‌ها",
+            "categories": "دسته‌بندی‌ها",
+            "specialties": "تخصص‌ها",
+            "insurances": "بیمه‌ها",
+            "addNew": "افزودن {type} جدید",
+            "edit": "ویرایش {type}",
+            "name": "نام انگلیسی",
+            "nameFa": "نام فارسی",
+            "save": "ذخیره تغییرات",
+            "delete": "حذف {type}",
+            "deleteConfirm": "آیا از حذف این {type} اطمینان دارید؟",
+            "types": {
+                "category": "دسته‌بندی",
+                "specialty": "تخصص",
+                "insurance": "بیمه"
+            }
+        }
+    },
+    "Auth": {
+        "signin": "ورود",
+        "register": "ایجاد حساب کاربری"
+    }
+}

@@ -1,0 +1,167 @@
+{
+    "HomePage": {
+        "title": "Find Trusted Healthcare in Yazd",
+        "subtitle": "Transparency in Price, Quality, and Services",
+        "searchPlaceholder": "Search for clinics, services...",
+        "searchCity": "City",
+        "searchButton": "Search",
+        "login": "Login",
+        "register": "Register",
+        "stats": {
+            "verified": "Verified Clinics",
+            "trust": "Official Data",
+            "users": "Happy Users"
+        },
+        "valueProps": {
+            "transparency": "Full Transparency",
+            "transparencyDesc": "See prices and services upfront.",
+            "quality": "Quality Assurance",
+            "qualityDesc": "Verified clinics and moderated reviews.",
+            "choice": "Your Choice",
+            "choiceDesc": "Compare and choose the best for you."
+        }
+    },
+    "Clinics": {
+        "title": "Clinics",
+        "subtitle": "Find verified healthcare providers in your area",
+        "noResults": "No clinics found",
+        "verified": "Verified",
+        "services": "Services",
+        "reviews": "Reviews",
+        "contact": "Contact",
+        "viewDetails": "View Details",
+        "filters": "Filters",
+        "specialty": "Specialty",
+        "city": "City",
+        "insurance": "Insurance",
+        "priceRange": "Price Range",
+        "clearAll": "Clear All",
+        "applyFilters": "Apply",
+        "all": "All",
+        "search": "Search",
+        "cities": {
+            "Yazd": "Yazd",
+            "Meybod": "Meybod",
+            "Ardakan": "Ardakan"
+        },
+        "specialties": {
+            "Dentistry": "Dentistry",
+            "Cardiology": "Cardiology",
+            "Dermatology": "Dermatology",
+            "Neurology": "Neurology"
+        },
+        "insurances": {
+            "Salamat": "Public Health (Salamat)",
+            "Tamin": "Social Security (Tamin)",
+            "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
+        }
+    },
+    "ClinicDetail": {
+        "services": "Services & Pricing",
+        "reviews": "Patient Reviews",
+        "writeReview": "Write a Review",
+        "noServices": "No services listed",
+        "noReviews": "No reviews yet",
+        "verified": "Verified Clinic",
+        "phone": "Phone",
+        "website": "Website",
+        "address": "Address",
+        "save": "Save",
+        "saved": "Saved"
+    },
+    "Navigation": {
+        "clinics": "Clinics",
+        "services": "Services",
+        "favorites": "Favorites",
+        "about": "About",
+        "login": "Login",
+        "register": "Register",
+        "language": "English"
+    },
+    "Footer": {
+        "links": "Quick Links",
+        "legal": "Legal",
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "rights": "ALL RIGHTS RESERVED"
+    },
+    "Admin": {
+        "reviews": {
+            "title": "Review Moderation",
+            "subtitle": "Manage pending clinical reviews",
+            "noPending": "All caught up! No pending reviews.",
+            "pending": "Pending",
+            "anonymous": "Anonymous User",
+            "submitted": "Submitted",
+            "for": "for"
+        },
+        "clinics": {
+            "title": "Clinic Management",
+            "addNew": "Add New Clinic",
+            "edit": "Edit Clinic",
+            "list": {
+                "name": "Name",
+                "status": "Status",
+                "actions": "Actions",
+                "verified": "Verified",
+                "pending": "Pending",
+                "verify": "Verify",
+                "edit": "Edit",
+                "delete": "Delete",
+                "noClinics": "No clinics found."
+            },
+            "form": {
+                "name": "Clinic Name",
+                "description": "Description",
+                "address": "Address",
+                "city": "City",
+                "phone": "Phone",
+                "website": "Website",
+                "submit": "Save Clinic",
+                "success": "Clinic saved successfully",
+                "error": "Failed to save clinic"
+            },
+            "languages": {
+                "fa": "Farsi (Default)",
+                "en": "English"
+            }
+        },
+        "dashboard": {
+            "title": "Admin Dashboard",
+            "subtitle": "Overview of the platform statistics and performance",
+            "clinics": "Clinics Management",
+            "reviews": "Reviews Moderation",
+            "users": "Users Management",
+            "welcome": "Welcome back, Admin",
+            "stats": {
+                "totalClinics": "Total Clinics",
+                "pendingReviews": "Pending Reviews",
+                "totalReviews": "Total Reviews",
+                "verified": "Verified Clinics"
+            }
+        },
+        "taxonomy": {
+            "title": "Taxonomy Management",
+            "subtitle": "Manage medical categories, specialties, and insurances",
+            "categories": "Categories",
+            "specialties": "Specialties",
+            "insurances": "Insurances",
+            "addNew": "Add New {type}",
+            "edit": "Edit {type}",
+            "name": "English Name",
+            "nameFa": "Farsi Name",
+            "save": "Save Changes",
+            "delete": "Delete {type}",
+            "deleteConfirm": "Are you sure you want to delete this {type}?",
+            "types": {
+                "category": "Category",
+                "specialty": "Specialty",
+                "insurance": "Insurance"
+            }
+        }
+    },
+    "Auth": {
+        "signin": "Sign In",
+        "register": "Create Account"
+    }
+}

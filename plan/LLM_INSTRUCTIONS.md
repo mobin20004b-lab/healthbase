@@ -1,5 +1,5 @@
 # LLM Instructions & Workflow
-
+use bun and postgresql
 This document defines how an LLM (or developer) should interact with this project structure to ensure consistent, high-quality progress.
 
 ## Core Philosophy
@@ -59,3 +59,8 @@ This document defines how an LLM (or developer) should interact with this projec
 4.  Executes `npm install prisma`.
 5.  Verifies with `npm run dev`.
 6.  Updates `plan/current_state.md` -> "Task 1 Done".
+
+
+
+files:
+[text](backend.md) [text](current_state.md) [text](design.md) [text](devops.md) [text](frontend.md) [text](LLM_INSTRUCTIONS.md) [text](mataill3.md) [text](plan.md) [text](pr.md) [text](product.md) [text](remaining_tasks.md) [text](uiux.md) [text](user_flow.md)

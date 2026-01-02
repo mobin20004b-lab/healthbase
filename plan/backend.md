@@ -30,7 +30,7 @@ This document outlines the backend development tasks for the Yazd Health Transpa
 
 ## 2. Authentication System (NextAuth.js)
 
-- **Task:** Implement Authentication using NextAuth.js.
+- **Task:** Implement Authentication using NextAuth.js. (Done)
 - **Steps:**
     1.  Install `next-auth`.
     2.  Configure NextAuth with `CredentialsProvider` (email/password) and JWT strategy.

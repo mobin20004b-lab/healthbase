@@ -4,24 +4,24 @@
 **Focus:** Transparency (Price, Quality), Bilingual Support, No Appointments.
 
 ## OKR 1: Foundation Setup (Weeks 1-3)
-**Status:** 🟡 In Progress
-- [ ] KR1.1: Repo Initialized with Next.js, Tailwind, TypeScript. (DevOps)
-- [ ] KR1.2: Database Schema (Prisma/Postgres) Defined & Migrated. (Backend)
-- [ ] KR1.3: Authentication (NextAuth) with Role Support. (Backend)
+**Status:** ✅ Completed
+- [x] KR1.1: Repo Initialized with Next.js, Tailwind, TypeScript. (DevOps)
+- [x] KR1.2: Database Schema (Prisma/Postgres) Defined & Migrated. (Backend)
+- [x] KR1.3: Authentication (NextAuth) with Role Support. (Backend)
 - [ ] KR1.4: CI/CD Pipeline (GitHub Actions) Active. (DevOps)
 
 ## OKR 2: Public Product (Weeks 4-7)
-**Status:** 🔴 Not Started
-- [ ] KR2.1: Clinic List & Search UI (Frontend)
-- [ ] KR2.2: Clinic Detail Page with Price Ranges (Frontend)
-- [ ] KR2.3: Global Search API (Backend)
-- [ ] KR2.4: Internationalization (fa/en) Fully Functional. (Frontend)
+**Status:** � In Progress (Mostly Done)
+- [x] KR2.1: Clinic List & Search UI (Frontend)
+- [x] KR2.2: Clinic Detail Page with Price Ranges (Frontend)
+- [x] KR2.3: Global Search API (Backend)
+- [x] KR2.4: Internationalization (fa/en) Fully Functional. (Frontend)
 
 ## OKR 3: User Interaction (Weeks 8-9)
-**Status:** 🔴 Not Started
-- [ ] KR3.1: Review Submission Flow. (User Flow)
-- [ ] KR3.2: Review Moderation Dashboard. (Frontend)
-- [ ] KR3.3: Favorites/Saved Clinics. (Backend/Frontend)
+**Status:** � In Progress
+- [x] KR3.1: Review Submission Flow. (User Flow)
+- [x] KR3.2: Review Moderation Dashboard. (Frontend)
+- [x] KR3.3: Favorites/Saved Clinics. (Backend/Frontend)
 
 ## OKR 4: Launch Readiness (Weeks 10-12)
 **Status:** 🔴 Not Started
@@ -31,15 +31,16 @@
 
 ---
 
-# Current Iteration: Iteration 1 - Foundation
+# Current Iteration: Iteration 2 - User Interaction
 
-**Goal:** Get the "Hello World" of the specific architecture running (Auth + DB + One Page).
+**Goal:** Implement the feedback loop (Reviews) and User Personalization (Favorites).
 
 **Active Tasks:**
-1.  **[Backend]** Initialize Project & DB Schema.
-    - *Plan:* `plan/backend.md` Section 1.
-2.  **[Frontend]** Basic Layout & i18n Setup.
-    - *Plan:* `plan/frontend.md` Section 1.
+1.  **[Admin]** Clinic Management Enhancements.
+    - *Plan:* `plan/frontend.md` Section 6.
+    - *Status:* ✅ [DONE] Implemented "Edit Clinic", "Create Clinic", and "Clinics Management Dashboard" for administrators.
+2.  **[Admin]** Taxonomy Management.
+    - *Status:* ✅ [DONE] Implemented relational models and admin interface for Categories, Specialties, and Insurances.
 
 **Next Step:**
-Pick a task from `plan/backend.md` (Task 1) and execute it.
+[Admin] Basic Analytics setup.

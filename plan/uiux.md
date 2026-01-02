@@ -1,15 +1,19 @@
-# UI/UX Design Plan
+# UI/UX Design Plan: Topmedica
 
-This document outlines the UI/UX design tasks for the Yazd Health Transparency Platform.
+This document outlines the UI/UX design tasks for the Topmedica platform.
 
 ## 1. Design System Foundation
 
 - **Task:** Establish the visual language.
 - **Steps:**
-    1.  Define Color Palette (Medical Blue/Green for trust, Clean White/Gray for background).
-    2.  Define Typography (Vazirmatn or Yekan for Persian, Inter/Roboto for English).
-    3.  Define Spacing/Grid system (8pt grid).
-    4.  Create Icon Set (Medical icons, UI controls).
+    1.  Define Color Palette (Material 3 Expressive):
+        - **Light Mode**: Primary (`#4C662B`), Secondary (`#586249`), Tertiary (`#386663`), Background (`#F9FAEF`), Surface (`#F9FAEF`), Error (`#BA1A1A`).
+        - **Dark Mode**: Primary (`#B1D18A`), Secondary (`#C0CBAD`), Tertiary (`#A0D0CB`), Background (`#12140E`), Surface (`#12140E`), Error (`#FFFFB4AB`).
+    2.  Define Typography:
+        - Primary Persian/Arabic: **Vazirmatn**, **Matn**, **IRANSansX**.
+        - Primary English/Latin: **Inter**, **Roboto**.
+    3.  Define Spacing/Grid system: 8pt grid with **Bento Grid** layouts.
+    4.  Create Icon Set: Material Symbols (Expressive).
 - **Checks:**
     - Colors pass contrast ratios (WCAG AA).
     - Fonts render correctly in browser.

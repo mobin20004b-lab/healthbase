@@ -1,4 +1,4 @@
-Below are **(1) BRD**, **(2) MVP OpenAPI (refactored)**, **(3) Implementation Plan**, and **(4) UI/UX Requirements + UX research** for a **clinic/service transparency & discovery platform** (FA/EN), explicitly **without appointments in MVP**.
+Below are **(1) BRD**, **(2) MVP OpenAPI (refactored)**, **(3) Implementation Plan**, and **(4) UI/UX Requirements + UX research** for **Topmedica**: a clinic/service transparency & discovery platform (FA/EN), explicitly **without appointments in MVP**.
 
 The PDF frames the core problem as **healthcare information asymmetry** and notes that local “nearby” solutions are mostly **location/appointment sites** that **don’t provide quality/price/service transparency**, while the goal is to publish information that meaningfully changes patient decisions.  
 

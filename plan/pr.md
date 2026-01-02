@@ -1,6 +1,6 @@
 Here is the comprehensive documentation package for the **Yazd Health Transparency Platform MVP**.
 
-These documents are structured as if they were in a `docs/` folder in your repository. They incorporate the specific constraints (Next.js, Vault, Postgres, No Appointments) and the requirements from the provided proposal PDF.
+These documents are structured as if they were in a `docs/` folder in your repository. They incorporate the specific constraints (Next.js, Postgres, No Appointments) and the requirements from the provided proposal PDF.
 
 ---
 
@@ -54,7 +54,6 @@ The MVP focuses on **Decision Support** rather than **Transaction**.
 * **Frontend & Backend:** Next.js 14+ (App Router). utilizing Server Components for SEO and performance.
 * **Database:** PostgreSQL (Relation data for clinics, services, reviews).
 * **ORM:** Prisma (Type-safe database access).
-* **Security & Secrets:** HashiCorp Vault.
 * **Search:** PostgreSQL `tsvector` (Full Text Search) for MVP.
 * **Infrastructure:** Dockerized containers.
 
@@ -63,14 +62,13 @@ The MVP focuses on **Decision Support** rather than **Transaction**.
                                     |
         +---------------------------+---------------------------+
         |                           |                           |
-   [Prisma ORM]             [Vault Client]              [Search Logic]
+   [Prisma ORM]             [Search Logic]
         |                           |                           |
-   [Postgres DB]            [HashiCorp Vault]           [Postgres FTS]
+   [Postgres DB]            [Postgres FTS]
                             (Secrets, RBAC, Keys)
 
 ## 3. Key Decisions
 * **Next.js Monorepo:** We removed Golang to simplify the stack. Next.js handles API routes (`/api/...`) and frontend rendering. This reduces context switching and simplifies type sharing (TypeScript everywhere).
-* **Vault for Identity:** Instead of simple JWTs stored in `.env`, we use Vault to manage the signing keys and role definitions. This prepares the system for high-security healthcare compliance (HIPAA/GDPR equivalent) from day one.
 * **No Booking Engine:** This drastically simplifies the schema. We do not need complex time-slot locking or calendar management.
 
 ```
@@ -88,13 +86,11 @@ The MVP focuses on **Decision Support** rather than **Transaction**.
 * **Task 1.2:** Layout Implementation.
     * *Requirement:* Create responsive shell. Persian font integration (e.g., Vazirmatn).
 
-## Epic 2: Authentication & User Management (Vault Backed)
-* **Task 2.1:** Vault Integration.
-    * *Requirement:* Configure Vault `userpass` or OIDC auth method. Store DB credentials in Vault KV.
-* **Task 2.2:** Registration Flow.
+## Epic 2: Authentication & User Management
+* **Task 2.1:** Registration Flow.
     * *Requirement:* Users register as "Patient" or "Clinic Manager".
-* **Task 2.3:** RBAC Middleware.
-    * *Requirement:* Next.js Middleware to check user roles against Vault policies before rendering Admin routes.
+* **Task 2.2:** RBAC Middleware.
+    * *Requirement:* Next.js Middleware to check user roles against policies before rendering Admin routes.
 
 ## Epic 3: Clinic Profiles (The Transparency Engine)
 * **Task 3.1:** Clinic Data Model.
@@ -197,7 +193,7 @@ enum InquiryStatus {
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
-  password  String   // In real app, hash this or use Vault for auth verification
+  password  String   // In real app, hash this or use NextAuth for auth verification
   fullName  String
   role      Role     @default(PATIENT)
   reviews   Review[]
@@ -296,7 +292,7 @@ openapi: 3.0.0
 info:
   title: Yazd Health Transparency API (MVP)
   version: 1.0.0
-  description: Refactored for Next.js/Vault. Appointments removed. Inquiry system added.
+  description: Refactored for Next.js. Appointments removed. Inquiry system added.
 servers:
   - url: /api/v1
 paths:
@@ -449,18 +445,17 @@ components:
 
 ---
 
-### File: `06_Security_Vault_Plan.md`
 
 ```markdown
-# Security & Vault Integration Plan
+# Security & NextAuth Integration Plan
 
 ## 1. Role in Architecture
-HashiCorp Vault is used to decouple security logic from the Next.js application logic. It manages:
-1.  **Dynamic Secrets:** Next.js does not hold the Postgres password. It requests a temporary credential from Vault on startup/refresh.
-2.  **Encryption as a Service:** Sensitive fields (like exact medical inquiries) can be encrypted by Vault (Transit Engine) before being stored in Postgres.
+HashiCorp NextAuth is used to decouple security logic from the Next.js application logic. It manages:
+1.  **Dynamic Secrets:** Next.js does not hold the Postgres password. It requests a temporary credential from NextAuth on startup/refresh.
+2.  **Encryption as a Service:** Sensitive fields (like exact medical inquiries) can be encrypted by NextAuth (Transit Engine) before being stored in Postgres.
 3.  **Policy Enforcement:** Defining who can do what.
 
-## 2. Vault Policies
+## 2. NextAuth Policies
 
 ### Policy: `clinic-manager`
 Allows a user to edit ONLY their own clinic's data and view inquiries.
@@ -491,15 +486,15 @@ path "secret/data/*" {
 
 ## 3. Implementation in Next.js
 
-We will use the `node-vault` client in Next.js API routes.
+We will use the `node-NextAuth` client in Next.js API routes.
 
 **Workflow:**
 
-1. User Login -> Next.js verifies against DB (salted hash) OR Vault Userpass.
+1. User Login -> Next.js verifies against DB (salted hash) OR NextAuth Userpass.
 2. Upon success, Next.js generates a Session.
 3. When the user tries to `POST /api/clinics/{id}/edit`:
 * Middleware checks the Session.
-* Middleware queries Vault: "Does this user have permission for this path?"
+* Middleware queries NextAuth: "Does this user have permission for this path?"
 * If yes, execute Prisma update.
 
 
