@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 
-export async function GET(request: Request) {
+export async function GET() {
     const session = await auth();
 
     if (!session || session.user.role !== 'ADMIN') {
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
             orderBy: { createdAt: 'desc' }
         });
 
-        const formattedClinics = clinics.map((clinic: any) => ({
+        const formattedClinics = clinics.map((clinic) => ({
             id: clinic.id,
             name: clinic.translations[0]?.name || clinic.name,
             city: clinic.translations[0]?.city || clinic.city,

@@ -26,7 +26,7 @@ export async function PUT(
             name,
             translations: {
                 deleteMany: {},
-                create: translations.map((t: any) => ({
+                create: translations.map((t: { locale: string; name: string }) => ({
                     locale: t.locale,
                     name: t.name,
                 })),

@@ -16,7 +16,7 @@ interface TranslationData {
 }
 
 interface ClinicFormProps {
-    initialData?: any;
+    initialData?: { id?: string; phone?: string; website?: string; image?: string; translations?: { locale: string; name?: string; description?: string; address?: string; city?: string }[] };
 }
 
 export function ClinicForm({ initialData }: ClinicFormProps) {
@@ -33,7 +33,7 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
     });
 
     const getInitialTranslation = (locale: string) => {
-        const trans = initialData?.translations?.find((t: any) => t.locale === locale);
+        const trans = initialData?.translations?.find((t: { locale: string; name?: string; description?: string; address?: string; city?: string }) => t.locale === locale);
         return {
             name: trans?.name || '',
             description: trans?.description || '',
@@ -90,8 +90,12 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
             if (!res.ok) throw new Error(t('form.error'));
 
             router.push('/clinics');
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An unknown error occurred');
+            }
         } finally {
             setLoading(false);
         }

@@ -54,7 +54,7 @@ export async function GET(
 
     // Apply translations in memory
     const translation = clinic.translations[0];
-    const services = clinic.services.map((service: any) => {
+    const services = clinic.services.map((service) => {
         const sTranslation = service.translations[0];
         return {
             ...service,
@@ -108,6 +108,7 @@ export async function PUT(
             data: {
                 ...body,
                 translations: translations ? {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     upsert: Object.entries(translations).map(([locale, data]: [string, any]) => ({
                         where: { clinicId_locale: { clinicId: id, locale } },
                         create: { locale, ...data },

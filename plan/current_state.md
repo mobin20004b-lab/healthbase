@@ -8,7 +8,7 @@
 - [x] KR1.1: Repo Initialized with Next.js, Tailwind, TypeScript. (DevOps)
 - [x] KR1.2: Database Schema (Prisma/Postgres) Defined & Migrated. (Backend)
 - [x] KR1.3: Authentication (NextAuth) with Role Support. (Backend)
-- [ ] KR1.4: CI/CD Pipeline (GitHub Actions) Active. (DevOps)
+- [x] KR1.4: CI/CD Pipeline (GitHub Actions) Active. (DevOps)
 
 ## OKR 2: Public Product (Weeks 4-7)
 **Status:**  In Progress (Mostly Done)
