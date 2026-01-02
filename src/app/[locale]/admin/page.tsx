@@ -3,12 +3,10 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
 import { Card } from '@/web/components/ui/card';
-import { Button } from '@/web/components/ui/button';
 import {
     LayoutDashboard,
     Hospital,
     MessageSquare,
-    Users,
     ArrowUpRight,
     CheckCircle2,
     Clock,

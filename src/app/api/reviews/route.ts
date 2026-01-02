@@ -69,7 +69,7 @@ export async function GET(request: Request) {
     const isAdmin = session?.user?.role === 'ADMIN';
 
     // If clinicId is provided, filters by clinic. Otherwise, logic depends on role.
-    const where: any = {};
+    const where: { clinicId?: string; status?: string } = {};
     if (clinicId) {
         where.clinicId = clinicId;
     }
@@ -77,8 +77,8 @@ export async function GET(request: Request) {
     // Only admins can see non-approved reviews for other clinics
     if (!isAdmin) {
         where.status = 'APPROVED';
-    } else if (searchParams.get('status')) {
-        where.status = searchParams.get('status');
+    } else if (status) { // Use the status variable from searchParams
+        where.status = status;
     }
 
     try {

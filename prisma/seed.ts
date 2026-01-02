@@ -95,7 +95,7 @@ async function main() {
     },
   })
 
-  const admin = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { email: 'admin@example.com' },
     update: { password: hashedPassword },
     create: {
@@ -107,7 +107,7 @@ async function main() {
   })
 
   // Create Clinic
-  const clinic = await prisma.clinic.create({
+  await prisma.clinic.create({
     data: {
       name: 'Yazd Heart Center',
       description: 'Specialized cardiology clinic in Yazd.',

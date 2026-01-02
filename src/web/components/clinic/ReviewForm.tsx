@@ -6,14 +6,14 @@ import { useRouter } from 'next/navigation';
 import { Star } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
-import { useTranslations } from 'next-intl';
+import { } from 'next-intl';
 
 interface ReviewFormProps {
     clinicId: string;
 }
 
 export function ReviewForm({ clinicId }: ReviewFormProps) {
-    const t = useTranslations('ClinicDetail');
+    // const t = useTranslations('ClinicDetail'); // unused
     const router = useRouter();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
@@ -55,8 +55,12 @@ export function ReviewForm({ clinicId }: ReviewFormProps) {
                 router.push(`/clinics/${clinicId}`);
                 router.refresh();
             }, 2000);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('An error occurred');
+            }
         } finally {
             setIsSubmitting(false);
         }

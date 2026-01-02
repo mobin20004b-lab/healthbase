@@ -1,8 +1,7 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
-import { MapPin, Star, BadgeCheck, Heart, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { MapPin, BadgeCheck, Heart, ArrowRight } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
@@ -59,7 +58,7 @@ export default async function FavoritesPage({ params }: { params: Promise<{ loca
                         <div className="mx-auto h-12 w-12 text-on-surface-variant mb-4 opacity-20">
                             <Heart className="h-full w-full" />
                         </div>
-                        <p className="text-on-surface-variant text-lg font-bold">You haven't saved any clinics yet.</p>
+                        <p className="text-on-surface-variant text-lg font-bold">You haven&apos;t saved any clinics yet.</p>
                         <Link href={`/${locale}/clinics`} className="mt-6 inline-block">
                             <Button variant="default" className="rounded-full px-8">
                                 Browse Clinics
@@ -68,7 +67,7 @@ export default async function FavoritesPage({ params }: { params: Promise<{ loca
                     </Card>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {favorites.map((clinic: any) => (
+                        {favorites.map((clinic: { id: string; name: string; isVerified?: boolean; city?: string; description?: string; services?: { id: string; name: string }[] }) => (
                             <Link
                                 key={clinic.id}
                                 href={`/${locale}/clinics/${clinic.id}`}
@@ -105,7 +104,7 @@ export default async function FavoritesPage({ params }: { params: Promise<{ loca
 
                                     <div className="flex items-center justify-between pt-6 border-t border-outline-variant/10">
                                         <div className="flex flex-wrap gap-2">
-                                            {clinic.services?.slice(0, 2).map((service: any) => (
+                                            {clinic.services?.slice(0, 2).map((service) => (
                                                 <span
                                                     key={service.id}
                                                     className="inline-flex items-center rounded-xl bg-surface-container-lowest border border-outline-variant/30 px-3 py-1.5 text-[10px] font-black uppercase tracking-tight text-on-surface-variant group-hover:bg-primary/5 group-hover:text-primary transition-all"

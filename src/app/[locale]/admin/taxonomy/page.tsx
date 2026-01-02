@@ -24,7 +24,7 @@ export default async function AdminTaxonomyPage({ params }: { params: Promise<{ 
                     </p>
                 </header>
 
-                <TaxonomyManager locale={locale} />
+                <TaxonomyManager />
             </div>
         </div>
     );

@@ -9,11 +9,12 @@ import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface SearchFiltersProps {
-    locale: string;
+    // locale: string;
 }
 
-export default function SearchFilters({ locale }: SearchFiltersProps) {
+export default function SearchFilters({}: SearchFiltersProps) {
     const t = useTranslations('Clinics');
     const router = useRouter();
     const searchParams = useSearchParams();

@@ -70,7 +70,7 @@ export default async function ClinicsPage({ params, searchParams }: PageProps) {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Filters Sidebar */}
                     <aside className="w-full lg:w-80 flex-shrink-0">
-                        <SearchFilters locale={locale} />
+                        <SearchFilters />
                     </aside>
 
                     {/* Clinic List - Bento Grid Layout */}
