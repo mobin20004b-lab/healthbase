@@ -11,14 +11,14 @@
 - [ ] KR1.4: CI/CD Pipeline (GitHub Actions) Active. (DevOps)
 
 ## OKR 2: Public Product (Weeks 4-7)
-**Status:** � In Progress (Mostly Done)
+**Status:**  In Progress (Mostly Done)
 - [x] KR2.1: Clinic List & Search UI (Frontend)
 - [x] KR2.2: Clinic Detail Page with Price Ranges (Frontend)
 - [x] KR2.3: Global Search API (Backend)
 - [x] KR2.4: Internationalization (fa/en) Fully Functional. (Frontend)
 
 ## OKR 3: User Interaction (Weeks 8-9)
-**Status:** � In Progress
+**Status:**  In Progress
 - [x] KR3.1: Review Submission Flow. (User Flow)
 - [x] KR3.2: Review Moderation Dashboard. (Frontend)
 - [x] KR3.3: Favorites/Saved Clinics. (Backend/Frontend)
@@ -42,5 +42,10 @@
 2.  **[Admin]** Taxonomy Management.
     - *Status:* ✅ [DONE] Implemented relational models and admin interface for Categories, Specialties, and Insurances.
 
+**Strategic Update:**
+A comprehensive implementation plan for the **Material 3 Expressive Design System** and **Next.js 16+ Architecture** has been created.
+- **New Master Plan:** `plan/implementation_tasks.md`
+- **Scope:** Supersedes previous UI/UX plans with specific tasks for Bento Grids, Spatial UI, and "Trust Calibration" features.
+
 **Next Step:**
-[Admin] Basic Analytics setup.
+Begin execution of `plan/implementation_tasks.md`, starting with **Task 1: Project Configuration & Design System Foundation**.
