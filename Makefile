@@ -50,6 +50,33 @@ migrate-push:
 seed:
 	npx ts-node prisma/seed.ts
 
+# Initialize DB for production: install, generate client, deploy migrations, then seed
+.PHONY: init-db
+init-db:
+	@test -n "$(DATABASE_URL)" || (echo "DATABASE_URL not set. Export it or set in environment." && exit 1)
+	$(MAKE) install
+	$(MAKE) generate
+	$(MAKE) migrate-deploy
+	$(MAKE) seed
+
+# Initialize DB for development: install, generate client, push schema, then seed
+.PHONY: init-db-dev
+init-db-dev:
+	@test -n "$(DATABASE_URL)" || (echo "DATABASE_URL not set. Export it or set in environment." && exit 1)
+	$(MAKE) install
+	$(MAKE) generate
+	$(MAKE) migrate-push
+	$(MAKE) seed
+
+# Destructive reset (development only) - runs prisma migrate reset
+.PHONY: migrate-reset
+migrate-reset:
+	@test -n "$(DATABASE_URL)" || (echo "DATABASE_URL not set. Export it or set in environment." && exit 1)
+	@echo "This will reset the database. Press Ctrl+C to cancel within 3s..."
+	sleep 3
+	npx prisma migrate reset --force --schema=$(PRISMA_SCHEMA)
+	$(MAKE) seed
+
 pm2-start:
 	pm2 start $(ECOSYSTEM) --env production
 
