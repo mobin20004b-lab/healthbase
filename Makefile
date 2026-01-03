@@ -95,3 +95,22 @@ lint:
 
 test:
 	$(NPM) run test
+
+# Docker helpers
+.PHONY: docker-build docker-up docker-down docker-logs docker-restart docker-push
+
+docker-build:
+	docker build -t topmedica-app:latest .
+
+docker-up:
+	docker-compose up -d --build
+
+docker-down:
+	docker-compose down -v
+
+docker-logs:
+	docker-compose logs -f --tail=200 app
+
+docker-restart:
+	docker-compose restart app
+
