@@ -41,6 +41,8 @@
         "applyFilters": "Apply",
         "all": "All",
         "search": "Search",
+        "searchPlaceholder": "Search for clinics, services...",
+        "province": "Province",
         "specialties": {
             "Dentistry": "Dentistry",
             "Cardiology": "Cardiology",
