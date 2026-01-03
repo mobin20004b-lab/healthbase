@@ -7,16 +7,18 @@ import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
 import { Globe, Save, AlertCircle } from 'lucide-react';
 import { useRouter } from '@/routing';
+import { IRAN_LOCATIONS } from '@/lib/constants/locations';
 
 interface TranslationData {
     name: string;
     description: string;
     address: string;
     city: string;
+    province: string;
 }
 
 interface ClinicFormProps {
-    initialData?: { id?: string; phone?: string; website?: string; image?: string; translations?: { locale: string; name?: string; description?: string; address?: string; city?: string }[] };
+    initialData?: { id?: string; phone?: string; website?: string; image?: string; translations?: { locale: string; name?: string; description?: string; address?: string; city?: string; province?: string }[] };
 }
 
 export function ClinicForm({ initialData }: ClinicFormProps) {
@@ -33,12 +35,13 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
     });
 
     const getInitialTranslation = (locale: string) => {
-        const trans = initialData?.translations?.find((t: { locale: string; name?: string; description?: string; address?: string; city?: string }) => t.locale === locale);
+        const trans = initialData?.translations?.find((t: { locale: string; name?: string; description?: string; address?: string; city?: string; province?: string }) => t.locale === locale);
         return {
             name: trans?.name || '',
             description: trans?.description || '',
             address: trans?.address || '',
-            city: trans?.city || ''
+            city: trans?.city || '',
+            province: trans?.province || ''
         };
     };
 
@@ -79,6 +82,7 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
                     description: translations.fa.description || translations.en.description,
                     address: translations.fa.address || translations.en.address,
                     city: translations.fa.city || translations.en.city,
+                    province: translations.fa.province || translations.en.province,
                     ...commonData,
                     translations: {
                         fa: translations.fa,
@@ -147,15 +151,42 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-black text-on-surface-variant ml-2">{t('form.city')}</label>
-                            <Input
-                                value={translations[activeTab].city}
-                                onChange={(e) => handleTranslationChange('city', e.target.value)}
-                                placeholder={t('form.city')}
-                                className="bg-surface-container-low border-none h-14 rounded-2xl px-6 font-bold"
-                            />
+                            <label className="text-sm font-black text-on-surface-variant ml-2">{t('form.province')}</label>
+                            <select
+                                value={translations[activeTab].province}
+                                onChange={(e) => {
+                                    handleTranslationChange('province', e.target.value);
+                                    handleTranslationChange('city', ''); // Reset city on province change
+                                }}
+                                className="w-full bg-surface-container-low border-none h-14 rounded-2xl px-6 font-bold text-on-surface outline-none focus:ring-2 focus:ring-primary/20 appearance-none"
+                            >
+                                <option value="">{t('form.selectProvince')}</option>
+                                {IRAN_LOCATIONS.map((prov) => (
+                                    <option key={prov.value} value={prov.value}>
+                                        {/* @ts-expect-error - translations are dynamic */}
+                                        {t(prov.label)}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="space-y-2">
+                            <label className="text-sm font-black text-on-surface-variant ml-2">{t('form.city')}</label>
+                            <select
+                                value={translations[activeTab].city}
+                                onChange={(e) => handleTranslationChange('city', e.target.value)}
+                                className="w-full bg-surface-container-low border-none h-14 rounded-2xl px-6 font-bold text-on-surface outline-none focus:ring-2 focus:ring-primary/20 appearance-none"
+                                disabled={!translations[activeTab].province}
+                            >
+                                <option value="">{t('form.selectCity')}</option>
+                                {translations[activeTab].province && IRAN_LOCATIONS.find(p => p.value === translations[activeTab].province)?.cities.map((city) => (
+                                    <option key={city.value} value={city.value}>
+                                        {/* @ts-expect-error - translations are dynamic */}
+                                        {t(city.label)}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="space-y-2 md:col-span-2">
                             <label className="text-sm font-black text-on-surface-variant ml-2">{t('form.address')}</label>
                             <Input
                                 value={translations[activeTab].address}

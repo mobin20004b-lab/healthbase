@@ -107,9 +107,17 @@ export default async function ClinicsPage({ params, searchParams }: PageProps) {
                                                             </div>
                                                         )}
                                                     </div>
-                                                    {clinic.city && (
+                                                    {(clinic.city || clinic.province) && (
                                                         <p className="mt-2 flex items-center gap-2 text-sm text-on-surface-variant font-bold">
                                                             <MapPin className="h-4 w-4 text-primary" />
+                                                            {/* @ts-expect-error - province is added dynamically */}
+                                                            {clinic.province && (
+                                                                <>
+                                                                    {/* @ts-expect-error - province is added dynamically */}
+                                                                    {clinic.province}
+                                                                    {clinic.city && ' - '}
+                                                                </>
+                                                            )}
                                                             {clinic.city}
                                                         </p>
                                                     )}

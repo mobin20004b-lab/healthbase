@@ -27,6 +27,7 @@ export async function GET() {
             id: clinic.id,
             name: clinic.translations[0]?.name || clinic.name,
             city: clinic.translations[0]?.city || clinic.city,
+            province: clinic.translations[0]?.province || clinic.province,
             isVerified: clinic.isVerified,
             reviewCount: clinic._count.reviews,
             serviceCount: clinic._count.services,
