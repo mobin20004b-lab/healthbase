@@ -1,6 +1,6 @@
 {
     "HomePage": {
-        "title": "Find Trusted Healthcare in Yazd",
+        "title": "Find Trusted Healthcare in <city></city>",
         "subtitle": "Transparency in Price, Quality, and Services",
         "searchPlaceholder": "Search for clinics, services...",
         "searchCity": "City",

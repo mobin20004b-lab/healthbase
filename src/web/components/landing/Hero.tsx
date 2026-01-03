@@ -1,7 +1,7 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useTranslations, useMessages } from 'next-intl';
+import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
@@ -9,10 +9,24 @@ import { Input } from '@/web/components/ui/input';
 
 export default function Hero() {
     const t = useTranslations('HomePage');
+    const tClinics = useTranslations('Clinics');
+    const messages = useMessages();
     const router = useRouter();
     const params = useParams();
     const locale = params.locale as string;
     const [q, setQ] = useState('');
+    const [currentCityIndex, setCurrentCityIndex] = useState(0);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cities = Object.keys((messages.Clinics as any)?.cities || {});
+
+    useEffect(() => {
+        if (cities.length === 0) return;
+        const interval = setInterval(() => {
+            setCurrentCityIndex((prev) => (prev + 1) % cities.length);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [cities.length]);
 
     const handleSearch = () => {
         if (!q.trim()) return;
@@ -31,7 +45,16 @@ export default function Hero() {
                 <div className="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20 flex flex-col items-center">
                     <div className="relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:max-w-none lg:pt-6 xl:col-span-6">
                         <h1 className="text-4xl font-extrabold tracking-tight text-on-surface sm:text-6xl text-balance leading-tight">
-                            {t('title')}
+                            {t.rich('title', {
+                                city: (chunks) => (
+                                    <span
+                                        key={cities[currentCityIndex]}
+                                        className="inline-block min-w-[8ch] text-primary animate-in fade-in slide-in-from-bottom-2 duration-500"
+                                    >
+                                        {cities.length > 0 ? tClinics(`cities.${cities[currentCityIndex]}`) : ''}
+                                    </span>
+                                )
+                            })}
                         </h1>
                         <p className="mt-6 text-lg text-on-surface-variant leading-relaxed">
                             {t('subtitle')}
