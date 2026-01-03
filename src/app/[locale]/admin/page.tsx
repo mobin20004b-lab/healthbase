@@ -1,7 +1,7 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { redirect, Link } from '@/routing';
 import { Card } from '@/web/components/ui/card';
 import {
     LayoutDashboard,
@@ -13,7 +13,6 @@ import {
     TrendingUp,
     Layers
 } from 'lucide-react';
-import Link from 'next/link';
 import prisma from '@/lib/prisma';
 
 export default async function AdminDashboard({ params }: { params: Promise<{ locale: string }> }) {
@@ -23,7 +22,7 @@ export default async function AdminDashboard({ params }: { params: Promise<{ loc
 
     const session = await auth();
     if (!session || session.user.role !== 'ADMIN') {
-        redirect('/');
+        redirect('/', { locale });
     }
 
     // Fetch stats

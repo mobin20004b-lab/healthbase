@@ -2,7 +2,8 @@
 
 import { useTranslations, useMessages } from 'next-intl';
 import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from '@/routing';
+import { useParams } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';

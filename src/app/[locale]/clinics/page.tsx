@@ -1,11 +1,11 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Link from 'next/link';
 import { MapPin, Star, BadgeCheck, Filter, ArrowRight } from 'lucide-react';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { cn } from '@/lib/utils';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
+import { Link } from '@/routing';
 
 interface PageProps {
     params: Promise<{ locale: string }>;
@@ -87,7 +87,7 @@ export default async function ClinicsPage({ params, searchParams }: PageProps) {
                                 clinics.map((clinic: { id: string; name: string; isVerified: boolean; isFavorited: boolean; city?: string; province?: string; averageRating: number; description?: string; services?: { id: string; name: string }[] }, index: number) => (
                                     <Link
                                         key={clinic.id}
-                                        href={`/${locale}/clinics/${clinic.id}`}
+                                        href={`/clinics/${clinic.id}`}
                                         className={cn(
                                             "block h-full transition-all",
                                             index === 0 ? "md:col-span-2 lg:col-span-2" : ""

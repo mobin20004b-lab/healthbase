@@ -1,10 +1,10 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { MapPin, Phone, Globe, BadgeCheck, Star, Edit } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
+import { Link } from '@/routing';
 
 // Fetch single clinic from API
 async function getClinic(id: string, locale: string) {

@@ -1,12 +1,11 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Link from 'next/link';
 import { MapPin, BadgeCheck, Heart, ArrowRight } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import { auth } from '@/auth';
-import { redirect } from 'next/navigation';
+import { redirect, Link } from '@/routing';
 
 async function getFavorites() {
     try {
