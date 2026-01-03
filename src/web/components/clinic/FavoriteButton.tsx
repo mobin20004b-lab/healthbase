@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
-import { useRouter } from '@/routing';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';

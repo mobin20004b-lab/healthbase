@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import { useRouter } from '@/routing';
+import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';

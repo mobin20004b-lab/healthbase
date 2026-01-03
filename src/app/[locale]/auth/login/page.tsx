@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from '@/routing';
+import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';

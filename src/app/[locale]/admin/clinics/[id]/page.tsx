@@ -1,7 +1,6 @@
 
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { auth } from '@/auth';
-import { redirect } from '@/routing';
 import { notFound } from 'next/navigation';
 import { ClinicForm } from '@/web/components/admin/ClinicForm';
 
@@ -24,7 +23,7 @@ export default async function EditClinicPage({ params }: { params: Promise<{ id:
 
     const session = await auth();
     if (!session || session.user.role !== 'ADMIN') {
-        redirect('/', { locale });
+        notFound();
     }
 
     const t = await getTranslations('Admin.clinics');

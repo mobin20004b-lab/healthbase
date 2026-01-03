@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { Link } from '@/routing';
+import { Link } from 'next/navigation';
 
 export default function Footer() {
     const t = useTranslations('Footer');
