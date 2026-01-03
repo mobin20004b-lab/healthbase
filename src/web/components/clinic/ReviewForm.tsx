@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useLocale } from '@/routing';
+import { useRouter } from '@/routing';
 import { Star } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
@@ -15,7 +15,6 @@ interface ReviewFormProps {
 export function ReviewForm({ clinicId }: ReviewFormProps) {
     // const t = useTranslations('ClinicDetail'); // unused
     const router = useRouter();
-    const locale = useLocale();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [comment, setComment] = useState('');
