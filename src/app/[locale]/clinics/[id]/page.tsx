@@ -61,7 +61,6 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             {clinic.address && (
                                 <p className="mt-8 flex items-center gap-3 text-xl text-on-surface-variant font-bold">
                                     <MapPin className="h-7 w-7 text-primary" />
-                                    {/* @ts-expect-error - province is added dynamically */}
                                     {clinic.province && `${clinic.province}, `}
                                     {clinic.city && `${clinic.city}, `}
                                     {clinic.address}
@@ -223,7 +222,6 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                                     <p className="text-lg text-on-surface-variant font-bold leading-snug">
                                         {clinic.address || 'Not provided'}<br />
                                         <span className="text-primary">
-                                            {/* @ts-expect-error - province is added dynamically */}
                                             {clinic.province && `${clinic.province} - `}{clinic.city}
                                         </span>
                                     </p>

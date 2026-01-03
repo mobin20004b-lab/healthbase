@@ -87,7 +87,6 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             <option value="">{t('all')}</option>
                             {getProvinces().map((prov) => (
                                 <option key={prov.value} value={prov.value}>
-                                    {/* @ts-expect-error - translations are dynamic */}
                                     {t(prov.label)}
                                 </option>
                             ))}
@@ -109,7 +108,6 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             <option value="">{t('all')}</option>
                             {province && getCities(province).map((c) => (
                                 <option key={c.value} value={c.value}>
-                                    {/* @ts-expect-error - translations are dynamic */}
                                     {t(c.label)}
                                 </option>
                             ))}

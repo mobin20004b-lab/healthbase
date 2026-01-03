@@ -84,7 +84,7 @@ export default async function ClinicsPage({ params, searchParams }: PageProps) {
                                     <p className="text-on-surface-variant text-lg font-bold">{t('noResults')}</p>
                                 </Card>
                             ) : (
-                                clinics.map((clinic: { id: string; name: string; isVerified: boolean; isFavorited: boolean; city?: string; averageRating: number; description?: string; services?: { id: string; name: string }[] }, index: number) => (
+                                clinics.map((clinic: { id: string; name: string; isVerified: boolean; isFavorited: boolean; city?: string; province?: string; averageRating: number; description?: string; services?: { id: string; name: string }[] }, index: number) => (
                                     <Link
                                         key={clinic.id}
                                         href={`/${locale}/clinics/${clinic.id}`}
@@ -110,10 +110,8 @@ export default async function ClinicsPage({ params, searchParams }: PageProps) {
                                                     {(clinic.city || clinic.province) && (
                                                         <p className="mt-2 flex items-center gap-2 text-sm text-on-surface-variant font-bold">
                                                             <MapPin className="h-4 w-4 text-primary" />
-                                                            {/* @ts-expect-error - province is added dynamically */}
                                                             {clinic.province && (
                                                                 <>
-                                                                    {/* @ts-expect-error - province is added dynamically */}
                                                                     {clinic.province}
                                                                     {clinic.city && ' - '}
                                                                 </>

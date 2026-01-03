@@ -175,7 +175,6 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
                                 <option value="">{t('form.selectProvince')}</option>
                                 {getProvinces(translations[activeTab].country || 'Iran').map((prov) => (
                                     <option key={prov.value} value={prov.value}>
-                                        {/* @ts-expect-error - translations are dynamic */}
                                         {t(prov.label)}
                                     </option>
                                 ))}
@@ -192,7 +191,6 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
                                 <option value="">{t('form.selectCity')}</option>
                                 {translations[activeTab].province && getCities(translations[activeTab].province, translations[activeTab].country || 'Iran').map((city) => (
                                     <option key={city.value} value={city.value}>
-                                        {/* @ts-expect-error - translations are dynamic */}
                                         {t(city.label)}
                                     </option>
                                 ))}
