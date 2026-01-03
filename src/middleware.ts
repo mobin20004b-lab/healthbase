@@ -11,10 +11,9 @@ export default auth((req) => {
 });
 
 export const config = {
-    // Match all paths except static files and API routes
+    // Match only localized paths - all URLs must have /fa/ or /en/ prefix
     matcher: [
         '/',
-        '/(fa|en)/:path*',
-        '/((?!api|_next|_vercel|.*\\..*).*)'
+        '/(fa|en)/:path*'
     ]
 };
