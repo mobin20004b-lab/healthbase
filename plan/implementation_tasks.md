@@ -53,18 +53,18 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Variants: `filled` (default), `tonal` (secondary container), `outlined` (border outline), `text` (ghost), `elevated` (shadow).
         *   **Interaction**: Add an `isMorphing` prop or internal state that changes the shape from `rounded-xl` to `m3-shape-flower` (or vice versa) on click/hover.
         *   **Animation**: Use the `m3-motion` transition class.
-*   [ ] **2.2. Card Component (`src/components/ui/card.tsx`)**
+*   [x] **2.2. Card Component (`src/components/ui/card.tsx`)**
     *   **Action**: Create M3 Card variants.
     *   **Sub-tasks**:
         *   Variants: `elevated` (shadow-md, bg-surface), `filled` (bg-surface-container-highest), `outlined` (border outline-variant, bg-surface).
         *   Props: `interactive` (adds hover elevation/state).
-*   [ ] **2.3. Input Fields (`src/components/ui/input.tsx`, `floating-label-input.tsx`)**
+*   [x] **2.3. Input Fields (`src/components/ui/input.tsx`, `floating-label-input.tsx`)**
     *   **Action**: Implement M3 Text Fields with floating labels.
     *   **Sub-tasks**:
         *   Create `FloatingLabelInput` component.
         *   Variants: `outlined` (border rings), `filled` (bg-surface-container-highest with bottom border).
         *   States: Error state (red border + icon).
-*   [ ] **2.4. Navigation Rail (`src/components/ui/nav-rail.tsx`)**
+*   [x] **2.4. Navigation Rail (`src/components/ui/nav-rail.tsx`)**
     *   **Action**: Create the vertical navigation rail for the Admin dashboard.
     *   **Sub-tasks**:
         *   Container: Fixed width (e.g., 80px), `h-screen`, `sticky`, `top-0`.
