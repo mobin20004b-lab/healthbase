@@ -58,7 +58,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Sub-tasks**:
         *   Variants: `elevated` (shadow-md, bg-surface), `filled` (bg-surface-container-highest), `outlined` (border outline-variant, bg-surface).
         *   Props: `interactive` (adds hover elevation/state).
-*   [ ] **2.3. Input Fields (`src/components/ui/input.tsx`, `floating-label-input.tsx`)**
+*   [x] **2.3. Input Fields (`src/components/ui/input.tsx`, `floating-label-input.tsx`)**
     *   **Action**: Implement M3 Text Fields with floating labels.
     *   **Sub-tasks**:
         *   Create `FloatingLabelInput` component.

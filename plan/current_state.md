@@ -47,15 +47,16 @@
     - *Status:* In Progress.
         - ✅ Task 2.1: Button Component.
         - ✅ Task 2.2: Card Component.
-        - [ ] Task 2.3: Input Fields.
+        - ✅ Task 2.3: Input Fields.
 
 **Strategic Update:**
 - **Completed:**
     - Tailwind Configuration enhanced with M3 colors and shape utilities (`globals.css`).
-    - Typography setup assumed complete (based on previous context).
+    - Typography setup assumed complete.
     - Button component updated with M3 variants.
     - Card component updated with M3 variants (`elevated`, `filled`, `outlined`) and `interactive` prop.
-- **Next Step:** Continue with **Task 2.3: Input Fields**.
+    - FloatingLabelInput component created with `filled` and `outlined` variants.
+- **Next Step:** Continue with **Task 2.4: Navigation Rail**.
 
 **Next Step:**
-Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.3: Input Fields**.
+Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.4: Navigation Rail**.
