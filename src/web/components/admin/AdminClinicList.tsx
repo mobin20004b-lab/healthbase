@@ -15,9 +15,10 @@ import {
     CheckCircle2,
     Clock,
     Search,
-    Plus
+    Plus,
+    Hospital
 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from '@/routing'; // Localized Link
 import { Input } from '@/web/components/ui/input';
 
 interface Clinic {
@@ -91,7 +92,7 @@ export function AdminClinicList({ initialClinics, locale }: AdminClinicListProps
                         className="pl-12 bg-surface-container-lowest border-none h-12 rounded-xl font-bold"
                     />
                 </div>
-                <Link href={`/${locale}/admin/clinics/new`}>
+                <Link href={`/admin/clinics/new`}>
                     <Button className="h-12 px-8 rounded-xl font-black flex items-center gap-2 shadow-lg shadow-primary/20">
                         <Plus className="h-5 w-5" />
                         {t('addNew')}
@@ -152,7 +153,7 @@ export function AdminClinicList({ initialClinics, locale }: AdminClinicListProps
                                         {clinic.isVerified ? t('list.pending') : t('list.verify')}
                                     </Button>
 
-                                    <Link href={`/${locale}/admin/clinics/${clinic.id}`}>
+                                    <Link href={`/admin/clinics/${clinic.id}`}>
                                         <Button variant="tonal" size="icon" className="rounded-xl text-primary m3-shape-flower">
                                             <Edit3 className="h-4 w-4" />
                                         </Button>
@@ -175,6 +176,3 @@ export function AdminClinicList({ initialClinics, locale }: AdminClinicListProps
         </div>
     );
 }
-
-// Add the missing icon
-import { Hospital } from 'lucide-react';

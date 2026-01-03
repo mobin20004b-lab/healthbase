@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
-import Link from 'next/link';
+import { Link } from '@/routing'; // Localized Link
 
 interface PageProps {
     params: Promise<{ locale: string }>;

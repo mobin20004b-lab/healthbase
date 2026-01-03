@@ -2,8 +2,7 @@
 
 import { useTranslations, useMessages } from 'next-intl';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useParams } from 'next/navigation';
+import { useRouter } from '@/routing'; // Localized router
 import { Search } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
@@ -13,8 +12,6 @@ export default function Hero() {
     const tClinics = useTranslations('Clinics');
     const messages = useMessages();
     const router = useRouter();
-    const params = useParams();
-    const locale = params.locale as string;
     const [q, setQ] = useState('');
     const [currentCityIndex, setCurrentCityIndex] = useState(0);
 
@@ -31,7 +28,8 @@ export default function Hero() {
 
     const handleSearch = () => {
         if (!q.trim()) return;
-        router.push(`/${locale}/clinics?q=${encodeURIComponent(q)}`);
+        // next-intl useRouter automatically handles locale prefix
+        router.push(`/clinics?q=${encodeURIComponent(q)}`);
     };
 
     return (

@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/routing'; // Localized router
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
@@ -34,6 +34,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         if (specialty) params.set('specialty', specialty); else params.delete('specialty');
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
 
+        // useRouter from next-intl automatically handles locale prefix
         router.push(`/clinics?${params.toString()}`);
     };
 
