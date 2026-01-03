@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -13,15 +14,24 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String    @default("USER")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
   password      String?
   clinicId      String?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
   accounts      Account[]
-  reviews       Review[]
   sessions      Session[]
-  clinic        Clinic?   @relation(fields: [clinicId], references: [id])
+  reviews       Review[]
+
+  /// User belongs to a clinic (optional)
+  clinic        Clinic?   @relation(fields: [clinicId], references: [id], onDelete: SetNull)
+
+  /// Favorites many-to-many
   favorites     Clinic[]  @relation("UserFavorites")
+
+  /// Clinic owners relation (one clinic -> many users)
+  ownedClinic   Clinic?   @relation("ClinicOwners")
 }
 
 model Account {
@@ -37,6 +47,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
+
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -47,6 +58,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -70,14 +82,22 @@ model Clinic {
   image        String?
   website      String?
   isVerified   Boolean             @default(false)
+
   createdAt    DateTime            @default(now())
   updatedAt    DateTime            @updatedAt
+
   translations ClinicTranslation[]
   reviews      Review[]
   services     Service[]
-  owners       User[]
+
+  /// Owners: one clinic can have many users as owners
+  owners       User[]              @relation("ClinicOwners")
+
+  /// Many-to-many relations
   insurances   Insurance[]         @relation("ClinicInsurances")
   specialties  Specialty[]         @relation("ClinicSpecialties")
+
+  /// Favorites many-to-many (users who favorited this clinic)
   favoritedBy  User[]              @relation("UserFavorites")
 }
 
@@ -90,6 +110,7 @@ model ClinicTranslation {
   city        String?
   province    String?
   country     String?
+
   clinicId    String
   clinic      Clinic  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 
@@ -103,12 +124,16 @@ model Service {
   priceMin     Float?
   priceMax     Float?
   currency     String               @default("IRR")
+
   clinicId     String
+  clinic       Clinic               @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
+  categoryId   String?
+  category     Category?            @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
   createdAt    DateTime             @default(now())
   updatedAt    DateTime             @updatedAt
-  categoryId   String?
-  category     Category?            @relation(fields: [categoryId], references: [id])
-  clinic       Clinic               @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
   translations ServiceTranslation[]
 }
 
@@ -117,6 +142,7 @@ model ServiceTranslation {
   locale      String
   name        String
   description String?
+
   serviceId   String
   service     Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 
@@ -128,12 +154,15 @@ model Review {
   rating    Int
   comment   String?
   status    String   @default("PENDING")
+
   userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   clinicId  String
+  clinic    Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  clinic    Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Specialty {
@@ -141,6 +170,7 @@ model Specialty {
   name         String?
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt
+
   translations SpecialtyTranslation[]
   clinics      Clinic[]               @relation("ClinicSpecialties")
 }
@@ -149,6 +179,7 @@ model SpecialtyTranslation {
   id          String    @id @default(cuid())
   locale      String
   name        String
+
   specialtyId String
   specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
 
@@ -160,6 +191,7 @@ model Insurance {
   name         String?
   createdAt    DateTime               @default(now())
   updatedAt    DateTime               @updatedAt
+
   translations InsuranceTranslation[]
   clinics      Clinic[]               @relation("ClinicInsurances")
 }
@@ -168,6 +200,7 @@ model InsuranceTranslation {
   id          String    @id @default(cuid())
   locale      String
   name        String
+
   insuranceId String
   insurance   Insurance @relation(fields: [insuranceId], references: [id], onDelete: Cascade)
 
@@ -179,6 +212,7 @@ model Category {
   name         String?
   createdAt    DateTime              @default(now())
   updatedAt    DateTime              @updatedAt
+
   translations CategoryTranslation[]
   services     Service[]
 }
@@ -187,6 +221,7 @@ model CategoryTranslation {
   id         String   @id @default(cuid())
   locale     String
   name       String
+
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
