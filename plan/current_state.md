@@ -49,6 +49,7 @@
         - ✅ Task 2.2: Card Component.
         - ✅ Task 2.3: Input Fields.
         - ✅ Task 2.4: Navigation Rail.
+        - ✅ Task 2.5: Sticky Header.
 
 **Strategic Update:**
 - **Completed:**
@@ -58,7 +59,8 @@
     - Card component updated with M3 variants (`elevated`, `filled`, `outlined`) and `interactive` prop.
     - FloatingLabelInput component created with `filled` and `outlined` variants.
     - Navigation Rail component implemented (`src/web/components/ui/nav-rail.tsx`).
-- **Next Step:** Continue with **Task 2.5: Sticky Header**.
+    - Sticky Header component implemented (`src/web/components/ui/sticky-header.tsx`) with unit tests.
+- **Next Step:** Continue with **Task 2.6: Bento Grid System**.
 
 **Next Step:**
-Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.5: Sticky Header**.
+Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.6: Bento Grid System**.
