@@ -77,7 +77,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Sub-tasks**:
         *   Styling: `backdrop-blur-md`, `bg-background/70`, `border-b border-outline-variant/20`.
         *   Z-index: Ensure it stays above content.
-*   [ ] **2.6. Bento Grid System (`src/components/ui/bento-grid.tsx`)**
+*   [x] **2.6. Bento Grid System (`src/web/components/ui/bento-grid.tsx`)**
     *   **Action**: Create a responsive grid wrapper.
     *   **Sub-tasks**:
         *   **Container**: CSS Grid with auto-rows. `grid-cols-1 md:grid-cols-4 gap-4`.
