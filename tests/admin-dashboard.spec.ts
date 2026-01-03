@@ -1,14 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Admin Dashboard', () => {
-    test.beforeEach(async ({ page }) => {
-        // Mock authentication - In a real scenario, you'd use a setup project or API login
-        // For this test, we might need to actually login via UI or bypass if possible.
-        // Since we don't have a seed user easily accessible in CI without setup,
-        // we will assume we can hit the login page and try to login (expecting failure or specific redirect).
-
-        // However, for MVP verification of STRUCTURE, we can check if the route is protected.
-    });
+    // Note: To test actual Admin access, we'd need a seeded admin user.
+    // For MVP verification, we check route protection and login page existence.
 
     test('should redirect unauthenticated users to login', async ({ page }) => {
         await page.goto('http://localhost:3000/en/admin');

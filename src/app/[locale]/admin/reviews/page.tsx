@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import prisma from '@/lib/prisma';
 import { Card } from '@/web/components/ui/card';
 import { Button } from '@/web/components/ui/button';
-import { Check, X, AlertTriangle, Star } from 'lucide-react';
+import { Check, X, Star } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 
 async function updateReviewStatus(reviewId: string, status: 'APPROVED' | 'REJECTED') {
@@ -70,7 +70,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ l
                                     </div>
 
                                     <p className="text-on-surface mb-4 leading-relaxed bg-surface-container-low p-4 rounded-xl">
-                                        "{review.comment}"
+                                        &quot;{review.comment}&quot;
                                     </p>
 
                                     {/* Detailed scores not in schema yet, commenting out

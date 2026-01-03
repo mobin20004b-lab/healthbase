@@ -4,7 +4,6 @@ import {
     LayoutDashboard,
     Hospital,
     MessageSquare,
-    Settings,
     LogOut,
     Layers,
     User
@@ -13,7 +12,6 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { auth, signOut } from '@/auth';
 import { redirect } from 'next/navigation';
-import { Button } from '@/web/components/ui/button';
 
 export default async function AdminLayout({
     children,

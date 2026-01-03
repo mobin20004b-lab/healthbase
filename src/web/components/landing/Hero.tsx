@@ -46,7 +46,7 @@ export default function Hero() {
                     <div className="relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:max-w-none lg:pt-6 xl:col-span-6">
                         <h1 className="text-4xl font-extrabold tracking-tight text-on-surface sm:text-6xl text-balance leading-tight">
                             {t.rich('title', {
-                                city: (chunks) => (
+                                city: () => (
                                     <span
                                         key={cities[currentCityIndex]}
                                         className="inline-block min-w-[8ch] text-primary animate-in fade-in slide-in-from-bottom-2 duration-500"
