@@ -48,6 +48,7 @@
         - ✅ Task 2.1: Button Component.
         - ✅ Task 2.2: Card Component.
         - ✅ Task 2.3: Input Fields.
+        - ✅ Task 2.4: Navigation Rail.
 
 **Strategic Update:**
 - **Completed:**
@@ -56,7 +57,8 @@
     - Button component updated with M3 variants.
     - Card component updated with M3 variants (`elevated`, `filled`, `outlined`) and `interactive` prop.
     - FloatingLabelInput component created with `filled` and `outlined` variants.
-- **Next Step:** Continue with **Task 2.4: Navigation Rail**.
+    - Navigation Rail component implemented (`src/web/components/ui/nav-rail.tsx`).
+- **Next Step:** Continue with **Task 2.5: Sticky Header**.
 
 **Next Step:**
-Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.4: Navigation Rail**.
+Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.5: Sticky Header**.

@@ -64,7 +64,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Create `FloatingLabelInput` component.
         *   Variants: `outlined` (border rings), `filled` (bg-surface-container-highest with bottom border).
         *   States: Error state (red border + icon).
-*   [ ] **2.4. Navigation Rail (`src/components/ui/nav-rail.tsx`)**
+*   [x] **2.4. Navigation Rail (`src/components/ui/nav-rail.tsx`)**
     *   **Action**: Create the vertical navigation rail for the Admin dashboard.
     *   **Sub-tasks**:
         *   Container: Fixed width (e.g., 80px), `h-screen`, `sticky`, `top-0`.

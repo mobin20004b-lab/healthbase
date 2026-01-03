@@ -30,7 +30,8 @@ const FloatingLabelInput = React.forwardRef<HTMLInputElement, FloatingLabelInput
         container: "relative bg-transparent rounded-lg border border-outline hover:border-on-surface focus-within:border-primary focus-within:border-2 transition-colors",
         input: cn(baseInputStyles, "bg-transparent px-2.5 pb-2.5 pt-4 text-on-surface border-0"),
         // Added -top-2 to position label on the border
-        label: cn(baseLabelStyles, "-top-2 bg-surface start-1 px-1 text-xs text-on-surface-variant peer-focus:text-primary peer-focus:bg-surface peer-focus:px-1 peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2"),
+        // Reset translate-y to 0 when focused to rely solely on top positioning
+        label: cn(baseLabelStyles, "-top-2 bg-surface start-1 px-1 text-xs text-on-surface-variant peer-focus:text-primary peer-focus:bg-surface peer-focus:px-1 peer-focus:translate-y-0 peer-placeholder-shown:text-base peer-placeholder-shown:top-4 peer-placeholder-shown:bg-transparent peer-focus:-top-2"),
       },
     };
 
