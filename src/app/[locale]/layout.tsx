@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
-import { Inter, Vazirmatn } from 'next/font/google';
+import { Inter, Vazirmatn, Roboto_Mono } from 'next/font/google';
 import '../globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from 'sonner';
@@ -11,6 +11,7 @@ import { auth } from '@/auth';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const vazir = Vazirmatn({ subsets: ['arabic', 'latin'], variable: '--font-vazir' });
+const robotoMono = Roboto_Mono({ subsets: ['latin'], variable: '--font-roboto-mono' });
 
 export const metadata: Metadata = {
   title: 'Topmedica',
@@ -43,6 +44,7 @@ export default async function RootLayout({
       <body className={cn(
         inter.variable,
         vazir.variable,
+        robotoMono.variable,
         "font-sans min-h-screen bg-background antialiased flex flex-col"
       )}>
         <NextIntlClientProvider messages={messages}>
