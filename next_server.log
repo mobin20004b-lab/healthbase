@@ -1,0 +1,139 @@
+$ next start
+▲ Next.js 16.1.1
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 785ms
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/chunks/ssr/_b908b07e._.js:415:51331
+    at fv (/app/.next/server/chunks/ssr/_b908b07e._.js:415:53919)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/chunks/ssr/_b908b07e._.js:415:51331
+    at fv (/app/.next/server/chunks/ssr/_b908b07e._.js:415:53919)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/chunks/ssr/_b908b07e._.js:415:51331
+    at fv (/app/.next/server/chunks/ssr/_b908b07e._.js:415:53919)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at /app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:51382
+    at sx (/app/.next/server/edge/chunks/[root-of-the-server]__e8d19800._.js:416:53999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

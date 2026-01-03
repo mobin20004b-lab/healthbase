@@ -3,22 +3,27 @@ import React from "react";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: 'default' | 'elevated' | 'filled' | 'outlined' | 'bento';
+    interactive?: boolean;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-    ({ className, variant = 'default', ...props }, ref) => {
+    ({ className, variant = 'default', interactive = false, ...props }, ref) => {
         const variants = {
             default: "bg-surface-container-low border border-outline-variant/10 rounded-[var(--radius-lg)]",
-            elevated: "bg-surface-container-low shadow-lg shadow-on-surface/5 rounded-[var(--radius-lg)]",
+            elevated: "bg-surface-container-low shadow-md shadow-on-surface/5 rounded-[var(--radius-lg)]",
             filled: "bg-surface-container-highest rounded-[var(--radius-lg)]",
             outlined: "bg-surface border border-outline-variant rounded-[var(--radius-lg)]",
             bento: "m3-bento-card",
         };
 
+        const interactiveStyles = interactive
+            ? "transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
+            : "";
+
         return (
             <div
                 ref={ref}
-                className={cn(variants[variant], className)}
+                className={cn(variants[variant], interactiveStyles, className)}
                 {...props}
             />
         );

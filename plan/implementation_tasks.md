@@ -53,7 +53,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Variants: `filled` (default), `tonal` (secondary container), `outlined` (border outline), `text` (ghost), `elevated` (shadow).
         *   **Interaction**: Add an `isMorphing` prop or internal state that changes the shape from `rounded-xl` to `m3-shape-flower` (or vice versa) on click/hover.
         *   **Animation**: Use the `m3-motion` transition class.
-*   [ ] **2.2. Card Component (`src/components/ui/card.tsx`)**
+*   [x] **2.2. Card Component (`src/components/ui/card.tsx`)**
     *   **Action**: Create M3 Card variants.
     *   **Sub-tasks**:
         *   Variants: `elevated` (shadow-md, bg-surface), `filled` (bg-surface-container-highest), `outlined` (border outline-variant, bg-surface).
@@ -77,7 +77,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Sub-tasks**:
         *   Styling: `backdrop-blur-md`, `bg-background/70`, `border-b border-outline-variant/20`.
         *   Z-index: Ensure it stays above content.
-*   [ ] **2.6. Bento Grid System (`src/components/ui/bento-grid.tsx`)**
+*   [x] **2.6. Bento Grid System (`src/components/ui/bento-grid.tsx`)**
     *   **Action**: Create a responsive grid wrapper.
     *   **Sub-tasks**:
         *   **Container**: CSS Grid with auto-rows. `grid-cols-1 md:grid-cols-4 gap-4`.
