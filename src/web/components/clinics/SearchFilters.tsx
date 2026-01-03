@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
-import { IRAN_LOCATIONS } from '@/lib/constants/locations';
+import { getProvinces, getCities } from '@/lib/constants/locations';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface SearchFiltersProps {
@@ -85,7 +85,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
                         >
                             <option value="">{t('all')}</option>
-                            {IRAN_LOCATIONS.map((prov) => (
+                            {getProvinces().map((prov) => (
                                 <option key={prov.value} value={prov.value}>
                                     {/* @ts-expect-error - translations are dynamic */}
                                     {t(prov.label)}
@@ -107,7 +107,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             disabled={!province}
                         >
                             <option value="">{t('all')}</option>
-                            {province && IRAN_LOCATIONS.find(p => p.value === province)?.cities.map((c) => (
+                            {province && getCities(province).map((c) => (
                                 <option key={c.value} value={c.value}>
                                     {/* @ts-expect-error - translations are dynamic */}
                                     {t(c.label)}

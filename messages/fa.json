@@ -57,6 +57,9 @@
             "NiroohayeMosallah": "نیروهای مسلح"
         },
         "locations": {
+        "countries": {
+            "Iran": "ایران"
+        },
             "provinces": {
                 "Yazd": "یزد",
                 "Tehran": "تهران",
@@ -143,6 +146,7 @@
                 "name": "نام کلینیک",
                 "description": "توضیحات",
                 "address": "آدرس",
+                "country": "کشور",
                 "province": "استان",
                 "selectProvince": "انتخاب استان",
                 "city": "شهر",
@@ -195,5 +199,5 @@
     "Auth": {
         "signin": "ورود",
         "register": "ایجاد حساب کاربری"
-    },
+    }
 }

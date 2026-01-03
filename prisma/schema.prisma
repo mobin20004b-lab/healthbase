@@ -65,6 +65,7 @@ model Clinic {
   address      String?
   city         String?
   province     String?
+  country      String?             @default("Iran")
   phone        String?
   image        String?
   website      String?
@@ -88,6 +89,7 @@ model ClinicTranslation {
   address     String?
   city        String?
   province    String?
+  country     String?
   clinicId    String
   clinic      Clinic  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 
