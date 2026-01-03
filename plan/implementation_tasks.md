@@ -6,9 +6,10 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: Establish the technical and visual bedrock for the application.
 
-*   [ ] **1.1. Enhance Tailwind Configuration**
+*   [x] **1.1. Enhance Tailwind Configuration**
     *   **Source**: `plan/mataill3.md`, `src/app/globals.css`
     *   **Action**: Update `tailwind.config.ts` to fully expose the M3 colors and custom shapes defined in `globals.css`. Ensure `extend.colors` maps `primary`, `secondary`, `tertiary`, `surface`, `error` etc. to the CSS variables.
+    *   **Note**: Using Tailwind v4 CSS-first configuration via `@theme inline` in `globals.css` instead of `tailwind.config.ts`.
     *   **Sub-tasks**:
         *   Map `primary`, `on-primary`, `primary-container`, `on-primary-container` to CSS variables.
         *   Map `secondary`, `on-secondary`, `secondary-container`, `on-secondary-container`.
@@ -20,7 +21,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Acceptance Criteria**:
         *   Running `bg-primary` results in `#4C662B` (light) or `#B1D18A` (dark) in the browser.
         *   `bg-surface-container` works as expected.
-*   [ ] **1.2. Implement Shape Utilities**
+*   [x] **1.2. Implement Shape Utilities**
     *   **Source**: `plan/mataill3.md` (Section 2.1)
     *   **Action**: Verify utility classes in `src/app/globals.css` and ensure they are usable.
     *   **Sub-tasks**:
@@ -29,7 +30,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Add a standard transition utility class `m3-motion` with `transition-all duration-300 ease-[cubic-bezier(0.4,0.0,0.2,1)]` for "Motion Physics".
     *   **Acceptance Criteria**:
         *   A test button with `m3-shape-flower` renders as a flower.
-*   [ ] **1.3. Typography Setup**
+*   [x] **1.3. Typography Setup**
     *   **Source**: `plan/uiux.md`
     *   **Action**: Ensure `next/font` is configured for proper bilingual support.
     *   **Sub-tasks**:

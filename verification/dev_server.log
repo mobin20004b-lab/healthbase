@@ -1,0 +1,48 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 2.7s
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+○ Compiling /[locale] ...
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Error: MISSING_MESSAGE: Could not resolve `HomePage.valueProps.title` in messages for locale `en`.
+    at ValueProps (src/web/components/landing/ValueProps.tsx:13:100)
+  11 |             <div className="mx-auto max-w-7xl px-6 lg:px-8">
+  12 |                 <div className="mx-auto max-w-2xl text-center mb-16">
+> 13 |                     <h2 className="text-sm font-black uppercase tracking-[0.4em] text-primary/60">{t('title') || 'TOPMEDICA'}</h2>
+     |                                                                                                    ^
+  14 |                     <p className="mt-2 text-4xl font-black tracking-tight text-on-surface sm:text-6xl text-balance leading-tight">
+  15 |                         {t('header') || 'Everything you need to find care'}
+  16 |                     </p> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `HomePage.valueProps.title` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `HomePage.valueProps.header` in messages for locale `en`.
+    at ValueProps (src/web/components/landing/ValueProps.tsx:15:26)
+  13 |                     <h2 className="text-sm font-black uppercase tracking-[0.4em] text-primary/60">{t('title') || 'TOPMEDICA'}</h2>
+  14 |                     <p className="mt-2 text-4xl font-black tracking-tight text-on-surface sm:text-6xl text-balance leading-tight">
+> 15 |                         {t('header') || 'Everything you need to find care'}
+     |                          ^
+  16 |                     </p>
+  17 |                 </div>
+  18 | {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `HomePage.valueProps.header` in messages for locale `en`.'
+}
+ GET /en 200 in 9.2s (compile: 7.6s, proxy.ts: 245ms, generate-params: 1252ms, render: 1308ms)
