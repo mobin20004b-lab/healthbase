@@ -103,14 +103,14 @@ docker-build:
 	docker build -t topmedica-app:latest .
 
 docker-up:
-	docker-compose up -d --build
+	docker compose up -d --build
 
 docker-down:
-	docker-compose down -v
+	docker compose down -v
 
 docker-logs:
-	docker-compose logs -f --tail=200 app
+	docker compose logs -f --tail=200 app
 
 docker-restart:
-	docker-compose restart app
+	docker compose restart app
 
