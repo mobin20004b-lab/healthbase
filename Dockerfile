@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install minimal tools for bun installation and runtime
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends curl ca-certificates ca-certificates gnupg dirmngr build-essential libssl-dev libgcc-s1 \
+	&& apt-get install -y --no-install-recommends curl ca-certificates gnupg dirmngr build-essential libssl-dev libgcc-s1 unzip \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Copy package files and prisma first for better caching
