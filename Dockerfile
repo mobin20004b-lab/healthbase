@@ -14,6 +14,9 @@ COPY prisma ./prisma
 # Copy rest of the source
 COPY . .
 
+# Ensure entrypoint has execute permissions
+RUN chmod +x /app/docker-entrypoint.sh
+
 # Install Bun using official installer
 RUN curl -fsSL https://bun.com/install | bash && \
 	ln -sf /root/.bun/bin/bun /usr/local/bin/bun && \
@@ -22,8 +25,6 @@ RUN curl -fsSL https://bun.com/install | bash && \
 
 # Install dependencies using Bun
 RUN bun install --no-save
-
-RUN chmod +x /app/docker-entrypoint.sh
 
 ENV NODE_ENV=production
 
