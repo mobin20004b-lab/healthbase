@@ -100,10 +100,10 @@ test:
 .PHONY: docker-build docker-up docker-down docker-logs docker-restart docker-push
 
 docker-build:
-	docker build -t topmedica-app:latest .
+	docker compose build --no-cache
 
 docker-up:
-	docker compose up -d --build
+	docker compose up -d
 
 docker-down:
 	docker compose down -v
@@ -113,4 +113,10 @@ docker-logs:
 
 docker-restart:
 	docker compose restart app
+
+docker-ps:
+	docker compose ps
+
+docker-init-logs:
+	docker compose logs -f db-init
 
