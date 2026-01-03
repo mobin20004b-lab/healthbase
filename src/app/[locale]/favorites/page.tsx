@@ -67,7 +67,7 @@ export default async function FavoritesPage({ params }: { params: Promise<{ loca
                     </Card>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {favorites.map((clinic: { id: string; name: string; isVerified?: boolean; city?: string; description?: string; services?: { id: string; name: string }[] }) => (
+                        {favorites.map((clinic: { id: string; name: string; isVerified?: boolean; city?: string; province?: string; description?: string; services?: { id: string; name: string }[] }) => (
                             <Link
                                 key={clinic.id}
                                 href={`/${locale}/clinics/${clinic.id}`}
@@ -87,10 +87,10 @@ export default async function FavoritesPage({ params }: { params: Promise<{ loca
                                                     </div>
                                                 )}
                                             </div>
-                                            {clinic.city && (
+                                        {(clinic.city || clinic.province) && (
                                                 <p className="mt-2 flex items-center gap-2 text-sm text-on-surface-variant font-bold">
                                                     <MapPin className="h-4 w-4 text-primary" />
-                                                    {clinic.city}
+                                                {clinic.province && `${clinic.province} - `}{clinic.city}
                                                 </p>
                                             )}
                                         </div>

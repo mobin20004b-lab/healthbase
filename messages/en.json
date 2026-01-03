@@ -39,11 +39,6 @@
         "applyFilters": "Apply",
         "all": "All",
         "search": "Search",
-        "cities": {
-            "Yazd": "Yazd",
-            "Meybod": "Meybod",
-            "Ardakan": "Ardakan"
-        },
         "specialties": {
             "Dentistry": "Dentistry",
             "Cardiology": "Cardiology",
@@ -54,6 +49,37 @@
             "Salamat": "Public Health (Salamat)",
             "Tamin": "Social Security (Tamin)",
             "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
+        },
+        "locations": {
+        "countries": {
+            "Iran": "Iran"
+        },
+            "provinces": {
+                "Yazd": "Yazd",
+                "Tehran": "Tehran",
+                "Isfahan": "Isfahan",
+                "Fars": "Fars",
+                "RazaviKhorasan": "Razavi Khorasan"
+            },
+            "cities": {
+                "Yazd": "Yazd",
+                "Meybod": "Meybod",
+                "Ardakan": "Ardakan",
+                "Bafq": "Bafq",
+                "Mehriz": "Mehriz",
+                "Tehran": "Tehran",
+                "Eslamshahr": "Eslamshahr",
+                "Shahriar": "Shahriar",
+                "Isfahan": "Isfahan",
+                "Kashan": "Kashan",
+                "Najafabad": "Najafabad",
+                "Shiraz": "Shiraz",
+                "Marvdasht": "Marvdasht",
+                "Jahrom": "Jahrom",
+                "Mashhad": "Mashhad",
+                "Nishapur": "Nishapur",
+                "Sabzevar": "Sabzevar"
+            }
         }
     },
     "ClinicDetail": {

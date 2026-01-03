@@ -9,6 +9,7 @@ const clinicSchema = z.object({
     description: z.string().optional(),
     address: z.string().optional(),
     city: z.string().optional(),
+    province: z.string().optional(),
     phone: z.string().optional(),
     image: z.string().optional(),
     website: z.string().optional(),
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '20');
     const city = searchParams.get('city');
+    const province = searchParams.get('province');
     const specialty = searchParams.get('specialty');
     const insurance = searchParams.get('insurance');
     const q = searchParams.get('q');
@@ -36,6 +38,15 @@ export async function GET(request: Request) {
             OR: [
                 { city: { equals: city, mode: 'insensitive' } },
                 { translations: { some: { city: { equals: city, mode: 'insensitive' }, locale: lang } } }
+            ]
+        });
+    }
+
+    if (province) {
+        andConditions.push({
+            OR: [
+                { province: { equals: province, mode: 'insensitive' } },
+                { translations: { some: { province: { equals: province, mode: 'insensitive' }, locale: lang } } }
             ]
         });
     }
@@ -64,6 +75,7 @@ export async function GET(request: Request) {
                 { name: { contains: q, mode: 'insensitive' } },
                 { description: { contains: q, mode: 'insensitive' } },
                 { city: { contains: q, mode: 'insensitive' } },
+                { province: { contains: q, mode: 'insensitive' } },
                 { translations: { some: { name: { contains: q, mode: 'insensitive' } } } },
                 { translations: { some: { description: { contains: q, mode: 'insensitive' } } } },
                 { services: { some: { name: { contains: q, mode: 'insensitive' } } } },
@@ -135,6 +147,7 @@ export async function GET(request: Request) {
             description: translation?.description || clinic.description,
             address: translation?.address || clinic.address,
             city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
             services,
             averageRating,
             isFavorited: clinic.favoritedBy?.length > 0,

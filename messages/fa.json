@@ -32,6 +32,7 @@
         "viewDetails": "مشاهده جزئیات",
         "filters": "فیلترها",
         "specialty": "تخصص",
+        "province": "استان",
         "city": "شهر",
         "insurance": "بیمه",
         "priceRange": "محدوده قیمت",
@@ -39,11 +40,6 @@
         "applyFilters": "اعمال",
         "all": "همه",
         "search": "جستجو",
-        "cities": {
-            "Yazd": "یزد",
-            "Meybod": "میبد",
-            "Ardakan": "اردکان"
-        },
         "specialties": {
             "Dentistry": "دندانپزشکی",
             "Cardiology": "قلب و عروق",
@@ -54,6 +50,37 @@
             "Salamat": "بیمه سلامت",
             "Tamin": "تأمین اجتماعی",
             "NiroohayeMosallah": "نیروهای مسلح"
+        },
+        "locations": {
+        "countries": {
+            "Iran": "ایران"
+        },
+            "provinces": {
+                "Yazd": "یزد",
+                "Tehran": "تهران",
+                "Isfahan": "اصفهان",
+                "Fars": "فارس",
+                "RazaviKhorasan": "خراسان رضوی"
+            },
+            "cities": {
+                "Yazd": "یزد",
+                "Meybod": "میبد",
+                "Ardakan": "اردکان",
+                "Bafq": "بافق",
+                "Mehriz": "مهریز",
+                "Tehran": "تهران",
+                "Eslamshahr": "اسلام‌شهر",
+                "Shahriar": "شهریار",
+                "Isfahan": "اصفهان",
+                "Kashan": "کاشان",
+                "Najafabad": "نجف‌آباد",
+                "Shiraz": "شیراز",
+                "Marvdasht": "مرودشت",
+                "Jahrom": "جهرم",
+                "Mashhad": "مشهد",
+                "Nishapur": "نیشابور",
+                "Sabzevar": "سبزوار"
+            }
         }
     },
     "ClinicDetail": {
@@ -114,7 +141,11 @@
                 "name": "نام کلینیک",
                 "description": "توضیحات",
                 "address": "آدرس",
+                "country": "کشور",
+                "province": "استان",
+                "selectProvince": "انتخاب استان",
                 "city": "شهر",
+                "selectCity": "انتخاب شهر",
                 "phone": "تلفن",
                 "website": "وب‌سایت",
                 "submit": "ذخیره کلینیک",
