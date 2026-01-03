@@ -83,7 +83,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   **Container**: CSS Grid with auto-rows. `grid-cols-1 md:grid-cols-4 gap-4`.
         *   **Item (`BentoItem`)**: Props for `colSpan` (1, 2, 4) and `rowSpan` (1, 2).
         *   **Responsive Logic**: On mobile, everything should be `col-span-1`.
-*   [ ] **2.7. Clinic Card (`src/components/clinic-card.tsx`)**
+*   [x] **2.7. Clinic Card (`src/web/components/clinics/clinic-card.tsx`)**
     *   **Action**: specific implementation for search results.
     *   **Sub-tasks**:
         *   **Glassmorphic Container**: `bg-surface-container-low/80 backdrop-blur`.
