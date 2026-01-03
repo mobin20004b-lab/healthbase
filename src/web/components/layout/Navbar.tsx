@@ -1,7 +1,8 @@
 'use client';
 
 import { useTranslations, useLocale } from 'next-intl';
-import { Link, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import { Menu, X, Globe } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/web/components/ui/button';

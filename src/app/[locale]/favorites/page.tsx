@@ -5,7 +5,7 @@ import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import { auth } from '@/auth';
-import { Link } from 'next/navigation';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 async function getFavorites() {

@@ -1,7 +1,7 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
-import { Link } from 'next/navigation';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Card } from '@/web/components/ui/card';
 import {
