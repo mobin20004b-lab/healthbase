@@ -125,11 +125,61 @@ The Admin Portal prioritizes "Efficiency" and "Density".
 
 ## 7. Design System Specifications & Tokens
 
-### 7.1 Color System
-Generated using HCT (Hue, Chroma, Tone) color space.
-*   **Primary**: Teal-500 equivalent (`#4C662B` / `#B1D18A`).
-*   **Error**: Red-600 (Plus icon for accessibility).
-*   **Surface**: Warm neutral (`#F9FAEF` / `#12140E`).
+### 7.1 Color System (Comprehensive M3 Palette)
+
+These values map to the Material 3 "Teal" and "Sage" tonal palettes. They must be defined in CSS variables and referenced in Tailwind config.
+
+**Light Mode**
+*   `primary`: `#4C662B`
+*   `on-primary`: `#FFFFFF`
+*   `primary-container`: `#CDEDA3`
+*   `on-primary-container`: `#102000`
+*   `secondary`: `#586249`
+*   `on-secondary`: `#FFFFFF`
+*   `secondary-container`: `#DCE7C8`
+*   `on-secondary-container`: `#161E0B`
+*   `tertiary`: `#386663`
+*   `on-tertiary`: `#FFFFFF`
+*   `tertiary-container`: `#BCECE7`
+*   `on-tertiary-container`: `#00201E`
+*   `error`: `#BA1A1A`
+*   `on-error`: `#FFFFFF`
+*   `error-container`: `#FFDAD6`
+*   `on-error-container`: `#410002`
+*   `background`: `#F9FAEF`
+*   `on-background`: `#1A1C16`
+*   `surface`: `#F9FAEF`
+*   `on-surface`: `#1A1C16`
+*   `surface-variant`: `#E1E4D5`
+*   `on-surface-variant`: `#44483D`
+*   `outline`: `#75796C`
+*   `outline-variant`: `#C5C8BA`
+
+**Dark Mode**
+*   `primary`: `#B1D18A`
+*   `on-primary`: `#1F3701`
+*   `primary-container`: `#354E16`
+*   `on-primary-container`: `#CDEDA3`
+*   `secondary`: `#C0CBAD`
+*   `on-secondary`: `#2A331E`
+*   `secondary-container`: `#404A33`
+*   `on-secondary-container`: `#DCE7C8`
+*   `tertiary`: `#A0D0CB`
+*   `on-tertiary`: `#003735`
+*   `tertiary-container`: `#1F4E4B`
+*   `on-tertiary-container`: `#BCECE7`
+*   `error`: `#FFB4AB`
+*   `on-error`: `#690005`
+*   `error-container`: `#93000A`
+*   `on-error-container`: `#FFDAD6`
+*   `background`: `#12140E`
+*   `on-background`: `#E2E3D8`
+*   `surface`: `#12140E`
+*   `on-surface`: `#E2E3D8`
+*   `surface-variant`: `#44483D`
+*   `on-surface-variant`: `#C5C8BA`
+*   `outline`: `#8F9285`
+*   `outline-variant`: `#44483D`
 
 ### 7.2 Typography
 *   **Headings**: Expressive, high weight.
