@@ -29,7 +29,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Add a standard transition utility class `m3-motion` with `transition-all duration-300 ease-[cubic-bezier(0.4,0.0,0.2,1)]` for "Motion Physics".
     *   **Acceptance Criteria**:
         *   A test button with `m3-shape-flower` renders as a flower.
-*   [ ] **1.3. Typography Setup**
+*   [x] **1.3. Typography Setup**
     *   **Source**: `plan/uiux.md`
     *   **Action**: Ensure `next/font` is configured for proper bilingual support.
     *   **Sub-tasks**:
