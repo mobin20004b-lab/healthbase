@@ -12,7 +12,7 @@ export const authConfig = {
 
             if (isOnDashboard || isOnAdmin) {
                 if (isLoggedIn) return true;
-                return false; // Redirect unauthenticated users to login page
+                return false; // Deny access without redirecting
             }
             return true;
         },

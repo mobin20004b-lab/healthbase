@@ -45,7 +45,7 @@ export function FavoriteButton({
 
             if (res.status === 401) {
                 toast.error('Please login to save clinics');
-                router.push('/auth/login');
+                // Don't redirect - let user handle it or stay on current page
                 return;
             }
 

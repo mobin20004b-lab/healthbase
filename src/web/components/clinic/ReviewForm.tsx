@@ -53,7 +53,6 @@ export function ReviewForm({ clinicId }: ReviewFormProps) {
 
             setSuccess(true);
             setTimeout(() => {
-                router.push(`/clinics/${clinicId}`);
                 router.refresh();
             }, 2000);
         } catch (err: unknown) {

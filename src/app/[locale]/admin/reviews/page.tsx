@@ -1,7 +1,7 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
-import { redirect } from '@/routing';
+import { notFound } from 'next/navigation';
 import { Card } from '@/web/components/ui/card';
 import { BadgeCheck, Clock, CheckCircle } from 'lucide-react';
 import { ReviewModerationActions } from '@/web/components/admin/ReviewModerationActions';
@@ -22,7 +22,7 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ l
 
     const session = await auth();
     if (!session || session.user.role !== 'ADMIN') {
-        redirect('/', { locale });
+        notFound();
     }
 
     const reviews = await getPendingReviews();

@@ -1,7 +1,7 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
-import { redirect } from '@/routing';
+import { notFound } from 'next/navigation';
 import { TaxonomyManager } from '@/web/components/admin/TaxonomyManager';
 
 export default async function AdminTaxonomyPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -11,7 +11,7 @@ export default async function AdminTaxonomyPage({ params }: { params: Promise<{ 
 
     const session = await auth();
     if (!session || session.user.role !== 'ADMIN') {
-        redirect('/', { locale });
+        notFound();
     }
 
     return (

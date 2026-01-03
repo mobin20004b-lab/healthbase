@@ -1,7 +1,7 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
-import { redirect } from '@/routing';
+import { notFound } from 'next/navigation';
 import { AdminClinicList } from '@/web/components/admin/AdminClinicList';
 
 async function getClinics() {
@@ -19,7 +19,7 @@ export default async function AdminClinicsPage({ params }: { params: Promise<{ l
 
     const session = await auth();
     if (!session || session.user.role !== 'ADMIN') {
-        redirect('/', { locale });
+        notFound();
     }
 
     const clinics = await getClinics();

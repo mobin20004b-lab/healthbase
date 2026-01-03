@@ -96,7 +96,7 @@ export function ClinicForm({ initialData }: ClinicFormProps) {
 
             if (!res.ok) throw new Error(t('form.error'));
 
-            router.push('/clinics');
+            router.refresh();
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);

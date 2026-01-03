@@ -1,7 +1,8 @@
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
-import { redirect, Link } from '@/routing';
+import { Link } from '@/routing';
+import { notFound } from 'next/navigation';
 import { Card } from '@/web/components/ui/card';
 import {
     LayoutDashboard,
@@ -22,7 +23,7 @@ export default async function AdminDashboard({ params }: { params: Promise<{ loc
 
     const session = await auth();
     if (!session || session.user.role !== 'ADMIN') {
-        redirect('/', { locale });
+        notFound();
     }
 
     // Fetch stats

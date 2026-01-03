@@ -5,7 +5,8 @@ import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import { auth } from '@/auth';
-import { redirect, Link } from '@/routing';
+import { Link } from '@/routing';
+import { notFound } from 'next/navigation';
 
 async function getFavorites() {
     try {
@@ -26,7 +27,7 @@ export default async function FavoritesPage({ params }: { params: Promise<{ loca
 
     const session = await auth();
     if (!session) {
-        redirect(`/${locale}/auth/login`);
+        notFound();
     }
 
     const t = await getTranslations('Clinics');
