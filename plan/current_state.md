@@ -59,7 +59,7 @@
     - Card component updated with M3 variants (`elevated`, `filled`, `outlined`) and `interactive` prop.
     - FloatingLabelInput component created with `filled` and `outlined` variants.
     - Navigation Rail component implemented (`src/web/components/ui/nav-rail.tsx`).
-    - Sticky Header component implemented (`src/web/components/ui/sticky-header.tsx`) with unit tests.
+    - Sticky Header component implemented (`src/web/components/ui/sticky-header.tsx`) with glassmorphic styling.
 - **Next Step:** Continue with **Task 2.6: Bento Grid System**.
 
 **Next Step:**

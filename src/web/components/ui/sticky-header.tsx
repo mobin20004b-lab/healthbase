@@ -1,26 +1,20 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-interface StickyHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
-}
+export interface StickyHeaderProps extends React.HTMLAttributes<HTMLElement> {}
 
-const StickyHeader = React.forwardRef<HTMLDivElement, StickyHeaderProps>(
-  ({ className, children, ...props }, ref) => {
-    return (
-      <header
-        ref={ref}
-        className={cn(
-          "sticky top-0 z-50 flex w-full items-center justify-between border-b border-outline-variant/20 bg-background/70 px-6 py-4 backdrop-blur-md transition-all",
-          className
-        )}
-        {...props}
-      >
+export function StickyHeader({ className, children, ...props }: StickyHeaderProps) {
+  return (
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full backdrop-blur-md bg-background/70 border-b border-outline-variant/20 transition-all duration-300",
+        className
+      )}
+      {...props}
+    >
+      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {children}
-      </header>
-    )
-  }
-)
-StickyHeader.displayName = "StickyHeader"
-
-export { StickyHeader }
+      </div>
+    </header>
+  )
+}
