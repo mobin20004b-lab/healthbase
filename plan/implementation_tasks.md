@@ -72,7 +72,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Items: Icon (24px) + Label (12px), centered stack.
         *   Active State: Pill-shaped indicator behind the icon.
         *   **RTL Support**: Ensure it sticks to the right in `dir="rtl"`.
-*   [ ] **2.5. Sticky Header (`src/components/ui/sticky-header.tsx`)**
+*   [x] **2.5. Sticky Header (`src/web/components/ui/sticky-header.tsx`)**
     *   **Action**: Create the glassmorphic header for public pages.
     *   **Sub-tasks**:
         *   Styling: `backdrop-blur-md`, `bg-background/70`, `border-b border-outline-variant/20`.
