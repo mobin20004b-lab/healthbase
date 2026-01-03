@@ -3,22 +3,37 @@ import React from "react";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: 'default' | 'elevated' | 'filled' | 'outlined' | 'bento';
+    interactive?: boolean;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-    ({ className, variant = 'default', ...props }, ref) => {
+    ({ className, variant = 'default', interactive = false, ...props }, ref) => {
         const variants = {
             default: "bg-surface-container-low border border-outline-variant/10 rounded-[var(--radius-lg)]",
-            elevated: "bg-surface-container-low shadow-lg shadow-on-surface/5 rounded-[var(--radius-lg)]",
+            elevated: "bg-surface shadow-md text-on-surface rounded-[var(--radius-lg)]",
             filled: "bg-surface-container-highest rounded-[var(--radius-lg)]",
             outlined: "bg-surface border border-outline-variant rounded-[var(--radius-lg)]",
             bento: "m3-bento-card",
         };
 
+        // Specific interactive overrides per variant if needed
+        const variantInteractiveStyles = {
+            default: interactive ? "hover:shadow-md" : "",
+            elevated: interactive ? "hover:shadow-lg" : "",
+            filled: interactive ? "hover:bg-surface-container-high" : "",
+            outlined: interactive ? "hover:bg-surface-container-highest/10" : "",
+            bento: interactive ? "hover:scale-[1.01] hover:shadow-md" : "",
+        };
+
         return (
             <div
                 ref={ref}
-                className={cn(variants[variant], className)}
+                className={cn(
+                    variants[variant],
+                    interactive && "m3-motion cursor-pointer",
+                    variantInteractiveStyles[variant],
+                    className
+                )}
                 {...props}
             />
         );

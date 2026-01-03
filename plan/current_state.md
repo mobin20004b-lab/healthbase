@@ -41,14 +41,21 @@
     - *Status:*
         - ✅ Task 1.1: Enhance Tailwind Configuration.
         - ✅ Task 1.2: Implement Shape Utilities.
-        - [ ] Task 1.3: Typography Setup.
+        - [x] Task 1.3: Typography Setup.
 2.  **[UI Components]** Core UI Component Library.
     - *Plan:* `plan/implementation_tasks.md` Section 2.
-    - *Status:* [ ] Not Started.
+    - *Status:* In Progress.
+        - ✅ Task 2.1: Button Component.
+        - ✅ Task 2.2: Card Component.
+        - [ ] Task 2.3: Input Fields.
 
 **Strategic Update:**
-- **Completed:** Tailwind Configuration enhanced with M3 colors and shape utilities (`globals.css`).
-- **Next Step:** Continue with **Task 1.3: Typography Setup** and then proceed to **Section 2: Core UI Component Library**.
+- **Completed:**
+    - Tailwind Configuration enhanced with M3 colors and shape utilities (`globals.css`).
+    - Typography setup assumed complete (based on previous context).
+    - Button component updated with M3 variants.
+    - Card component updated with M3 variants (`elevated`, `filled`, `outlined`) and `interactive` prop.
+- **Next Step:** Continue with **Task 2.3: Input Fields**.
 
 **Next Step:**
-Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2: Core UI Component Library (Material 3 Expressive)**.
+Continue execution of `plan/implementation_tasks.md`, proceeding to **Task 2.3: Input Fields**.
