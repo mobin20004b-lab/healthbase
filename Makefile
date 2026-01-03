@@ -99,8 +99,16 @@ test:
 # Docker helpers
 .PHONY: docker-build docker-up docker-down docker-logs docker-restart docker-push
 
+COMPOSE_BAKE ?= false
+
 docker-build:
-	docker compose build --no-cache
+	@if [ "$(COMPOSE_BAKE)" = "true" ]; then \
+		echo "Building with Docker Bake..."; \
+		docker buildx bake -f docker-bake.hcl --load; \
+	else \
+		echo "Building with Docker Compose..."; \
+		docker compose build --no-cache; \
+	fi
 
 docker-up:
 	docker compose up -d
