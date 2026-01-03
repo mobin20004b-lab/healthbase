@@ -14,17 +14,10 @@ COPY prisma ./prisma
 # Copy rest of the source
 COPY . .
 
-# Install Bun directly to /usr/local/bin
-RUN set -eux; \
-	BUN_ZIP="/tmp/bun.zip"; \
-	BUN_URL="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip"; \
-	echo "Downloading Bun from $BUN_URL"; \
-	curl -fsSL "$BUN_URL" -o "$BUN_ZIP"; \
-	unzip "$BUN_ZIP" -d /tmp/bun-extract; \
-	mv /tmp/bun-extract/bun /usr/local/bin/bun; \
-	mv /tmp/bun-extract/bunx /usr/local/bin/bunx 2>/dev/null || true; \
-	rm -rf "$BUN_ZIP" /tmp/bun-extract; \
-	chmod +x /usr/local/bin/bun; \
+# Install Bun using official installer
+RUN curl -fsSL https://bun.com/install | bash && \
+	ln -sf /root/.bun/bin/bun /usr/local/bin/bun && \
+	ln -sf /root/.bun/bin/bunx /usr/local/bin/bunx && \
 	bun --version
 
 # Install dependencies using Bun
