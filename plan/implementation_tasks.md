@@ -47,7 +47,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: Build the reusable LEGO blocks. *Note: Use Shadcn UI as a base where possible, but heavily customize to match M3 specs.*
 
-*   [ ] **2.1. Button Component (`src/components/ui/button.tsx`)**
+*   [x] **2.1. Button Component (`src/web/components/ui/button.tsx`)**
     *   **Action**: Create/Update the Button component to support M3 variants and "Shape Morphing".
     *   **Sub-tasks**:
         *   Variants: `filled` (default), `tonal` (secondary container), `outlined` (border outline), `text` (ghost), `elevated` (shadow).

@@ -249,6 +249,12 @@
   .m3-motion {
     @apply transition-all duration-300 ease-[cubic-bezier(0.4,0.0,0.2,1)];
   }
+}
+
+@layer utilities {
+  .m3-shape-flower {
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
 
   .m3-bento-card {
     @apply bg-surface-container-low border border-outline-variant;
