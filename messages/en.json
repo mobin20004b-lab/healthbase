@@ -13,6 +13,8 @@
             "users": "Happy Users"
         },
         "valueProps": {
+            "title": "Why Choose TopMedica?",
+            "header": "Why Choose TopMedica?",
             "transparency": "Full Transparency",
             "transparencyDesc": "See prices and services upfront.",
             "quality": "Quality Assurance",
