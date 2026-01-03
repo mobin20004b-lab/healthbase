@@ -2,17 +2,22 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { auth } from '@/auth';
 import { redirect } from 'next/navigation';
+import prisma from '@/lib/prisma';
 import { Card } from '@/web/components/ui/card';
-import { BadgeCheck, Clock, CheckCircle } from 'lucide-react';
-import { ReviewModerationActions } from '@/web/components/admin/ReviewModerationActions';
+import { Button } from '@/web/components/ui/button';
+import { Check, X, AlertTriangle, Star } from 'lucide-react';
+import { revalidatePath } from 'next/cache';
 
-// Fetch pending reviews
-async function getPendingReviews() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/reviews?status=PENDING`, {
-        cache: 'no-store'
+async function updateReviewStatus(reviewId: string, status: 'APPROVED' | 'REJECTED') {
+    "use server"
+    const session = await auth();
+    if (!session || session.user.role !== 'ADMIN') return;
+
+    await prisma.review.update({
+        where: { id: reviewId },
+        data: { status }
     });
-    if (!res.ok) return [];
-    return res.json();
+    revalidatePath('/[locale]/admin/reviews');
 }
 
 export default async function AdminReviewsPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -25,72 +30,77 @@ export default async function AdminReviewsPage({ params }: { params: Promise<{ l
         redirect('/');
     }
 
-    const reviews = await getPendingReviews();
+    const reviews = await prisma.review.findMany({
+        where: { status: 'PENDING' },
+        orderBy: { createdAt: 'desc' },
+        include: {
+            user: { select: { name: true, email: true } },
+            clinic: { select: { name: true } }
+        }
+    });
 
     return (
-        <div className="min-h-screen bg-background py-16">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <header className="mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                    <div>
-                        <h1 className="text-4xl font-black text-on-surface leading-tight">{t('title')}</h1>
-                        <p className="text-xl text-on-surface-variant font-bold mt-2">
-                            {t('subtitle')}
-                        </p>
-                    </div>
-                </header>
+        <div className="p-8">
+            <header className="mb-8">
+                <h1 className="text-3xl font-black text-on-surface mb-2">{t('title')}</h1>
+                <p className="text-on-surface-variant">{t('subtitle')}</p>
+            </header>
 
-                {reviews.length === 0 ? (
-                    <Card className="p-20 text-center bg-surface-container-low border-dashed border-2 border-outline-variant/30 rounded-[var(--radius-3xl)]">
-                        <CheckCircle className="h-16 w-16 text-primary/30 mx-auto mb-6" />
-                        <p className="text-2xl font-bold text-on-surface-variant">{t('noPending')}</p>
-                    </Card>
-                ) : (
-                    <div className="grid gap-8">
-                        {reviews.map((review: { id: string; user?: { name: string }; clinicId: string; rating: number; comment: string; createdAt: string }) => (
-                            <Card key={review.id} variant="bento" className="p-8 bg-surface-container-lowest border-outline-variant/10 shadow-sm relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-4">
-                                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warning-container text-on-warning-container text-xs font-black uppercase tracking-widest">
-                                        <Clock className="h-4 w-4" />
-                                        {t('pending')}
-                                    </span>
-                                </div>
-
-                                <div className="flex flex-col md:flex-row gap-10">
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-4 mb-6">
-                                            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center m3-shape-flower">
-                                                <span className="text-lg font-black text-primary">{review.user?.name?.[0] || 'U'}</span>
-                                            </div>
-                                            <div>
-                                                <h3 className="text-xl font-black text-on-surface">{review.user?.name || t('anonymous')}</h3>
-                                                <p className="text-sm font-bold text-on-surface-variant">{t('for')} <span className="text-primary">{review.clinicId}</span></p>
-                                            </div>
+            {reviews.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-12 text-on-surface-variant">
+                    <Check className="h-12 w-12 mb-4 opacity-50" />
+                    <p>{t('no_pending')}</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 gap-4">
+                    {reviews.map((review) => (
+                        <Card key={review.id} variant="elevated" className="p-6">
+                            <div className="flex flex-col md:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className="font-bold text-on-surface">{review.user.name || review.user.email}</span>
+                                            <span className="text-on-surface-variant text-sm">reviewed</span>
+                                            <span className="font-bold text-primary">{review.clinic.name}</span>
                                         </div>
-
-                                        <div className="flex gap-1 mb-4">
-                                            {[...Array(5)].map((_, i) => (
-                                                <BadgeCheck key={i} className={`h-5 w-5 ${i < review.rating ? 'text-primary fill-primary' : 'text-outline-variant/30'}`} />
-                                            ))}
+                                        <div className="flex items-center bg-primary/10 px-2 py-1 rounded-lg">
+                                            <Star className="h-4 w-4 text-primary fill-primary mr-1" />
+                                            <span className="font-bold text-primary">{review.rating}</span>
                                         </div>
-
-                                        <p className="text-lg text-on-surface font-medium leading-relaxed italic border-l-4 border-primary/20 pl-6 my-6">
-                                            &quot;{review.comment}&quot;
-                                        </p>
-
-                                        <p className="text-xs font-bold text-on-surface-variant/40 uppercase tracking-widest">
-                                            {t('submitted')}: {new Date(review.createdAt).toLocaleDateString(locale)}
-                                        </p>
                                     </div>
 
-                                    <div className="md:w-64 flex flex-col justify-center gap-4 border-t md:border-t-0 md:border-l border-outline-variant/10 pt-8 md:pt-0 md:pl-8">
-                                        <ReviewModerationActions reviewId={review.id} />
+                                    <p className="text-on-surface mb-4 leading-relaxed bg-surface-container-low p-4 rounded-xl">
+                                        "{review.comment}"
+                                    </p>
+
+                                    {/* Detailed scores not in schema yet, commenting out
+                                    <div className="flex gap-4 text-xs text-on-surface-variant font-mono">
+                                        <span>Wait: {review.waiting_time_score}/5</span>
+                                        <span>Clean: {review.cleanliness_score}/5</span>
+                                        <span>Staff: {review.staff_friendliness_score}/5</span>
                                     </div>
+                                    */}
                                 </div>
-                            </Card>
-                        ))}
-                    </div>
-                )}
-            </div>
+
+                                <div className="flex md:flex-col justify-center gap-2 border-t md:border-t-0 md:border-l border-outline-variant/20 pt-4 md:pt-0 md:pl-6">
+                                    <form action={updateReviewStatus.bind(null, review.id, 'APPROVED')}>
+                                        <Button variant="filled" size="sm" type="submit" className="w-full bg-success text-on-success hover:bg-success/90">
+                                            <Check className="h-4 w-4 mr-2" />
+                                            {t('approve')}
+                                        </Button>
+                                    </form>
+                                    <form action={updateReviewStatus.bind(null, review.id, 'REJECTED')}>
+                                        <Button variant="outlined" size="sm" type="submit" className="w-full text-error border-error hover:bg-error/10">
+                                            <X className="h-4 w-4 mr-2" />
+                                            {t('reject')}
+                                        </Button>
+                                    </form>
+                                </div>
+                            </div>
+                        </Card>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
