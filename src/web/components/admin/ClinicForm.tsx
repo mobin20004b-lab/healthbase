@@ -6,7 +6,7 @@ import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
 import { Globe, Save, AlertCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/routing'; // Localized router
 import { getProvinces, getCities } from '@/lib/constants/locations';
 
 interface TranslationData {

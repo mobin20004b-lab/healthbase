@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/routing'; // Localized Link
 
 export default function Footer() {
     const t = useTranslations('Footer');

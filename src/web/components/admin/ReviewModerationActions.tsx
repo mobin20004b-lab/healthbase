@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/routing'; // Localized router
 import { Button } from '@/web/components/ui/button';
 import { CheckCircle, XCircle, Trash2 } from 'lucide-react';
 
