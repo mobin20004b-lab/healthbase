@@ -79,6 +79,8 @@
   --color-inverse-surface: var(--inverse-surface);
   --color-inverse-on-surface: var(--inverse-on-surface);
   --color-inverse-primary: var(--inverse-primary);
+
+  /* Radius Extensions */
   --radius-3xl: 32px;
   --radius-4xl: 40px;
 
@@ -259,5 +261,13 @@
   .m3-bento-card {
     @apply bg-surface-container-low border border-outline-variant;
     border-radius: var(--radius-xl);
+  }
+}
+
+@layer utilities {
+  .m3-motion {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition-duration: 300ms;
   }
 }
