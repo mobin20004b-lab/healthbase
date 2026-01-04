@@ -115,17 +115,9 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: "Trust Calibration" and User Funnel.
 
-*   [ ] **4.1. Landing Page (`src/app/[locale]/(marketing)/page.tsx`)**
-    *   **Hero Section**:
-        *   **Visual**: Integrate a lightweight 3D or abstract SVG animation (e.g., using `framer-motion` for "floating" nodes).
-        *   **Copy**: "Convergence of Care, Intelligence, and Design".
-    *   **Search Bar**: Large, centered input with "Zocdoc-style" dropdowns.
-    *   **Trust Bento Grid**:
-        *   Implement a 3-column bento grid.
-        *   **Counter**: Animated number for "15k+ Specialists".
-        *   **Lock**: Animated padlock icon for "HIPAA Secure".
-        *   **Testimonials**: Carousel in the third cell.
-    *   **Scroll Animations**: Use `framer-motion` `whileInView` for text reveal.
+*   [x] **4.1. Landing Page (`src/app/[locale]/(marketing)/page.tsx`)**
+    *   **Hero Section**: Implemented with dynamic city cycling, search bar, and abstract motion graphics.
+    *   **Trust Bento Grid**: Implemented `TrustBento.tsx` with animated counters, testimonials, and verified status.
 *   [ ] **4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)**
     *   **Layout**: `grid grid-cols-1 lg:grid-cols-3 h-screen`.
     *   **Left Panel (List)**: Scrollable list of `ClinicCard`.
