@@ -94,13 +94,13 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: Implement the shell for different user roles.
 
-*   [ ] **3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)**
+*   [x] **3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)**
     *   **Action**: Standard website layout.
     *   **Sub-tasks**:
         *   Import and use `StickyHeader`.
         *   Add `Footer` component.
         *   **Mobile**: Implement a Hamburger menu that opens a `Sheet` (Side drawer).
-*   [ ] **3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)**
+*   [x] **3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)**
     *   **Action**: Authenticated layout for patients.
     *   **Sub-tasks**:
         *   **Desktop**: Use `NavigationRail` (or sidebar).
