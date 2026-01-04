@@ -167,7 +167,15 @@
                 "totalClinics": "Total Clinics",
                 "pendingReviews": "Pending Reviews",
                 "totalReviews": "Total Reviews",
-                "verified": "Verified Clinics"
+                "verified": "Verified Clinics",
+                "trend": "vs last month"
+            },
+            "flow": {
+                "title": "Patient Flow",
+                "checkIn": "Check-in",
+                "exam": "Examination",
+                "lab": "Lab/Imaging",
+                "discharge": "Discharge"
             }
         },
         "taxonomy": {

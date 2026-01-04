@@ -171,7 +171,15 @@
                 "totalClinics": "کل کلینیک‌ها",
                 "pendingReviews": "نظرات در انتظار",
                 "totalReviews": "کل نظرات",
-                "verified": "کلینیک‌های تایید شده"
+                "verified": "کلینیک‌های تایید شده",
+                "trend": "نسبت به ماه قبل"
+            },
+            "flow": {
+                "title": "جریان بیمار",
+                "checkIn": "پذیرش",
+                "exam": "معاینه",
+                "lab": "آزمایشگاه/تصویربرداری",
+                "discharge": "ترخیص"
             }
         },
         "taxonomy": {

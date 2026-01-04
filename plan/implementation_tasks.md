@@ -162,9 +162,9 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: "Efficiency" and "Density".
 
-*   [ ] **6.1. Overview (`src/app/[locale]/(admin)/overview/page.tsx`)**
-    *   **Sankey Diagram**: Use a library like `nivo` or `recharts` (if supported) to show "Check-in" -> "Exam" -> "Discharge".
-    *   **Revenue Tiles**: Simple Cards with Big Number + Trend Indicator (Green arrow up).
+*   [x] **6.1. Overview (`src/app/[locale]/(admin)/admin/page.tsx`)**
+    *   **Sankey Diagram**: Implemented "Patient Flow" visualization (SVG/CSS based to avoid heavy deps).
+    *   **Revenue Tiles**: Added trend indicators to existing stats cards.
 *   [x] **6.2. Patient Management (`src/app/[locale]/(admin)/admin/patients/page.tsx`)**
     *   **High-Density Table**:
         *   State: `density` ('compact' | 'standard' | 'comfortable').
