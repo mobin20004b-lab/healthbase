@@ -165,7 +165,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 *   [ ] **6.1. Overview (`src/app/[locale]/(admin)/overview/page.tsx`)**
     *   **Sankey Diagram**: Use a library like `nivo` or `recharts` (if supported) to show "Check-in" -> "Exam" -> "Discharge".
     *   **Revenue Tiles**: Simple Cards with Big Number + Trend Indicator (Green arrow up).
-*   [ ] **6.2. Patient Management (`src/app/[locale]/(admin)/patients/page.tsx`)**
+*   [x] **6.2. Patient Management (`src/app/[locale]/(admin)/admin/patients/page.tsx`)**
     *   **High-Density Table**:
         *   State: `density` ('compact' | 'standard' | 'comfortable').
         *   Row Height: `h-8` (compact), `h-12` (standard), `h-16` (comfortable).
