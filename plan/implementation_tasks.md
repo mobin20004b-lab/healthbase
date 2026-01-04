@@ -105,7 +105,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Sub-tasks**:
         *   **Desktop**: Use `NavigationRail` (or sidebar).
         *   **Mobile**: Use `BottomNavigationBar` (new component: `src/components/ui/bottom-nav.tsx`).
-*   [ ] **3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)**
+*   [x] **3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)**
     *   **Action**: High-density admin layout.
     *   **Sub-tasks**:
         *   Use `NavigationRail` (Left for LTR, Right for RTL).
