@@ -167,7 +167,15 @@
                 "totalClinics": "Total Clinics",
                 "pendingReviews": "Pending Reviews",
                 "totalReviews": "Total Reviews",
-                "verified": "Verified Clinics"
+                "verified": "Verified Clinics",
+                "trend": "vs last month"
+            },
+            "flow": {
+                "title": "Patient Flow",
+                "checkIn": "Check-in",
+                "exam": "Examination",
+                "lab": "Lab/Imaging",
+                "discharge": "Discharge"
             }
         },
         "taxonomy": {
@@ -187,6 +195,24 @@
                 "category": "Category",
                 "specialty": "Specialty",
                 "insurance": "Insurance"
+            }
+        },
+        "patients": {
+            "title": "Patient Management",
+            "subtitle": "Manage registered patients and their accounts",
+            "table": {
+                "name": "Name",
+                "email": "Email",
+                "role": "Role",
+                "joinedDate": "Joined Date",
+                "actions": "Actions",
+                "noPatients": "No patients found.",
+                "noName": "No Name"
+            },
+            "actions": {
+                "view": "View Profile",
+                "edit": "Edit",
+                "delete": "Delete"
             }
         }
     },
