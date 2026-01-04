@@ -57,6 +57,7 @@ export function SheetTrigger({
 
   // If asChild is true, we need to clone the child to add the onClick handler
   if (asChild && React.isValidElement(children)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const child = children as React.ReactElement<any>
     return React.cloneElement(child, {
       onClick: (e: React.MouseEvent) => {
@@ -86,6 +87,7 @@ export function SheetClose({
   const { setOpen } = useSheet()
 
   if (asChild && React.isValidElement(children)) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const child = children as React.ReactElement<any>
     return React.cloneElement(child, {
       onClick: (e: React.MouseEvent) => {

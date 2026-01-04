@@ -115,7 +115,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: "Trust Calibration" and User Funnel.
 
-*   [ ] **4.1. Landing Page (`src/app/[locale]/(marketing)/page.tsx`)**
+*   [x] **4.1. Landing Page (`src/app/[locale]/(marketing)/page.tsx`)**
     *   **Hero Section**:
         *   **Visual**: Integrate a lightweight 3D or abstract SVG animation (e.g., using `framer-motion` for "floating" nodes).
         *   **Copy**: "Convergence of Care, Intelligence, and Design".
