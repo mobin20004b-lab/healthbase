@@ -8,9 +8,14 @@
         "login": "Login",
         "register": "Register",
         "stats": {
+            "title": "Trusted by Thousands",
+            "subtitle": "We connect you with verified specialists and ensure your data remains secure.",
             "verified": "Verified Clinics",
             "trust": "Official Data",
-            "users": "Happy Users"
+            "users": "Happy Users",
+            "hipaa": "HIPAA Secure",
+            "hipaaDesc": "Your health data is encrypted and protected with enterprise-grade security.",
+            "testimonial": "TopMedica made finding a specialist incredibly easy. The transparency is a game changer."
         },
         "valueProps": {
             "title": "Why Choose TopMedica?",
