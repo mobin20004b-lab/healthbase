@@ -94,7 +94,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: Implement the shell for different user roles.
 
-*   [ ] **3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)**
+*   [x] **3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)**
     *   **Action**: Standard website layout.
     *   **Sub-tasks**:
         *   Import and use `StickyHeader`.
