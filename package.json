@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "bun test"
+    "test": "bun test --preload ./src/tests/setup/happy-dom.ts"
   },
   "dependencies": {
     "@happy-dom/global-registrator": "^20.0.11",

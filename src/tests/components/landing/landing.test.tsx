@@ -3,10 +3,6 @@ import { render } from "@testing-library/react";
 import Hero from "@/web/components/landing/Hero";
 import TrustBento from "@/web/components/landing/TrustBento";
 import React from "react";
-import { GlobalRegistrator } from "@happy-dom/global-registrator";
-
-GlobalRegistrator.register();
-
 // Mock next-intl
 const mockT = (key: string) => {
     if (key === 'heroTitle') return 'Test Title'; // Changed key to match component usage

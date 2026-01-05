@@ -1,11 +1,7 @@
 import { describe, it, expect } from 'bun:test';
 import React from 'react';
 import { render } from '@testing-library/react';
-import { GlobalRegistrator } from '@happy-dom/global-registrator';
 import { BentoGrid, BentoItem } from '@/web/components/ui/bento-grid';
-
-// Register global DOM before running tests
-GlobalRegistrator.register();
 
 describe('BentoGrid Component', () => {
   it('renders children correctly', () => {
