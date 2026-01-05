@@ -1,11 +1,7 @@
-import { describe, it, expect, beforeEach, afterEach, beforeAll } from "bun:test"
+import { describe, it, expect, afterEach } from "bun:test"
 import { cleanup, render } from "@testing-library/react"
 import { StickyHeader } from "@/web/components/ui/sticky-header"
 import * as React from "react"
-import { GlobalRegistrator } from "@happy-dom/global-registrator"
-
-// Register Happy DOM globally before any tests run
-GlobalRegistrator.register()
 
 describe("StickyHeader", () => {
   afterEach(() => {

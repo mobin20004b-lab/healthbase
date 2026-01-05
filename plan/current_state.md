@@ -1,21 +1,19 @@
 # Current State
 
 ## Current Iteration
-**Phase 3: Layouts & Core Pages**
+**Phase 4: Features & Components**
 
 ## Active Tasks
-*   [x] 3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)
-*   [x] 3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)
-*   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
+*   [x] 4.1. Landing Page Improvements
+*   [ ] 4.2. Clinic Search & Filtering
+*   [ ] 4.3. Clinic Details Page
 
 ## Recent Achievements
-*   Implemented `Sheet` component for mobile navigation.
-*   Refactored `Navbar` to use `StickyHeader` and `Sheet`.
-*   Restructured `src/app/[locale]` to use Route Groups (`(marketing)`).
-*   Moved `page.tsx` (Landing Page) to `(marketing)` group.
-*   Implemented `PatientLayout` with `NavigationRail` and `BottomNav`.
-*   Implemented `AdminLayout` with `NavigationRail`.
-*   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
+*   Implemented `Hero` component with Zocdoc-style search (Condition, Location, Insurance) and 3D/abstract animations using `framer-motion`.
+*   Implemented `TrustBento` grid component replacing the old `StatsGrid`, featuring Quality, Transparency, and Choice cards.
+*   Added `ScrollAnimationWrapper` for scroll-triggered entrance animations.
+*   Updated Landing Page (`src/app/[locale]/(marketing)/page.tsx`) to assemble the new components.
+*   Fixed `StickyHeader` usage and test configuration.
 
 ## Next Steps
-1.  Implement Feature 4.1 Landing Page improvements.
+1.  Implement Feature 4.2 Clinic Search & Filtering (Search Results Page).
