@@ -1,7 +1,7 @@
 {
     "HomePage": {
         "title": "Find Trusted Healthcare in <city></city>",
-        "subtitle": "Transparency in Price, Quality, and Services",
+        "subtitle": "Convergence of Care, Intelligence, and Design",
         "searchPlaceholder": "Search for clinics, services...",
         "searchCity": "City",
         "searchButton": "Search",
@@ -11,6 +11,14 @@
             "verified": "Verified Clinics",
             "trust": "Official Data",
             "users": "Happy Users"
+        },
+        "trustBento": {
+            "specialists": "15k+ Specialists",
+            "hipaa": "HIPAA Secure",
+            "testimonials": "Testimonials",
+            "testimonial1": "The transparency here is unmatched.",
+            "testimonial2": "Finally found a specialist I trust.",
+            "testimonial3": "Booked an appointment in minutes."
         },
         "valueProps": {
             "title": "Why Choose TopMedica?",
