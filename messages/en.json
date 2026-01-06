@@ -12,6 +12,21 @@
             "trust": "Official Data",
             "users": "Happy Users"
         },
+        "trustBento": {
+            "specialists": {
+                "label": "Specialists Available",
+                "desc": "Access a vast network of verified healthcare professionals across the country."
+            },
+            "hipaa": {
+                "title": "HIPAA Secure",
+                "desc": "Your data is encrypted and handled with the highest security standards."
+            },
+            "testimonials": {
+                "title": "Patient Stories",
+                "story1": "Found a great dentist in minutes. The transparency is a game changer.",
+                "story2": "Very easy to compare prices and services."
+            }
+        },
         "valueProps": {
             "title": "Why Choose TopMedica?",
             "header": "Why Choose TopMedica?",
