@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { Clinic } from "@prisma/client";
-import { Card, CardContent, CardFooter } from "@/web/components/ui/card";
+import type { Clinic } from "@prisma/client";
+import { Card } from "@/web/components/ui/card";
 import { Button } from "@/web/components/ui/button";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
