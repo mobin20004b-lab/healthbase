@@ -1,12 +1,23 @@
 {
     "HomePage": {
         "title": "Find Trusted Healthcare in <city></city>",
+        "heroTitle": "Convergence of Care, Intelligence, and Design",
+        "heroSubtitle": "Transparency in Price, Quality, and Services",
         "subtitle": "Transparency in Price, Quality, and Services",
         "searchPlaceholder": "Search for clinics, services...",
         "searchCity": "City",
         "searchButton": "Search",
         "login": "Login",
         "register": "Register",
+        "Trust": {
+            "title": "Trusted by Patients and Providers",
+            "subtitle": "Our platform is built on a foundation of security, scale, and satisfaction.",
+            "specialists": "Specialists Onboarded",
+            "security": "Enterprise-grade data protection.",
+            "testimonial": "Topmedica transformed how I manage my clinic's schedule. It's simply intuitive.",
+            "joinTitle": "Join the Future of Healthcare",
+            "joinSubtitle": "Seamlessly connect with patients and manage your practice with modern tools designed for efficiency."
+        },
         "stats": {
             "verified": "Verified Clinics",
             "trust": "Official Data",

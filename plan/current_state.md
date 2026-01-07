@@ -18,4 +18,4 @@
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
 
 ## Next Steps
-1.  Implement Feature 4.1 Landing Page improvements.
+1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).

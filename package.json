@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "bun test"
+    "test": "bun test --preload ./src/tests/setup/happy-dom.ts"
   },
   "dependencies": {
     "@happy-dom/global-registrator": "^20.0.11",
@@ -18,6 +18,7 @@
     "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.23.26",
     "happy-dom": "^20.0.11",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
