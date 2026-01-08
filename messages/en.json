@@ -36,6 +36,7 @@
     },
     "Clinics": {
         "title": "Clinics",
+        "pageTitle": "Find Your Care",
         "subtitle": "Find verified healthcare providers in your area",
         "noResults": "No clinics found",
         "verified": "Verified",
