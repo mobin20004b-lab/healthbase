@@ -146,7 +146,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
 
 **Goal**: "Reassurance" and Personalization.
 
-*   [ ] **5.1. Dashboard (`src/app/[locale]/(patient)/dashboard/page.tsx`)**
+*   [x] **5.1. Dashboard (`src/app/[locale]/(patient)/dashboard/page.tsx`)**
     *   **Logic**: Fetch user profile. If `conditions.length > 0`, use "Chronic Layout", else "Healthy Layout".
     *   **Widgets**:
         *   **ActivityChart**: wrapper around Recharts (Bar/Line).
