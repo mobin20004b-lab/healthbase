@@ -59,7 +59,7 @@ export default function SearchPage() {
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
-      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
+      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block bg-surface">
         <SearchFilters />
       </div>
 
@@ -67,7 +67,7 @@ export default function SearchPage() {
       <div className="flex-1 flex relative">
         {/* List View */}
         <div className={cn(
-            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300 bg-surface-container-lowest",
             showMap ? "hidden lg:block" : "block"
         )}>
              <div className="max-w-4xl mx-auto space-y-6">
@@ -110,10 +110,24 @@ export default function SearchPage() {
             "w-full lg:w-1/3 border-l border-outline-variant/20 bg-surface-container-high relative",
             showMap ? "block" : "hidden lg:block"
         )}>
-             <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant">
-                 <div className="text-center">
-                     <Map className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                     <p>Map View Placeholder</p>
+             {/* Map Placeholder Graphic */}
+             <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center overflow-hidden">
+                 {/* Abstract Map Pattern */}
+                 <div className="absolute inset-0 opacity-10"
+                      style={{
+                          backgroundImage: 'radial-gradient(circle at 2px 2px, gray 1px, transparent 0)',
+                          backgroundSize: '20px 20px'
+                      }}
+                 />
+
+                 <div className="relative z-10 text-center p-6 bg-surface/80 backdrop-blur-md rounded-2xl shadow-lg border border-outline-variant">
+                     <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary">
+                        <Map className="w-8 h-8" />
+                     </div>
+                     <h3 className="text-lg font-bold text-on-surface mb-2">Interactive Map</h3>
+                     <p className="text-sm text-on-surface-variant max-w-[200px]">
+                        Map view integration coming soon. Will support clustering and location search.
+                     </p>
                  </div>
              </div>
         </div>
@@ -122,7 +136,7 @@ export default function SearchPage() {
       {/* Mobile Map Toggle FAB */}
       <div className="lg:hidden fixed bottom-6 right-6 z-50">
           <Button
-            className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
+            className="rounded-2xl shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300 bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary"
             size="icon"
             onClick={() => setShowMap(!showMap)}
           >
