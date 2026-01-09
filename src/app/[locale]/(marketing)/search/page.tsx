@@ -1,17 +1,24 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { useSearchParams } from 'next/navigation';
+
+// Extended mock type to include filterable fields not present in base Clinic type yet or for simulation
+type MockClinic = Partial<Clinic> & {
+    specialty?: string;
+    insurances?: string[];
+};
 
 // Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
+const MOCK_CLINICS: MockClinic[] = [
   {
     id: '1',
     name: 'Tehran Heart Center',
@@ -20,6 +27,8 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
     country: 'Iran',
     image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
     isVerified: true,
+    specialty: 'Cardiology',
+    insurances: ['Salamat', 'Tamin'],
   },
   {
     id: '2',
@@ -29,6 +38,8 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
     country: 'Iran',
     image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
     isVerified: false,
+    specialty: 'Neurology',
+    insurances: ['Tamin', 'NiroohayeMosallah'],
   },
   {
     id: '3',
@@ -38,23 +49,45 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
     country: 'Iran',
     image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
     isVerified: true,
+    specialty: 'Dermatology',
+    insurances: ['Salamat'],
+  },
+  {
+    id: '4',
+    name: 'Yazd Dental Clinic',
+    city: 'Yazd',
+    province: 'Yazd',
+    country: 'Iran',
+    image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=1000',
+    isVerified: true,
+    specialty: 'Dentistry',
+    insurances: ['Salamat', 'Tamin', 'NiroohayeMosallah'],
   }
 ];
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const t = useTranslations('Search');
+  const searchParams = useSearchParams();
 
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
-  };
+  // Filter Logic
+  const filteredClinics = useMemo(() => {
+    const q = searchParams.get('q')?.toLowerCase() || '';
+    const city = searchParams.get('city');
+    const province = searchParams.get('province');
+    const specialty = searchParams.get('specialty');
+    const insurance = searchParams.get('insurance');
+
+    return MOCK_CLINICS.filter((clinic) => {
+        const matchesQ = !q || (clinic.name?.toLowerCase().includes(q) ?? false) || (clinic.city?.toLowerCase().includes(q) ?? false);
+        const matchesCity = !city || clinic.city === city;
+        const matchesProvince = !province || clinic.province === province;
+        const matchesSpecialty = !specialty || clinic.specialty === specialty;
+        const matchesInsurance = !insurance || (clinic.insurances?.includes(insurance) ?? false);
+
+        return matchesQ && matchesCity && matchesProvince && matchesSpecialty && matchesInsurance;
+    });
+  }, [searchParams]);
 
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
@@ -92,16 +125,22 @@ export default function SearchPage() {
                     </div>
                  </div>
 
-                 <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
-                         <ClinicCard
-                             key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
-                         />
-                     ))}
-                 </div>
+                 {filteredClinics.length === 0 ? (
+                     <div className="text-center py-12 text-on-surface-variant">
+                         <p>{t('noResults')}</p>
+                     </div>
+                 ) : (
+                     <div className="grid grid-cols-1 gap-4">
+                         {filteredClinics.map((clinic) => (
+                             <ClinicCard
+                                 key={clinic.id}
+                                 clinic={clinic as Clinic}
+                                 rating={4.5}
+                                 reviewCount={120}
+                             />
+                         ))}
+                     </div>
+                 )}
              </div>
         </div>
 
@@ -113,7 +152,7 @@ export default function SearchPage() {
              <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant">
                  <div className="text-center">
                      <Map className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                     <p>Map View Placeholder</p>
+                     <p>{t('mapView')}</p>
                  </div>
              </div>
         </div>

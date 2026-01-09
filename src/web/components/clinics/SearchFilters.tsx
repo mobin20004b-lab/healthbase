@@ -35,7 +35,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
@@ -44,7 +44,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         setQ('');
         setSpecialty('');
         setInsurance('');
-        router.push(`/clinics`);
+        router.push(`/search`);
     };
 
     return (
