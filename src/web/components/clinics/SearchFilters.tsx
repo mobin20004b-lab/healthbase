@@ -1,13 +1,15 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import { useRouter } from '@/routing'; // Localized router
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
+import { Checkbox } from '@/web/components/ui/checkbox';
+import { Label } from '@/web/components/ui/label';
 import { getProvinces, getCities } from '@/lib/constants/locations';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -20,43 +22,79 @@ export default function SearchFilters({}: SearchFiltersProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    // Single value filters
     const [city, setCity] = useState(searchParams.get('city') || '');
     const [province, setProvince] = useState(searchParams.get('province') || '');
     const [q, setQ] = useState(searchParams.get('q') || '');
-    const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
-    const [insurance, setInsurance] = useState(searchParams.get('insurance') || '');
+
+    // Multi-select filters
+    const [specialties, setSpecialties] = useState<string[]>([]);
+    const [insurances, setInsurances] = useState<string[]>([]);
+
+    useEffect(() => {
+        const specs = searchParams.getAll('specialty');
+        if (specs.length) setSpecialties(specs);
+
+        const ins = searchParams.getAll('insurance');
+        if (ins.length) setInsurances(ins);
+    }, [searchParams]);
 
     const handleSearch = () => {
-        const params = new URLSearchParams(searchParams.toString());
-        if (city) params.set('city', city); else params.delete('city');
-        if (province) params.set('province', province); else params.delete('province');
-        if (q) params.set('q', q); else params.delete('q');
-        if (specialty) params.set('specialty', specialty); else params.delete('specialty');
-        if (insurance) params.set('insurance', insurance); else params.delete('insurance');
+        const params = new URLSearchParams(); // Start fresh to avoid duplicates if we used searchParams.toString() with appends
+
+        // Retain other existing params if needed, but for filters usually we rebuild
+        // However, standard is to preserve existing if not controlled here.
+        // Let's rebuild from state.
+
+        if (city) params.set('city', city);
+        if (province) params.set('province', province);
+        if (q) params.set('q', q);
+
+        specialties.forEach(s => params.append('specialty', s));
+        insurances.forEach(i => params.append('insurance', i));
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
         setCity('');
         setProvince('');
         setQ('');
-        setSpecialty('');
-        setInsurance('');
-        router.push(`/clinics`);
+        setSpecialties([]);
+        setInsurances([]);
+        router.push(`/search`);
     };
 
+    const toggleSpecialty = (value: string) => {
+        setSpecialties(prev =>
+            prev.includes(value)
+                ? prev.filter(item => item !== value)
+                : [...prev, value]
+        );
+    };
+
+    const toggleInsurance = (value: string) => {
+        setInsurances(prev =>
+            prev.includes(value)
+                ? prev.filter(item => item !== value)
+                : [...prev, value]
+        );
+    };
+
+    const SPECIALTY_OPTIONS = ['Dentistry', 'Cardiology', 'Dermatology', 'Neurology'];
+    const INSURANCE_OPTIONS = ['Salamat', 'Tamin', 'NiroohayeMosallah'];
+
     return (
-        <Card variant="bento" className="p-6 sticky top-24">
+        <Card variant="bento" className="p-6 sticky top-24 h-[calc(100vh-100px)] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-bold text-on-surface">{t('filters')}</h2>
-                <Button variant="ghost" size="sm" onClick={handleClear} className="font-bold">
+                <Button variant="ghost" size="sm" onClick={handleClear} className="font-bold text-xs">
                     {t('clearAll')}
                 </Button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 pb-20">
                 {/* Search Input */}
                 <div>
                     <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('search')}</label>
@@ -117,46 +155,47 @@ export default function SearchFilters({}: SearchFiltersProps) {
                     </div>
                 </div>
 
-                {/* Specialty Filter */}
+                {/* Specialty Filter (Checkbox List) */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('specialty')}</label>
-                    <div className="relative">
-                        <select
-                            value={specialty}
-                            onChange={(e) => setSpecialty(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
-                        >
-                            <option value="">{t('all')}</option>
-                            <option value="Dentistry">{t('specialties.Dentistry')}</option>
-                            <option value="Cardiology">{t('specialties.Cardiology')}</option>
-                            <option value="Dermatology">{t('specialties.Dermatology')}</option>
-                            <option value="Neurology">{t('specialties.Neurology')}</option>
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    <label className="block text-sm font-bold text-on-surface-variant mb-3">{t('specialty')}</label>
+                    <div className="flex flex-col gap-3">
+                        {SPECIALTY_OPTIONS.map((spec) => (
+                            <div key={spec} className="flex items-center space-x-2 rtl:space-x-reverse">
+                                <Checkbox
+                                    id={`spec-${spec}`}
+                                    checked={specialties.includes(spec)}
+                                    onCheckedChange={() => toggleSpecialty(spec)}
+                                />
+                                <Label htmlFor={`spec-${spec}`} className="text-sm font-normal cursor-pointer text-on-surface">
+                                    {t(`specialties.${spec}`)}
+                                </Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Insurance Filter */}
+                {/* Insurance Filter (Checkbox List) */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('insurance')}</label>
-                    <div className="relative">
-                        <select
-                            value={insurance}
-                            onChange={(e) => setInsurance(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
-                        >
-                            <option value="">{t('all')}</option>
-                            <option value="Salamat">{t('insurances.Salamat')}</option>
-                            <option value="Tamin">{t('insurances.Tamin')}</option>
-                            <option value="NiroohayeMosallah">{t('insurances.NiroohayeMosallah')}</option>
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    <label className="block text-sm font-bold text-on-surface-variant mb-3">{t('insurance')}</label>
+                    <div className="flex flex-col gap-3">
+                         {INSURANCE_OPTIONS.map((ins) => (
+                            <div key={ins} className="flex items-center space-x-2 rtl:space-x-reverse">
+                                <Checkbox
+                                    id={`ins-${ins}`}
+                                    checked={insurances.includes(ins)}
+                                    onCheckedChange={() => toggleInsurance(ins)}
+                                />
+                                <Label htmlFor={`ins-${ins}`} className="text-sm font-normal cursor-pointer text-on-surface">
+                                    {t(`insurances.${ins}`)}
+                                </Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
                 <Button
                     onClick={handleSearch}
-                    className="w-full h-12 text-base"
+                    className="w-full h-12 text-base mt-4"
                 >
                     {t('applyFilters')}
                 </Button>
