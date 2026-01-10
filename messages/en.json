@@ -1,4 +1,10 @@
 {
+    "Search": {
+        "title": "Find Your Care",
+        "mapView": "Map",
+        "listView": "List",
+        "filters": "Filters"
+    },
     "HomePage": {
         "title": "Find Trusted Healthcare in <city></city>",
         "heroTitle": "Convergence of Care, Intelligence, and Design",

@@ -1,6 +1,6 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
@@ -43,18 +43,7 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
-
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
-  };
+  const t = useTranslations('Search');
 
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
