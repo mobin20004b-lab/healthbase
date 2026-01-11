@@ -1,14 +1,14 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
+import MobileFilters from '@/web/components/clinics/MobileFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { useTranslations } from 'next-intl';
 
 // Mock data for initial implementation
 const MOCK_CLINICS: Partial<Clinic>[] = [
@@ -43,18 +43,7 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
-
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
-  };
+  const t = useTranslations('Search');
 
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
@@ -76,19 +65,7 @@ export default function SearchPage() {
 
                     {/* Mobile Filter Trigger */}
                     <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="outlined" size="sm" className="gap-2">
-                                    <Filter className="h-4 w-4" />
-                                    {t('filters')}
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="left" className="w-[300px] p-0">
-                                <div className="h-full overflow-y-auto p-4">
-                                    <SearchFilters />
-                                </div>
-                            </SheetContent>
-                        </Sheet>
+                        <MobileFilters />
                     </div>
                  </div>
 
@@ -113,7 +90,7 @@ export default function SearchPage() {
              <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant">
                  <div className="text-center">
                      <Map className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                     <p>Map View Placeholder</p>
+                     <p>{t('mapView')}</p>
                  </div>
              </div>
         </div>

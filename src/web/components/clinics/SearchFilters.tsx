@@ -12,10 +12,10 @@ import { getProvinces, getCities } from '@/lib/constants/locations';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface SearchFiltersProps {
-    // locale: string;
+    onSearchComplete?: () => void;
 }
 
-export default function SearchFilters({}: SearchFiltersProps) {
+export default function SearchFilters({ onSearchComplete }: SearchFiltersProps) {
     const t = useTranslations('Clinics');
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -36,6 +36,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
         // useRouter from next-intl automatically handles locale prefix
         router.push(`/clinics?${params.toString()}`);
+
+        if (onSearchComplete) {
+            onSearchComplete();
+        }
     };
 
     const handleClear = () => {
@@ -45,6 +49,9 @@ export default function SearchFilters({}: SearchFiltersProps) {
         setSpecialty('');
         setInsurance('');
         router.push(`/clinics`);
+        if (onSearchComplete) {
+            onSearchComplete();
+        }
     };
 
     return (

@@ -7,8 +7,12 @@
 *   [x] 3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)
 *   [x] 3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
+*   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
 
 ## Recent Achievements
+*   Implemented `MobileFilters` for improved mobile search UX.
+*   Updated `SearchFilters` to accept `onSearchComplete` callback.
+*   Refactored `SearchPage` to use proper layout, i18n, and `MobileFilters`.
 *   Implemented `Sheet` component for mobile navigation.
 *   Refactored `Navbar` to use `StickyHeader` and `Sheet`.
 *   Restructured `src/app/[locale]` to use Route Groups (`(marketing)`).
@@ -18,4 +22,4 @@
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
 
 ## Next Steps
-1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
+1.  Implement Feature 4.3 Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`).

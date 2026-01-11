@@ -99,6 +99,12 @@
         "save": "ذخیره",
         "saved": "ذخیره شده"
     },
+    "Search": {
+        "title": "جستجوی مراکز درمانی",
+        "mapView": "نمایش نقشه",
+        "listView": "نمایش لیست",
+        "filters": "فیلترها"
+    },
     "Navigation": {
         "clinics": "کلینیک‌ها",
         "services": "خدمات",
