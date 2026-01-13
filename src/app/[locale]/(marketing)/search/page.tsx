@@ -1,50 +1,20 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/data/mock-clinics';
+import { useSearchParams } from 'next/navigation';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const searchParams = useSearchParams();
 
-  // const t = useTranslations('Search');
   // Temporary mock until messages are updated
   const t = (key: string) => {
     const messages: Record<string, string> = {
@@ -52,14 +22,52 @@ export default function SearchPage() {
       mapView: 'Map',
       listView: 'List',
       filters: 'Filters',
+      noResults: 'No clinics found matching your criteria.',
     };
     return messages[key] || key;
   };
 
+  // Filter Logic
+  const filteredClinics = useMemo(() => {
+    const q = searchParams.get('q')?.toLowerCase() || '';
+    const city = searchParams.get('city');
+    const province = searchParams.get('province');
+    const specialties = searchParams.get('specialty')?.split(',').filter(Boolean) || [];
+    const insurances = searchParams.get('insurance')?.split(',').filter(Boolean) || [];
+
+    return MOCK_CLINICS.filter((clinic) => {
+      // 1. Text Search (Name, City, Province)
+      if (q) {
+        const matchName = clinic.name.toLowerCase().includes(q);
+        const matchCity = clinic.city?.toLowerCase().includes(q);
+        const matchProvince = clinic.province?.toLowerCase().includes(q);
+        if (!matchName && !matchCity && !matchProvince) return false;
+      }
+
+      // 2. Location Filters (Exact)
+      if (province && clinic.province !== province) return false;
+      if (city && clinic.city !== city) return false;
+
+      // 3. Specialty Filter (OR logic: clinic matches if it has ANY of the selected specialties)
+      if (specialties.length > 0) {
+        const hasSpecialty = specialties.some(s => clinic.specialties.includes(s));
+        if (!hasSpecialty) return false;
+      }
+
+      // 4. Insurance Filter (OR logic: clinic matches if it accepts ANY of the selected insurances)
+      if (insurances.length > 0) {
+        const hasInsurance = insurances.some(i => clinic.insurances.includes(i));
+        if (!hasInsurance) return false;
+      }
+
+      return true;
+    });
+  }, [searchParams]);
+
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
-      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
+      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block scrollbar-hide">
         <SearchFilters />
       </div>
 
@@ -93,14 +101,20 @@ export default function SearchPage() {
                  </div>
 
                  <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
-                         <ClinicCard
-                             key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
-                         />
-                     ))}
+                     {filteredClinics.length > 0 ? (
+                         filteredClinics.map((clinic) => (
+                             <ClinicCard
+                                 key={clinic.id}
+                                 clinic={clinic as Clinic}
+                                 rating={clinic.rating}
+                                 reviewCount={clinic.reviewCount}
+                             />
+                         ))
+                     ) : (
+                        <div className="text-center py-12 text-on-surface-variant">
+                            <p className="text-lg font-medium">{t('noResults')}</p>
+                        </div>
+                     )}
                  </div>
              </div>
         </div>

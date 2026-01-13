@@ -47,12 +47,18 @@
             "Dentistry": "دندانپزشکی",
             "Cardiology": "قلب و عروق",
             "Dermatology": "پوست و مو",
-            "Neurology": "مغز و اعصاب"
+            "Neurology": "مغز و اعصاب",
+            "Orthopedics": "ارتوپدی",
+            "General": "عمومی",
+            "Surgery": "جراحی"
         },
         "insurances": {
             "Salamat": "بیمه سلامت",
             "Tamin": "تأمین اجتماعی",
-            "NiroohayeMosallah": "نیروهای مسلح"
+            "NiroohayeMosallah": "نیروهای مسلح",
+            "Dana": "بیمه دانا",
+            "Asia": "بیمه آسیا",
+            "Saman": "بیمه سامان"
         },
         "locations": {
         "countries": {

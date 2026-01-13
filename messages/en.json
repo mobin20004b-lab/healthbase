@@ -58,12 +58,18 @@
             "Dentistry": "Dentistry",
             "Cardiology": "Cardiology",
             "Dermatology": "Dermatology",
-            "Neurology": "Neurology"
+            "Neurology": "Neurology",
+            "Orthopedics": "Orthopedics",
+            "General": "General",
+            "Surgery": "Surgery"
         },
         "insurances": {
             "Salamat": "Public Health (Salamat)",
             "Tamin": "Social Security (Tamin)",
-            "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
+            "NiroohayeMosallah": "Military (Niroohaye Mosallah)",
+            "Dana": "Dana Insurance",
+            "Asia": "Asia Insurance",
+            "Saman": "Saman Insurance"
         },
         "locations": {
         "countries": {
