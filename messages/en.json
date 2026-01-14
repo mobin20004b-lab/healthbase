@@ -49,10 +49,10 @@
         "insurance": "Insurance",
         "priceRange": "Price Range",
         "clearAll": "Clear All",
-        "applyFilters": "Apply",
+        "applyFilters": "Apply Filters",
         "all": "All",
         "search": "Search",
-        "searchPlaceholder": "Search for clinics, services...",
+        "searchPlaceholder": "Search by name, description...",
         "province": "Province",
         "specialties": {
             "Dentistry": "Dentistry",
@@ -74,7 +74,9 @@
                 "Tehran": "Tehran",
                 "Isfahan": "Isfahan",
                 "Fars": "Fars",
-                "RazaviKhorasan": "Razavi Khorasan"
+                "RazaviKhorasan": "Razavi Khorasan",
+                "EastAzerbaijan": "East Azerbaijan",
+                "Mazandaran": "Mazandaran"
             },
             "cities": {
                 "Yazd": "Yazd",
@@ -93,9 +95,17 @@
                 "Jahrom": "Jahrom",
                 "Mashhad": "Mashhad",
                 "Nishapur": "Nishapur",
-                "Sabzevar": "Sabzevar"
+                "Sabzevar": "Sabzevar",
+                "Tabriz": "Tabriz",
+                "Sari": "Sari"
             }
         }
+    },
+    "Search": {
+        "showMap": "Show Map",
+        "showList": "Show List",
+        "resultsFound": "Results Found",
+        "filters": "Filters"
     },
     "ClinicDetail": {
         "services": "Services & Pricing",

@@ -40,7 +40,7 @@
         "insurance": "بیمه",
         "priceRange": "محدوده قیمت",
         "clearAll": "پاک کردن همه",
-        "applyFilters": "اعمال",
+        "applyFilters": "اعمال فیلترها",
         "all": "همه",
         "search": "جستجو",
         "specialties": {
@@ -63,7 +63,9 @@
                 "Tehran": "تهران",
                 "Isfahan": "اصفهان",
                 "Fars": "فارس",
-                "RazaviKhorasan": "خراسان رضوی"
+                "RazaviKhorasan": "خراسان رضوی",
+                "EastAzerbaijan": "آذربایجان شرقی",
+                "Mazandaran": "مازندران"
             },
             "cities": {
                 "Yazd": "یزد",
@@ -82,9 +84,17 @@
                 "Jahrom": "جهرم",
                 "Mashhad": "مشهد",
                 "Nishapur": "نیشابور",
-                "Sabzevar": "سبزوار"
+                "Sabzevar": "سبزوار",
+                "Tabriz": "تبریز",
+                "Sari": "ساری"
             }
         }
+    },
+    "Search": {
+        "showMap": "نمایش نقشه",
+        "showList": "نمایش لیست",
+        "resultsFound": "نتیجه یافت شد",
+        "filters": "فیلترها"
     },
     "ClinicDetail": {
         "services": "خدمات و قیمت‌ها",
