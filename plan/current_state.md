@@ -7,8 +7,11 @@
 *   [x] 3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)
 *   [x] 3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
+*   [x] 4.3. Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`)
 
 ## Recent Achievements
+*   Implemented Comparison Tool with sticky table and visualizers.
+*   Updated Search page with multi-select comparison logic.
 *   Implemented `Sheet` component for mobile navigation.
 *   Refactored `Navbar` to use `StickyHeader` and `Sheet`.
 *   Restructured `src/app/[locale]` to use Route Groups (`(marketing)`).

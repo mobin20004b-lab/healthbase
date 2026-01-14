@@ -4,11 +4,12 @@
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { useRouter } from '@/routing';
 
 // Mock data for initial implementation
 const MOCK_CLINICS: Partial<Clinic>[] = [
@@ -43,6 +44,8 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedClinicIds, setSelectedClinicIds] = useState<string[]>([]);
+  const router = useRouter();
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -56,6 +59,20 @@ export default function SearchPage() {
     return messages[key] || key;
   };
 
+  const handleToggleCompare = (id: string, checked: boolean) => {
+    if (checked) {
+        if (selectedClinicIds.length >= 3) {
+            // Optional: Show toast "Max 3 items"
+            return;
+        }
+        setSelectedClinicIds(prev => [...prev, id]);
+    } else {
+        setSelectedClinicIds(prev => prev.filter(cId => cId !== id));
+    }
+  };
+
+  const clearSelection = () => setSelectedClinicIds([]);
+
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
@@ -67,7 +84,7 @@ export default function SearchPage() {
       <div className="flex-1 flex relative">
         {/* List View */}
         <div className={cn(
-            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300 pb-24", // added pb-24 for floating bar
             showMap ? "hidden lg:block" : "block"
         )}>
              <div className="max-w-4xl mx-auto space-y-6">
@@ -99,6 +116,8 @@ export default function SearchPage() {
                              clinic={clinic as Clinic}
                              rating={4.5}
                              reviewCount={120}
+                             isChecked={selectedClinicIds.includes(clinic.id)}
+                             onCompareChange={(checked) => handleToggleCompare(clinic.id, checked)}
                          />
                      ))}
                  </div>
@@ -118,6 +137,41 @@ export default function SearchPage() {
              </div>
         </div>
       </div>
+
+      {/* Compare Bar */}
+      {selectedClinicIds.length > 0 && (
+          <div className="fixed bottom-4 left-0 right-0 z-40 px-4 md:left-80 lg:px-8">
+              <div className="mx-auto max-w-4xl rounded-2xl bg-inverse-surface p-4 text-inverse-on-surface shadow-2xl animate-in slide-in-from-bottom-5 fade-in">
+                  <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                          <span className="font-medium">{selectedClinicIds.length} Selected</span>
+                          <button
+                              onClick={clearSelection}
+                              className="text-sm text-inverse-on-surface/70 hover:text-inverse-on-surface underline decoration-dotted"
+                          >
+                              Clear
+                          </button>
+                      </div>
+                      <div className="flex items-center gap-2">
+                          <Button
+                              size="sm"
+                              onClick={() => router.push(`/compare?ids=${selectedClinicIds.join(',')}`)}
+                          >
+                              Compare Now
+                          </Button>
+                          <Button
+                            variant="text"
+                            size="icon"
+                            className="text-inverse-on-surface hover:bg-white/10"
+                            onClick={clearSelection}
+                          >
+                              <X className="h-5 w-5" />
+                          </Button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      )}
 
       {/* Mobile Map Toggle FAB */}
       <div className="lg:hidden fixed bottom-6 right-6 z-50">
