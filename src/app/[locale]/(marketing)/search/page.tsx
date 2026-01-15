@@ -4,45 +4,27 @@
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/data/mock-clinics';
+import { useRouter } from '@/routing';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const router = useRouter();
+
+  const toggleSelection = (id: string) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(prev => prev.filter(item => item !== id));
+    } else {
+      if (selectedIds.length >= 3) return; // Max 3
+      setSelectedIds(prev => [...prev, id]);
+    }
+  };
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -96,9 +78,12 @@ export default function SearchPage() {
                      {MOCK_CLINICS.map((clinic) => (
                          <ClinicCard
                              key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             clinic={clinic as unknown as Clinic}
+                             rating={clinic.rating || 0}
+                             reviewCount={clinic.reviewCount || 0}
+                             nextAvailable={clinic.nextAvailable}
+                             isChecked={selectedIds.includes(clinic.id)}
+                             onCompareChange={() => toggleSelection(clinic.id)}
                          />
                      ))}
                  </div>
@@ -129,6 +114,20 @@ export default function SearchPage() {
               {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
           </Button>
       </div>
+
+      {/* Compare Floating Button */}
+      {selectedIds.length >= 2 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <Button
+                size="lg"
+                className="rounded-full shadow-xl px-8"
+                onClick={() => router.push(`/compare?ids=${selectedIds.join(',')}`)}
+            >
+                Compare ({selectedIds.length}) Clinics
+                <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+        </div>
+      )}
     </div>
   );
 }
