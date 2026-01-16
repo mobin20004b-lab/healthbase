@@ -1,50 +1,57 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
 import { useState } from 'react';
-import type { Clinic } from '@prisma/client';
+import { useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/data/mock-clinics';
+import type { Clinic } from '@prisma/client';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const searchParams = useSearchParams();
 
-  // const t = useTranslations('Search');
+  // Filter Logic
+  const filteredClinics = MOCK_CLINICS.filter((clinic) => {
+    const q = searchParams.get('q')?.toLowerCase();
+    const city = searchParams.get('city');
+    const province = searchParams.get('province');
+    const specialty = searchParams.get('specialty');
+    const insurance = searchParams.get('insurance');
+
+    let matches = true;
+
+    if (q) {
+      matches = matches && (
+        clinic.name.toLowerCase().includes(q) ||
+        (clinic.description?.toLowerCase().includes(q) ?? false) ||
+        (clinic.city?.toLowerCase().includes(q) ?? false)
+      );
+    }
+
+    if (city) {
+      matches = matches && clinic.city === city;
+    }
+
+    if (province) {
+      matches = matches && clinic.province === province;
+    }
+
+    if (specialty) {
+      matches = matches && clinic.specialties.includes(specialty);
+    }
+
+    if (insurance) {
+      matches = matches && clinic.insurances.includes(insurance);
+    }
+
+    return matches;
+  });
+
   // Temporary mock until messages are updated
   const t = (key: string) => {
     const messages: Record<string, string> = {
@@ -52,6 +59,7 @@ export default function SearchPage() {
       mapView: 'Map',
       listView: 'List',
       filters: 'Filters',
+      noResults: 'No clinics found matching your criteria.',
     };
     return messages[key] || key;
   };
@@ -93,14 +101,20 @@ export default function SearchPage() {
                  </div>
 
                  <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
+                     {filteredClinics.length > 0 ? (
+                       filteredClinics.map((clinic) => (
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating}
+                             reviewCount={clinic.reviewCount}
                          />
-                     ))}
+                       ))
+                     ) : (
+                       <div className="text-center py-12 text-on-surface-variant">
+                         <p>{t('noResults')}</p>
+                       </div>
+                     )}
                  </div>
              </div>
         </div>
