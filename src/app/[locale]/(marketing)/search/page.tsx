@@ -1,50 +1,20 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
+import { useState, useMemo } from 'react';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
-import { useState } from 'react';
-import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/data/mock-clinics';
+import type { Clinic } from '@prisma/client';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const searchParams = useSearchParams();
 
-  // const t = useTranslations('Search');
   // Temporary mock until messages are updated
   const t = (key: string) => {
     const messages: Record<string, string> = {
@@ -56,11 +26,42 @@ export default function SearchPage() {
     return messages[key] || key;
   };
 
+  const filteredClinics = useMemo(() => {
+    const q = searchParams.get('q')?.toLowerCase() || '';
+    const city = searchParams.get('city');
+    const province = searchParams.get('province');
+    const specialties = searchParams.get('specialty')?.split(',').filter(Boolean) || [];
+    const insurances = searchParams.get('insurance')?.split(',').filter(Boolean) || [];
+
+    return MOCK_CLINICS.filter(clinic => {
+      // Text Search
+      if (q && !clinic.name.toLowerCase().includes(q)) return false;
+
+      // Location
+      if (city && clinic.city !== city) return false;
+      if (province && clinic.province !== province) return false;
+
+      // Specialties (OR logic)
+      if (specialties.length > 0) {
+        const hasSpecialty = specialties.some(s => clinic.specialties.includes(s));
+        if (!hasSpecialty) return false;
+      }
+
+      // Insurance (OR logic)
+      if (insurances.length > 0) {
+        const hasInsurance = insurances.some(i => clinic.insurances.includes(i));
+        if (!hasInsurance) return false;
+      }
+
+      return true;
+    });
+  }, [searchParams]);
+
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
-      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
-        <SearchFilters />
+      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 bg-surface lg:block">
+         <SearchFilters key={searchParams.toString()} />
       </div>
 
       {/* Main Content Area */}
@@ -72,7 +73,9 @@ export default function SearchPage() {
         )}>
              <div className="max-w-4xl mx-auto space-y-6">
                  <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
+                    <h1 className="text-3xl font-bold text-on-surface">
+                        {t('title')} <span className="text-on-surface-variant text-lg font-normal">({filteredClinics.length} results)</span>
+                    </h1>
 
                     {/* Mobile Filter Trigger */}
                     <div className="lg:hidden">
@@ -85,7 +88,7 @@ export default function SearchPage() {
                             </SheetTrigger>
                             <SheetContent side="left" className="w-[300px] p-0">
                                 <div className="h-full overflow-y-auto p-4">
-                                    <SearchFilters />
+                                    <SearchFilters key={searchParams.toString()} />
                                 </div>
                             </SheetContent>
                         </Sheet>
@@ -93,14 +96,22 @@ export default function SearchPage() {
                  </div>
 
                  <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
-                         <ClinicCard
-                             key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
-                         />
-                     ))}
+                     {filteredClinics.length > 0 ? (
+                         filteredClinics.map((clinic) => (
+                             <ClinicCard
+                                 key={clinic.id}
+                                 clinic={clinic as unknown as Clinic}
+                                 rating={clinic.rating}
+                                 reviewCount={clinic.reviewCount}
+                                 nextAvailable={clinic.nextAvailable}
+                             />
+                         ))
+                     ) : (
+                         <div className="text-center py-12 text-on-surface-variant">
+                             <p className="text-lg">No clinics found matching your criteria.</p>
+                             <Button variant="text" onClick={() => window.location.href='/search'} className="mt-4">Clear Filters</Button>
+                         </div>
+                     )}
                  </div>
              </div>
         </div>
