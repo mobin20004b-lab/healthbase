@@ -35,6 +35,9 @@
         "viewDetails": "مشاهده جزئیات",
         "filters": "فیلترها",
         "specialty": "تخصص",
+        "serviceCategory": "دسته خدمات",
+        "rating": "حداقل امتیاز",
+        "sortBy": "مرتب‌سازی",
         "province": "استان",
         "city": "شهر",
         "insurance": "بیمه",
@@ -43,6 +46,17 @@
         "applyFilters": "اعمال",
         "all": "همه",
         "search": "جستجو",
+        "serviceCategories": {
+            "Consultation": "مشاوره",
+            "Surgery": "جراحی",
+            "Imaging": "تصویربرداری",
+            "Laboratory": "آزمایشگاه"
+        },
+        "sortOptions": {
+            "name": "نام",
+            "rating": "امتیاز",
+            "newest": "جدیدترین"
+        },
         "specialties": {
             "Dentistry": "دندانپزشکی",
             "Cardiology": "قلب و عروق",

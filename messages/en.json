@@ -45,6 +45,9 @@
         "viewDetails": "View Details",
         "filters": "Filters",
         "specialty": "Specialty",
+        "serviceCategory": "Service Category",
+        "rating": "Minimum Rating",
+        "sortBy": "Sort By",
         "city": "City",
         "insurance": "Insurance",
         "priceRange": "Price Range",
@@ -54,6 +57,17 @@
         "search": "Search",
         "searchPlaceholder": "Search for clinics, services...",
         "province": "Province",
+        "serviceCategories": {
+            "Consultation": "Consultation",
+            "Surgery": "Surgery",
+            "Imaging": "Imaging",
+            "Laboratory": "Laboratory"
+        },
+        "sortOptions": {
+            "name": "Name",
+            "rating": "Rating",
+            "newest": "Newest"
+        },
         "specialties": {
             "Dentistry": "Dentistry",
             "Cardiology": "Cardiology",

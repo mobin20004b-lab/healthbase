@@ -9,6 +9,7 @@ import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
 import { getProvinces, getCities } from '@/lib/constants/locations';
+import { Label } from '@/web/components/ui/label';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface SearchFiltersProps {
@@ -23,28 +24,38 @@ export default function SearchFilters({}: SearchFiltersProps) {
     const [city, setCity] = useState(searchParams.get('city') || '');
     const [province, setProvince] = useState(searchParams.get('province') || '');
     const [q, setQ] = useState(searchParams.get('q') || '');
+    const [serviceCategory, setServiceCategory] = useState(searchParams.get('service_category') || '');
     const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
     const [insurance, setInsurance] = useState(searchParams.get('insurance') || '');
+    const [minRating, setMinRating] = useState(searchParams.get('min_rating') || '');
 
     const handleSearch = () => {
         const params = new URLSearchParams(searchParams.toString());
+        // Preserve other params if needed, but here we rebuild based on state
         if (city) params.set('city', city); else params.delete('city');
         if (province) params.set('province', province); else params.delete('province');
         if (q) params.set('q', q); else params.delete('q');
+        if (serviceCategory) params.set('service_category', serviceCategory); else params.delete('service_category');
         if (specialty) params.set('specialty', specialty); else params.delete('specialty');
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
+        if (minRating) params.set('min_rating', minRating); else params.delete('min_rating');
+
+        // Always navigate to page 1 when filtering
+        params.set('page', '1');
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
         setCity('');
         setProvince('');
         setQ('');
+        setServiceCategory('');
         setSpecialty('');
         setInsurance('');
-        router.push(`/clinics`);
+        setMinRating('');
+        router.push(`/search`);
     };
 
     return (
@@ -59,7 +70,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
             <div className="space-y-6">
                 {/* Search Input */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('search')}</label>
+                    <Label className="mb-2">{t('search')}</Label>
                     <div className="relative">
                         <Input
                             type="text"
@@ -75,7 +86,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Province Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('province')}</label>
+                    <Label className="mb-2">{t('province')}</Label>
                     <div className="relative">
                         <select
                             value={province}
@@ -98,7 +109,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* City Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('city')}</label>
+                    <Label className="mb-2">{t('city')}</Label>
                     <div className="relative">
                         <select
                             value={city}
@@ -117,9 +128,28 @@ export default function SearchFilters({}: SearchFiltersProps) {
                     </div>
                 </div>
 
+                {/* Service Category Filter */}
+                <div>
+                    <Label className="mb-2">{t('serviceCategory')}</Label>
+                    <div className="relative">
+                        <select
+                            value={serviceCategory}
+                            onChange={(e) => setServiceCategory(e.target.value)}
+                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
+                        >
+                            <option value="">{t('all')}</option>
+                            <option value="Consultation">{t('serviceCategories.Consultation')}</option>
+                            <option value="Surgery">{t('serviceCategories.Surgery')}</option>
+                            <option value="Imaging">{t('serviceCategories.Imaging')}</option>
+                            <option value="Laboratory">{t('serviceCategories.Laboratory')}</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    </div>
+                </div>
+
                 {/* Specialty Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('specialty')}</label>
+                    <Label className="mb-2">{t('specialty')}</Label>
                     <div className="relative">
                         <select
                             value={specialty}
@@ -138,7 +168,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Insurance Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('insurance')}</label>
+                    <Label className="mb-2">{t('insurance')}</Label>
                     <div className="relative">
                         <select
                             value={insurance}
@@ -149,6 +179,24 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             <option value="Salamat">{t('insurances.Salamat')}</option>
                             <option value="Tamin">{t('insurances.Tamin')}</option>
                             <option value="NiroohayeMosallah">{t('insurances.NiroohayeMosallah')}</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    </div>
+                </div>
+
+                {/* Rating Filter */}
+                <div>
+                    <Label className="mb-2">{t('rating')}</Label>
+                    <div className="relative">
+                        <select
+                            value={minRating}
+                            onChange={(e) => setMinRating(e.target.value)}
+                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
+                        >
+                            <option value="">{t('all')}</option>
+                            <option value="3">3+</option>
+                            <option value="4">4+</option>
+                            <option value="4.5">4.5+</option>
                         </select>
                         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
                     </div>
