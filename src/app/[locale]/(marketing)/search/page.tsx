@@ -9,40 +9,23 @@ import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { Link } from '@/routing';
 
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/data/mock-clinics';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
+
+  const handleCompareChange = (clinicId: string, checked: boolean) => {
+    if (checked) {
+      if (selectedClinics.length < 3) {
+        setSelectedClinics([...selectedClinics, clinicId]);
+      }
+    } else {
+      setSelectedClinics(selectedClinics.filter((id) => id !== clinicId));
+    }
+  };
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -97,8 +80,12 @@ export default function SearchPage() {
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating}
+                             reviewCount={clinic.reviewCount}
+                             isChecked={selectedClinics.includes(clinic.id!)}
+                             onCompareChange={(checked) =>
+                                 clinic.id && handleCompareChange(clinic.id, checked)
+                             }
                          />
                      ))}
                  </div>
@@ -129,6 +116,17 @@ export default function SearchPage() {
               {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
           </Button>
       </div>
+
+      {/* Compare Floating Button */}
+      {selectedClinics.length > 0 && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-4 fade-in">
+              <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
+                  <Button size="lg" className="rounded-full shadow-xl bg-primary text-on-primary hover:bg-primary/90">
+                      Compare ({selectedClinics.length}) Clinics
+                  </Button>
+              </Link>
+          </div>
+      )}
     </div>
   );
 }
