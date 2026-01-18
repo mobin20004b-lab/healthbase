@@ -16,6 +16,8 @@
 *   Implemented `PatientLayout` with `NavigationRail` and `BottomNav`.
 *   Implemented `AdminLayout` with `NavigationRail`.
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
+*   Implemented Search Page with selection logic (`src/app/[locale]/(marketing)/search/page.tsx`).
+*   Implemented Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`) with data visualization.
 
 ## Next Steps
-1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
+1.  Implement Feature 4.4 About & Blog (`src/app/[locale]/(marketing)/about/page.tsx`).

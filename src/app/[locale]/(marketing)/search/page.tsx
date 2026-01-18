@@ -4,45 +4,18 @@
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
+import { useRouter } from '@/routing';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
+  const router = useRouter();
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -52,8 +25,28 @@ export default function SearchPage() {
       mapView: 'Map',
       listView: 'List',
       filters: 'Filters',
+      compare: 'Compare',
     };
     return messages[key] || key;
+  };
+
+  const handleCompareToggle = (clinicId: string, checked: boolean) => {
+    if (checked) {
+        if (selectedClinics.length < 3) {
+            setSelectedClinics([...selectedClinics, clinicId]);
+        } else {
+             // Optional: Show toast "Max 3 clinics"
+             // For now, we just don't add it
+        }
+    } else {
+        setSelectedClinics(selectedClinics.filter(id => id !== clinicId));
+    }
+  };
+
+  const handleCompareClick = () => {
+    const params = new URLSearchParams();
+    params.set('ids', selectedClinics.join(','));
+    router.push(`/compare?${params.toString()}`);
   };
 
   return (
@@ -70,7 +63,7 @@ export default function SearchPage() {
             "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
             showMap ? "hidden lg:block" : "block"
         )}>
-             <div className="max-w-4xl mx-auto space-y-6">
+             <div className="max-w-4xl mx-auto space-y-6 pb-20">
                  <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
 
@@ -97,8 +90,11 @@ export default function SearchPage() {
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating}
+                             reviewCount={clinic.reviewCount}
+                             nextAvailable={clinic.nextAvailable}
+                             isChecked={selectedClinics.includes(clinic.id!)}
+                             onCompareChange={(checked) => handleCompareToggle(clinic.id!, checked)}
                          />
                      ))}
                  </div>
@@ -119,10 +115,26 @@ export default function SearchPage() {
         </div>
       </div>
 
-      {/* Mobile Map Toggle FAB */}
-      <div className="lg:hidden fixed bottom-6 right-6 z-50">
+      {/* Compare Floating Button */}
+      {selectedClinics.length > 0 && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-4 fade-in duration-300">
+              <Button
+                  size="lg"
+                  className="rounded-full shadow-xl px-8 py-6 text-lg"
+                  onClick={handleCompareClick}
+              >
+                  {t('compare')} ({selectedClinics.length}) <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+          </div>
+      )}
+
+      {/* Mobile Map Toggle FAB (Hidden when Compare button is visible to avoid overlap) */}
+      <div className={cn(
+          "lg:hidden fixed bottom-6 right-6 z-40 transition-all duration-300",
+          selectedClinics.length > 0 ? "translate-y-20 opacity-0" : "translate-y-0 opacity-100"
+      )}>
           <Button
-            className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
+            className="rounded-full shadow-xl h-14 w-14 p-0"
             size="icon"
             onClick={() => setShowMap(!showMap)}
           >
