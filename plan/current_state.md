@@ -16,6 +16,7 @@
 *   Implemented `PatientLayout` with `NavigationRail` and `BottomNav`.
 *   Implemented `AdminLayout` with `NavigationRail`.
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
+*   **CI/CD Pipeline:** Setup GitHub Actions for automated linting, type checking, and testing (`plan/devops.md`).
 
 ## Next Steps
 1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
