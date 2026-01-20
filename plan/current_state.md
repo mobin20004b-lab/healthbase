@@ -18,4 +18,5 @@
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
 
 ## Next Steps
-1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
+1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`) - (Remaining: Map integration, Backend integration).
+2.  Implement Feature 4.4 About & Blog.

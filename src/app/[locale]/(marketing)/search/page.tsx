@@ -9,40 +9,32 @@ import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
+import { useRouter } from '@/routing';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const router = useRouter();
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
+
+  const handleCompareChange = (id: string, checked: boolean) => {
+    if (checked) {
+      if (selectedClinics.length < 3) {
+        setSelectedClinics([...selectedClinics, id]);
+      } else {
+        // Optional: Show toast "Max 3 clinics"
+        alert("You can compare up to 3 clinics.");
+      }
+    } else {
+      setSelectedClinics(selectedClinics.filter((cId) => cId !== id));
+    }
+  };
+
+  const handleCompareClick = () => {
+    if (selectedClinics.length > 0) {
+      router.push(`/compare?ids=${selectedClinics.join(',')}`);
+    }
+  };
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -52,6 +44,7 @@ export default function SearchPage() {
       mapView: 'Map',
       listView: 'List',
       filters: 'Filters',
+      compare: `Compare (${selectedClinics.length})`,
     };
     return messages[key] || key;
   };
@@ -74,21 +67,29 @@ export default function SearchPage() {
                  <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
 
-                    {/* Mobile Filter Trigger */}
-                    <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="outlined" size="sm" className="gap-2">
-                                    <Filter className="h-4 w-4" />
-                                    {t('filters')}
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="left" className="w-[300px] p-0">
-                                <div className="h-full overflow-y-auto p-4">
-                                    <SearchFilters />
-                                </div>
-                            </SheetContent>
-                        </Sheet>
+                    <div className="flex gap-2">
+                         {selectedClinics.length > 0 && (
+                             <Button onClick={handleCompareClick} size="sm" variant="filled">
+                                 {t('compare')}
+                             </Button>
+                         )}
+
+                        {/* Mobile Filter Trigger */}
+                        <div className="lg:hidden">
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button variant="outlined" size="sm" className="gap-2">
+                                        <Filter className="h-4 w-4" />
+                                        {t('filters')}
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent side="left" className="w-[300px] p-0">
+                                    <div className="h-full overflow-y-auto p-4">
+                                        <SearchFilters />
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
+                        </div>
                     </div>
                  </div>
 
@@ -97,8 +98,10 @@ export default function SearchPage() {
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating}
+                             reviewCount={clinic.reviewCount}
+                             nextAvailable={clinic.nextAvailable}
+                             onCompareChange={(checked) => handleCompareChange(clinic.id!, checked)}
                          />
                      ))}
                  </div>
