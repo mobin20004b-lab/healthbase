@@ -9,6 +9,9 @@
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 
 ## Recent Achievements
+*   Implemented Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
+*   Created `src/lib/services/clinics.ts` for server-side data fetching.
+*   Updated `SearchFilters` to use real URL parameters.
 *   Implemented `Sheet` component for mobile navigation.
 *   Refactored `Navbar` to use `StickyHeader` and `Sheet`.
 *   Restructured `src/app/[locale]` to use Route Groups (`(marketing)`).
@@ -18,4 +21,4 @@
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
 
 ## Next Steps
-1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
+1.  Implement Feature 4.3 Clinic Details (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`).
