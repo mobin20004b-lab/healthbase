@@ -97,6 +97,13 @@
             }
         }
     },
+    "Search": {
+        "title": "Find Your Care",
+        "mapView": "Map",
+        "listView": "List",
+        "filters": "Filters",
+        "noResults": "No results found matching your criteria."
+    },
     "ClinicDetail": {
         "services": "Services & Pricing",
         "reviews": "Patient Reviews",

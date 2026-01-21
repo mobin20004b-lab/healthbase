@@ -1,0 +1,279 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 5.1s
+○ Compiling /[locale]/search ...
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 8.3s (compile: 5.6s, proxy.ts: 204ms, generate-params: 822ms, render: 2.5s)
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 1548ms (compile: 44ms, proxy.ts: 13ms, generate-params: 31ms, render: 1491ms)
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 1671ms (compile: 38ms, proxy.ts: 11ms, generate-params: 26ms, render: 1621ms)
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 1511ms (compile: 35ms, proxy.ts: 11ms, generate-params: 25ms, render: 1465ms)
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 1603ms (compile: 35ms, proxy.ts: 12ms, generate-params: 25ms, render: 1555ms)
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 1424ms (compile: 32ms, proxy.ts: 10ms, generate-params: 23ms, render: 1382ms)
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Search` in messages for locale `en`.
+    at SearchPageContent (src/app/[locale]/(marketing)/search/page-content.tsx:19:28)
+  17 | export default function SearchPageContent({ initialClinics }: PageContentProps) {
+  18 |   const [showMap, setShowMap] = useState(false);
+> 19 |   const t = useTranslations('Search');
+     |                            ^
+  20 |
+  21 |   return (
+  22 |     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden"> {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Search` in messages for locale `en`.'
+}
+ GET /en/search 200 in 1518ms (compile: 44ms, proxy.ts: 9ms, generate-params: 34ms, render: 1464ms)
+ GET /en/search?specialty=Dentistry%2CCardiology 200 in 80ms (compile: 33ms, proxy.ts: 11ms, generate-params: 24ms, render: 36ms)
+✓ Compiled in 57ms
+✓ Compiled in 61ms
+✓ Compiled in 62ms
+ GET /en/search 200 in 843ms (compile: 268ms, proxy.ts: 131ms, generate-params: 31ms, render: 443ms)
+ GET /en/search?specialty=Dentistry 200 in 78ms (compile: 41ms, proxy.ts: 8ms, generate-params: 28ms, render: 29ms)
