@@ -25,6 +25,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
     const [q, setQ] = useState(searchParams.get('q') || '');
     const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
     const [insurance, setInsurance] = useState(searchParams.get('insurance') || '');
+    const [sort, setSort] = useState(searchParams.get('sort') || 'newest');
 
     const handleSearch = () => {
         const params = new URLSearchParams(searchParams.toString());
@@ -33,9 +34,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
         if (q) params.set('q', q); else params.delete('q');
         if (specialty) params.set('specialty', specialty); else params.delete('specialty');
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
+        if (sort && sort !== 'newest') params.set('sort', sort); else params.delete('sort');
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
@@ -44,7 +46,8 @@ export default function SearchFilters({}: SearchFiltersProps) {
         setQ('');
         setSpecialty('');
         setInsurance('');
-        router.push(`/clinics`);
+        setSort('newest');
+        router.push(`/search`);
     };
 
     return (
@@ -149,6 +152,24 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             <option value="Salamat">{t('insurances.Salamat')}</option>
                             <option value="Tamin">{t('insurances.Tamin')}</option>
                             <option value="NiroohayeMosallah">{t('insurances.NiroohayeMosallah')}</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    </div>
+                </div>
+
+                {/* Sort Filter */}
+                <div>
+                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('sortBy') || 'Sort By'}</label>
+                    <div className="relative">
+                        <select
+                            value={sort}
+                            onChange={(e) => setSort(e.target.value)}
+                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
+                        >
+                            <option value="newest">{t('sort.newest') || 'Newest'}</option>
+                            <option value="rating_desc">{t('sort.rating_desc') || 'Highest Rated'}</option>
+                            <option value="name_asc">{t('sort.name_asc') || 'Name (A-Z)'}</option>
+                            <option value="oldest">{t('sort.oldest') || 'Oldest'}</option>
                         </select>
                         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
                     </div>

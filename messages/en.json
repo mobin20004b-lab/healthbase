@@ -53,6 +53,15 @@
         "all": "All",
         "search": "Search",
         "searchPlaceholder": "Search for clinics, services...",
+        "mapView": "Map",
+        "listView": "List",
+        "sortBy": "Sort By",
+        "sort": {
+            "newest": "Newest",
+            "rating_desc": "Highest Rated",
+            "name_asc": "Name (A-Z)",
+            "oldest": "Oldest"
+        },
         "province": "Province",
         "specialties": {
             "Dentistry": "Dentistry",

@@ -43,6 +43,15 @@
         "applyFilters": "اعمال",
         "all": "همه",
         "search": "جستجو",
+        "mapView": "نقشه",
+        "listView": "لیست",
+        "sortBy": "مرتب‌سازی بر اساس",
+        "sort": {
+            "newest": "جدیدترین",
+            "rating_desc": "بالاترین امتیاز",
+            "name_asc": "نام (الف-ی)",
+            "oldest": "قدیمی‌ترین"
+        },
         "specialties": {
             "Dentistry": "دندانپزشکی",
             "Cardiology": "قلب و عروق",
