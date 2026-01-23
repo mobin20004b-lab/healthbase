@@ -6,6 +6,7 @@ import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
@@ -42,6 +43,7 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
 ];
 
 export default function SearchPage() {
+  const searchParams = useSearchParams();
   const [showMap, setShowMap] = useState(false);
 
   // const t = useTranslations('Search');
@@ -60,14 +62,14 @@ export default function SearchPage() {
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
       <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
-        <SearchFilters />
+        <SearchFilters key={searchParams.toString()} />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex relative">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 relative">
         {/* List View */}
         <div className={cn(
-            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+            "lg:col-span-2 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
             showMap ? "hidden lg:block" : "block"
         )}>
              <div className="max-w-4xl mx-auto space-y-6">
@@ -85,7 +87,7 @@ export default function SearchPage() {
                             </SheetTrigger>
                             <SheetContent side="left" className="w-[300px] p-0">
                                 <div className="h-full overflow-y-auto p-4">
-                                    <SearchFilters />
+                                    <SearchFilters key={`mobile-${searchParams.toString()}`} />
                                 </div>
                             </SheetContent>
                         </Sheet>
@@ -107,7 +109,7 @@ export default function SearchPage() {
 
         {/* Map View */}
         <div className={cn(
-            "w-full lg:w-1/3 border-l border-outline-variant/20 bg-surface-container-high relative",
+            "lg:col-span-1 border-l border-outline-variant/20 bg-surface-container-high relative",
             showMap ? "block" : "hidden lg:block"
         )}>
              <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant">
