@@ -1,134 +1,114 @@
-"use client";
-
-// import { useTranslations } from 'next-intl';
-import { ClinicCard } from '@/web/components/clinics/clinic-card';
+import { getTranslations } from 'next-intl/server';
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
-import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
-import { useState } from 'react';
-import type { Clinic } from '@prisma/client';
-import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { ClinicCard } from '@/web/components/clinics/clinic-card';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/web/components/ui/sheet";
+import { Button } from "@/web/components/ui/button";
+import { Filter } from "lucide-react";
+import { Link } from '@/routing';
 
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+type Props = {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-export default function SearchPage() {
-  const [showMap, setShowMap] = useState(false);
-
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
+export async function generateMetadata({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'Clinics' });
+  return {
+    title: t('title'),
+    description: t('subtitle')
   };
+}
+
+export default async function SearchPage({
+  searchParams,
+}: Props) {
+  const t = await getTranslations('Clinics');
+  const params = await searchParams;
+
+  const q = (Array.isArray(params.q) ? params.q[0] : params.q)?.toLowerCase() || '';
+  const city = (Array.isArray(params.city) ? params.city[0] : params.city) || '';
+  const province = (Array.isArray(params.province) ? params.province[0] : params.province) || '';
+  const specialty = (Array.isArray(params.specialty) ? params.specialty[0] : params.specialty) || '';
+  const insurance = (Array.isArray(params.insurance) ? params.insurance[0] : params.insurance) || '';
+
+  const filteredClinics = MOCK_CLINICS.filter((clinic) => {
+    const matchesQ = !q || clinic.name.toLowerCase().includes(q) || clinic.description?.toLowerCase().includes(q);
+    const matchesCity = !city || clinic.city === city;
+    const matchesProvince = !province || clinic.province === province;
+    const matchesSpecialty = !specialty || clinic.specialties.includes(specialty);
+    const matchesInsurance = !insurance || clinic.insurances.includes(insurance);
+
+    return matchesQ && matchesCity && matchesProvince && matchesSpecialty && matchesInsurance;
+  });
 
   return (
-    <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
-      {/* Filters Sidebar - Desktop */}
-      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
-        <SearchFilters />
-      </div>
+    <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row gap-8">
+            {/* Desktop Sidebar */}
+            <aside className="hidden md:block w-64 shrink-0">
+                <SearchFilters />
+            </aside>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex relative">
-        {/* List View */}
-        <div className={cn(
-            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
-            showMap ? "hidden lg:block" : "block"
-        )}>
-             <div className="max-w-4xl mx-auto space-y-6">
-                 <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
+            {/* Mobile Filter Trigger */}
+            <div className="md:hidden mb-4">
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <Button variant="outline" className="w-full flex items-center gap-2">
+                            <Filter className="h-4 w-4" />
+                            {t('filters')}
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
+                        <SheetHeader>
+                            <SheetTitle>{t('filters')}</SheetTitle>
+                        </SheetHeader>
+                        <div className="mt-4">
+                            <SearchFilters />
+                        </div>
+                    </SheetContent>
+                </Sheet>
+            </div>
 
-                    {/* Mobile Filter Trigger */}
-                    <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="outlined" size="sm" className="gap-2">
-                                    <Filter className="h-4 w-4" />
-                                    {t('filters')}
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="left" className="w-[300px] p-0">
-                                <div className="h-full overflow-y-auto p-4">
-                                    <SearchFilters />
-                                </div>
-                            </SheetContent>
-                        </Sheet>
+            {/* Results */}
+            <div className="flex-1">
+                <div className="mb-6">
+                    <h1 className="text-3xl font-bold text-on-surface mb-2">{t('title')}</h1>
+                    <p className="text-on-surface-variant">
+                        {filteredClinics.length > 0
+                            ? `${filteredClinics.length} result${filteredClinics.length !== 1 ? 's' : ''} found`
+                            : t('noResults')}
+                    </p>
+                </div>
+
+                {filteredClinics.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-6">
+                        {filteredClinics.map((clinic) => (
+                            <ClinicCard
+                                key={clinic.id}
+                                clinic={clinic}
+                                rating={clinic.rating}
+                                reviewCount={clinic.reviewCount}
+                                nextAvailable={clinic.nextAvailable}
+                            />
+                        ))}
                     </div>
-                 </div>
-
-                 <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
-                         <ClinicCard
-                             key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
-                         />
-                     ))}
-                 </div>
-             </div>
+                ) : (
+                    <div className="text-center py-12 bg-surface-container-low rounded-xl">
+                        <p className="text-lg text-on-surface-variant">{t('noResults')}</p>
+                        {/* We use a simple anchor tag for clearing to trigger a full refresh/reset or just link to base search */}
+                        <Button
+                             variant="link"
+                             className="mt-2 text-primary"
+                             asChild
+                        >
+                            <Link href="/search">Clear Filters</Link>
+                        </Button>
+                    </div>
+                )}
+            </div>
         </div>
-
-        {/* Map View */}
-        <div className={cn(
-            "w-full lg:w-1/3 border-l border-outline-variant/20 bg-surface-container-high relative",
-            showMap ? "block" : "hidden lg:block"
-        )}>
-             <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant">
-                 <div className="text-center">
-                     <Map className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                     <p>Map View Placeholder</p>
-                 </div>
-             </div>
-        </div>
-      </div>
-
-      {/* Mobile Map Toggle FAB */}
-      <div className="lg:hidden fixed bottom-6 right-6 z-50">
-          <Button
-            className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
-            size="icon"
-            onClick={() => setShowMap(!showMap)}
-          >
-              {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
-          </Button>
-      </div>
     </div>
   );
 }

@@ -35,7 +35,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
@@ -44,7 +44,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         setQ('');
         setSpecialty('');
         setInsurance('');
-        router.push(`/clinics`);
+        router.push(`/search`);
     };
 
     return (
@@ -59,9 +59,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
             <div className="space-y-6">
                 {/* Search Input */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('search')}</label>
+                    <label htmlFor="search-input" className="block text-sm font-bold text-on-surface-variant mb-2">{t('search')}</label>
                     <div className="relative">
                         <Input
+                            id="search-input"
                             type="text"
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
@@ -75,9 +76,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Province Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('province')}</label>
+                    <label htmlFor="province-select" className="block text-sm font-bold text-on-surface-variant mb-2">{t('province')}</label>
                     <div className="relative">
                         <select
+                            id="province-select"
                             value={province}
                             onChange={(e) => {
                                 setProvince(e.target.value);
@@ -98,9 +100,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* City Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('city')}</label>
+                    <label htmlFor="city-select" className="block text-sm font-bold text-on-surface-variant mb-2">{t('city')}</label>
                     <div className="relative">
                         <select
+                            id="city-select"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
@@ -119,9 +122,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Specialty Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('specialty')}</label>
+                    <label htmlFor="specialty-select" className="block text-sm font-bold text-on-surface-variant mb-2">{t('specialty')}</label>
                     <div className="relative">
                         <select
+                            id="specialty-select"
                             value={specialty}
                             onChange={(e) => setSpecialty(e.target.value)}
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
@@ -138,9 +142,10 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Insurance Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('insurance')}</label>
+                    <label htmlFor="insurance-select" className="block text-sm font-bold text-on-surface-variant mb-2">{t('insurance')}</label>
                     <div className="relative">
                         <select
+                            id="insurance-select"
                             value={insurance}
                             onChange={(e) => setInsurance(e.target.value)}
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
