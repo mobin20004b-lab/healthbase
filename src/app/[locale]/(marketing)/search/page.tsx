@@ -1,60 +1,56 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
-import { useState } from 'react';
+import { Map, List, Filter, Scale } from 'lucide-react';
+import { useState, useMemo } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { useSearchParams } from 'next/navigation';
+import { Link } from '@/routing';
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
 
 export default function SearchPage() {
+  const t = useTranslations('Clinics');
   const [showMap, setShowMap] = useState(false);
+  const searchParams = useSearchParams();
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
 
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
+  // Filter Logic
+  const filteredClinics = useMemo(() => {
+    const q = searchParams.get('q')?.toLowerCase();
+    const city = searchParams.get('city');
+    const province = searchParams.get('province');
+    const specialty = searchParams.get('specialty');
+    const insurance = searchParams.get('insurance');
+
+    return MOCK_CLINICS.filter((clinic) => {
+      if (q && !clinic.name.toLowerCase().includes(q) && !clinic.description?.toLowerCase().includes(q) && !clinic.specialties.some(s => s.toLowerCase().includes(q))) return false;
+      if (city && clinic.city !== city) return false;
+      if (province && clinic.province !== province) return false;
+      if (specialty && !clinic.specialties.includes(specialty)) return false;
+      if (insurance && !clinic.insurances.includes(insurance)) return false;
+      return true;
+    });
+  }, [searchParams]);
+
+  // Comparison Logic
+  const handleCompareChange = (id: string, checked: boolean) => {
+    if (checked) {
+      if (selectedClinics.length >= 3) {
+        // Optional: Show toast notification that max 3 is allowed
+        return;
+      }
+      setSelectedClinics([...selectedClinics, id]);
+    } else {
+      setSelectedClinics(selectedClinics.filter((cId) => cId !== id));
+    }
   };
+
+  const compareUrl = `/compare?ids=${selectedClinics.join(',')}`;
 
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
@@ -70,15 +66,18 @@ export default function SearchPage() {
             "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
             showMap ? "hidden lg:block" : "block"
         )}>
-             <div className="max-w-4xl mx-auto space-y-6">
+             <div className="max-w-4xl mx-auto space-y-6 pb-20">
                  <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
+                    <div>
+                        <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
+                        <p className="text-on-surface-variant mt-1">{t('subtitle')}</p>
+                    </div>
 
                     {/* Mobile Filter Trigger */}
                     <div className="lg:hidden">
                         <Sheet>
                             <SheetTrigger asChild>
-                                <Button variant="outlined" size="sm" className="gap-2">
+                                <Button variant="outline" size="sm" className="gap-2">
                                     <Filter className="h-4 w-4" />
                                     {t('filters')}
                                 </Button>
@@ -93,14 +92,22 @@ export default function SearchPage() {
                  </div>
 
                  <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
+                     {filteredClinics.length > 0 ? filteredClinics.map((clinic) => (
                          <ClinicCard
                              key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             clinic={clinic as Clinic} // Cast to satisfy Prisma type
+                             rating={clinic.rating}
+                             reviewCount={120} // Mock
+                             nextAvailable={clinic.nextAvailable}
+                             onCompareChange={(checked) => handleCompareChange(clinic.id, checked)}
+                             // isChecked prop is missing in ClinicCard interface but useful if controlled.
+                             // Assuming uncontrolled for now based on read_file of ClinicCard.
                          />
-                     ))}
+                     )) : (
+                        <div className="text-center py-10 text-on-surface-variant">
+                            {t('noResults')}
+                        </div>
+                     )}
                  </div>
              </div>
         </div>
@@ -118,6 +125,22 @@ export default function SearchPage() {
              </div>
         </div>
       </div>
+
+      {/* Comparison Floating Action Button */}
+      {selectedClinics.length > 0 && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-5 duration-300">
+              <Button
+                size="lg"
+                className="shadow-xl rounded-full px-6 gap-2"
+                asChild
+              >
+                  <Link href={compareUrl}>
+                      <Scale className="h-5 w-5" />
+                      Compare ({selectedClinics.length})
+                  </Link>
+              </Button>
+          </div>
+      )}
 
       {/* Mobile Map Toggle FAB */}
       <div className="lg:hidden fixed bottom-6 right-6 z-50">
