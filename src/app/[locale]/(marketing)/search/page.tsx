@@ -4,45 +4,17 @@
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
+import { Link } from '@/routing';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -56,6 +28,16 @@ export default function SearchPage() {
     return messages[key] || key;
   };
 
+  const handleCompareToggle = (id: string, checked: boolean) => {
+      if (checked) {
+          if (selectedClinics.length < 3) {
+              setSelectedClinics([...selectedClinics, id]);
+          }
+      } else {
+          setSelectedClinics(selectedClinics.filter(cId => cId !== id));
+      }
+  };
+
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
@@ -67,7 +49,7 @@ export default function SearchPage() {
       <div className="flex-1 flex relative">
         {/* List View */}
         <div className={cn(
-            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+            "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300 pb-24", // Added pb-24 for floating bar
             showMap ? "hidden lg:block" : "block"
         )}>
              <div className="max-w-4xl mx-auto space-y-6">
@@ -97,8 +79,11 @@ export default function SearchPage() {
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating}
+                             reviewCount={clinic.reviewCount}
+                             nextAvailable={clinic.nextAvailable}
+                             isChecked={selectedClinics.includes(clinic.id)}
+                             onCompareChange={(checked) => handleCompareToggle(clinic.id, checked)}
                          />
                      ))}
                  </div>
@@ -118,6 +103,28 @@ export default function SearchPage() {
              </div>
         </div>
       </div>
+
+      {/* Compare Floating Bar */}
+      {selectedClinics.length > 0 && (
+          <div className="fixed bottom-0 lg:left-80 left-0 right-0 z-40 p-4 bg-surface-container-high/90 backdrop-blur border-t border-outline-variant/20 animate-in slide-in-from-bottom duration-300 shadow-lg">
+              <div className="max-w-4xl mx-auto flex items-center justify-between">
+                   <div className="flex items-center gap-4">
+                       <span className="text-on-surface font-medium">{selectedClinics.length} clinics selected</span>
+                       <Button variant="ghost" size="sm" onClick={() => setSelectedClinics([])} className="text-error hover:text-error/80 hover:bg-error/10">
+                          <X className="w-4 h-4 mr-1" /> Clear
+                       </Button>
+                   </div>
+                   <Button asChild className="rounded-full">
+                       <Link href={{
+                           pathname: '/compare',
+                           query: { ids: selectedClinics.join(',') }
+                       }}>
+                          Compare <ArrowRight className="w-4 h-4 ml-2" />
+                       </Link>
+                   </Button>
+              </div>
+          </div>
+      )}
 
       {/* Mobile Map Toggle FAB */}
       <div className="lg:hidden fixed bottom-6 right-6 z-50">
