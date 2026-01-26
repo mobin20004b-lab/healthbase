@@ -13,6 +13,7 @@ interface ClinicCardProps {
     reviewCount?: number;
     nextAvailable?: string; // e.g., "Tomorrow", "In 3 days"
     onCompareChange?: (checked: boolean) => void;
+    checked?: boolean;
     className?: string;
 }
 
@@ -22,6 +23,7 @@ export function ClinicCard({
     reviewCount = 0,
     nextAvailable = "Tomorrow",
     onCompareChange,
+    checked,
     className,
 }: ClinicCardProps) {
     return (
@@ -50,6 +52,7 @@ export function ClinicCard({
                     <label className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer">
                         <input
                             type="checkbox"
+                            checked={checked}
                             className="peer h-4 w-4 rounded border-primary text-primary focus:ring-primary accent-primary"
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
@@ -105,6 +108,7 @@ export function ClinicCard({
                     <label className="hidden sm:flex items-center gap-2 text-sm text-on-surface-variant cursor-pointer hover:text-on-surface transition-colors">
                         <input
                             type="checkbox"
+                            checked={checked}
                             className="h-4 w-4 rounded border-outline text-primary focus:ring-primary accent-primary"
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
