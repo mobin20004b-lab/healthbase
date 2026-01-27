@@ -1,17 +1,23 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { useSearchParams } from 'next/navigation';
 
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
+// Extended mock type for filtering
+type MockClinic = Partial<Clinic> & {
+    services?: { name: string }[];
+    insurances?: string[];
+};
+
+const MOCK_CLINICS: MockClinic[] = [
   {
     id: '1',
     name: 'Tehran Heart Center',
@@ -20,6 +26,8 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
     country: 'Iran',
     image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
     isVerified: true,
+    services: [{ name: 'Cardiology' }, { name: 'Surgery' }],
+    insurances: ['Salamat', 'Tamin'],
   },
   {
     id: '2',
@@ -29,6 +37,8 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
     country: 'Iran',
     image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
     isVerified: false,
+    services: [{ name: 'General' }, { name: 'Dermatology' }],
+    insurances: ['Salamat'],
   },
   {
     id: '3',
@@ -38,23 +48,44 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
     country: 'Iran',
     image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
     isVerified: true,
+    services: [{ name: 'Neurology' }, { name: 'Dentistry' }],
+    insurances: ['NiroohayeMosallah'],
   }
 ];
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const t = useTranslations('Clinics');
+  const searchParams = useSearchParams();
 
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
-  };
+  // Filter Logic
+  const filteredClinics = useMemo(() => {
+      const q = searchParams.get('q')?.toLowerCase();
+      const city = searchParams.get('city');
+      const province = searchParams.get('province');
+      const specialty = searchParams.get('specialty');
+      const insurance = searchParams.get('insurance');
+
+      return MOCK_CLINICS.filter(clinic => {
+          if (q) {
+              const inName = clinic.name?.toLowerCase().includes(q);
+              const inCity = clinic.city?.toLowerCase().includes(q);
+              const inProv = clinic.province?.toLowerCase().includes(q);
+              if (!inName && !inCity && !inProv) return false;
+          }
+          if (city && clinic.city !== city) return false;
+          if (province && clinic.province !== province) return false;
+          if (specialty) {
+              const hasSpecialty = clinic.services?.some(s => s.name === specialty);
+              if (!hasSpecialty) return false;
+          }
+          if (insurance) {
+              const hasInsurance = clinic.insurances?.includes(insurance);
+              if (!hasInsurance) return false;
+          }
+          return true;
+      });
+  }, [searchParams]);
 
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
@@ -92,16 +123,33 @@ export default function SearchPage() {
                     </div>
                  </div>
 
-                 <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
-                         <ClinicCard
-                             key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
-                         />
-                     ))}
-                 </div>
+                 {filteredClinics.length === 0 ? (
+                     <div className="text-center py-12">
+                         <p className="text-on-surface-variant text-lg">{t('noResults')}</p>
+                     </div>
+                 ) : (
+                     <div className="grid grid-cols-1 gap-4">
+                         {filteredClinics.map((clinic) => (
+                             <ClinicCard
+                                 key={clinic.id}
+                                 clinic={clinic as Clinic}
+                                 rating={4.5}
+                                 reviewCount={120}
+                             />
+                         ))}
+                     </div>
+                 )}
+
+                 {/* Pagination Placeholder */}
+                 {filteredClinics.length > 0 && (
+                     <div className="flex justify-center mt-8">
+                         <div className="flex gap-2">
+                             <Button variant="ghost" size="sm" disabled>1</Button>
+                             <Button variant="ghost" size="sm" disabled>2</Button>
+                             <Button variant="ghost" size="sm" disabled>...</Button>
+                         </div>
+                     </div>
+                 )}
              </div>
         </div>
 

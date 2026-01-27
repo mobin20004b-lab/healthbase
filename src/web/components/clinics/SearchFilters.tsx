@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import { useRouter } from '@/routing'; // Localized router
+import { useRouter, usePathname } from '@/routing'; // Localized router
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
@@ -18,6 +18,7 @@ interface SearchFiltersProps {
 export default function SearchFilters({}: SearchFiltersProps) {
     const t = useTranslations('Clinics');
     const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const [city, setCity] = useState(searchParams.get('city') || '');
@@ -35,7 +36,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`${pathname}?${params.toString()}`);
     };
 
     const handleClear = () => {
@@ -44,7 +45,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         setQ('');
         setSpecialty('');
         setInsurance('');
-        router.push(`/clinics`);
+        router.push(pathname);
     };
 
     return (

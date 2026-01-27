@@ -1,7 +1,16 @@
-import { describe, it, expect, beforeAll } from "bun:test";
+import { describe, it, expect, beforeAll, mock } from "bun:test";
 import React from "react";
 import { render } from "@testing-library/react";
 import { ClinicCard } from "./clinic-card";
+
+// Mock @/routing to handle Link component
+mock.module("@/routing", () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Link: ({ children, href }: any) => <a href={href}>{children}</a>,
+    useRouter: () => ({ push: () => {} }),
+    usePathname: () => "/",
+}));
+
 describe("ClinicCard", () => {
     // Mock Clinic object
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

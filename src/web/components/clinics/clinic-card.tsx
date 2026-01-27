@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { Clinic } from "@prisma/client";
+import { Link } from "@/routing";
 import { Card } from "@/web/components/ui/card";
 import { Button } from "@/web/components/ui/button";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
@@ -111,10 +112,12 @@ export function ClinicCard({
                         <span>Compare</span>
                     </label>
 
-                    <Button variant="tonal" size="sm" className="ml-auto group/btn">
-                        View Profile
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
-                    </Button>
+                    <Link href={`/clinics/${clinic.id}`}>
+                        <Button variant="tonal" size="sm" className="ml-auto group/btn">
+                            View Profile
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </Card>
