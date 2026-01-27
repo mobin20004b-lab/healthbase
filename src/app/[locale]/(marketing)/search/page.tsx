@@ -4,45 +4,29 @@
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
+import { Link } from '@/routing';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
+
+  const handleCompareChange = (clinicId: string, checked: boolean) => {
+    if (checked) {
+      if (selectedClinics.length >= 3) {
+        // Optional: Show toast notification that max 3 is allowed
+        return;
+      }
+      setSelectedClinics((prev) => [...prev, clinicId]);
+    } else {
+      setSelectedClinics((prev) => prev.filter((id) => id !== clinicId));
+    }
+  };
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -97,8 +81,10 @@ export default function SearchPage() {
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating || 0}
+                             reviewCount={clinic.reviewCount || 0}
+                             nextAvailable={clinic.nextAvailable}
+                             onCompareChange={(checked) => handleCompareChange(clinic.id, checked)}
                          />
                      ))}
                  </div>
@@ -129,6 +115,35 @@ export default function SearchPage() {
               {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
           </Button>
       </div>
+
+      {/* Comparison Floating Bar */}
+      {selectedClinics.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-md">
+            <div className="flex items-center justify-between bg-inverse-surface text-inverse-on-surface p-4 rounded-xl shadow-xl animate-in slide-in-from-bottom-5 fade-in duration-300">
+                <div className="flex items-center gap-3">
+                    <span className="font-semibold">{selectedClinics.length} Selected</span>
+                    <button
+                        onClick={() => setSelectedClinics([])}
+                        className="text-xs underline opacity-80 hover:opacity-100"
+                    >
+                        Clear
+                    </button>
+                </div>
+
+                <Button
+                    asChild
+                    variant="filled"
+                    size="sm"
+                    className="bg-primary-container text-on-primary-container hover:bg-primary-container/90"
+                >
+                    <Link href={{ pathname: '/compare', query: { ids: selectedClinics.join(',') } }}>
+                        Compare
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                </Button>
+            </div>
+        </div>
+      )}
     </div>
   );
 }
