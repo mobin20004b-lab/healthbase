@@ -15,7 +15,7 @@ export default function Hero() {
 
   const handleSearch = () => {
     if (!q.trim()) return;
-    router.push(`/clinics?q=${encodeURIComponent(q)}`);
+    router.push(`/search?q=${encodeURIComponent(q)}`);
   };
 
   return (

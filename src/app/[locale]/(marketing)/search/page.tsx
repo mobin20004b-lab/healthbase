@@ -9,40 +9,13 @@ import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
-
-// Mock data for initial implementation
-const MOCK_CLINICS: Partial<Clinic>[] = [
-  {
-    id: '1',
-    name: 'Tehran Heart Center',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  },
-  {
-    id: '2',
-    name: 'Milad Hospital',
-    city: 'Tehran',
-    province: 'Tehran',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
-    isVerified: false,
-  },
-  {
-    id: '3',
-    name: 'Shiraz Central Clinic',
-    city: 'Shiraz',
-    province: 'Fars',
-    country: 'Iran',
-    image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
-    isVerified: true,
-  }
-];
+import { MOCK_CLINICS } from '@/lib/constants/mock-data';
+import { useRouter } from '@/routing';
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
+  const router = useRouter();
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -52,8 +25,21 @@ export default function SearchPage() {
       mapView: 'Map',
       listView: 'List',
       filters: 'Filters',
+      compareSelected: 'Selected for comparison',
+      compare: 'Compare',
+      clear: 'Clear',
     };
     return messages[key] || key;
+  };
+
+  const handleCompare = (clinicId: string, checked: boolean) => {
+      if (checked) {
+          if (selectedClinics.length < 3) {
+              setSelectedClinics([...selectedClinics, clinicId]);
+          }
+      } else {
+          setSelectedClinics(selectedClinics.filter(id => id !== clinicId));
+      }
   };
 
   return (
@@ -70,7 +56,7 @@ export default function SearchPage() {
             "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
             showMap ? "hidden lg:block" : "block"
         )}>
-             <div className="max-w-4xl mx-auto space-y-6">
+             <div className="max-w-4xl mx-auto space-y-6 pb-24">
                  <div className="flex items-center justify-between">
                     <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
 
@@ -97,8 +83,10 @@ export default function SearchPage() {
                          <ClinicCard
                              key={clinic.id}
                              clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
+                             rating={clinic.rating}
+                             reviewCount={clinic.reviewCount}
+                             nextAvailable={clinic.nextAvailable}
+                             onCompareChange={(checked) => handleCompare(clinic.id!, checked)}
                          />
                      ))}
                  </div>
@@ -119,8 +107,38 @@ export default function SearchPage() {
         </div>
       </div>
 
+      {/* Comparison Bar */}
+      {selectedClinics.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-4">
+            <div className="bg-surface-container-highest text-on-surface p-4 rounded-xl shadow-2xl flex items-center justify-between border border-outline-variant/20 backdrop-blur-md animate-in slide-in-from-bottom-5 fade-in duration-300">
+                <div className="flex items-center gap-3">
+                    <div className="bg-primary/10 text-primary w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+                        {selectedClinics.length}
+                    </div>
+                    <span className="font-medium text-sm">{t('compareSelected')}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                     <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setSelectedClinics([])}
+                     >
+                         {t('clear')}
+                     </Button>
+                     <Button
+                        onClick={() => router.push(`/compare?ids=${selectedClinics.join(',')}`)}
+                        disabled={selectedClinics.length < 2}
+                        size="sm"
+                     >
+                         {t('compare')}
+                     </Button>
+                </div>
+            </div>
+        </div>
+      )}
+
       {/* Mobile Map Toggle FAB */}
-      <div className="lg:hidden fixed bottom-6 right-6 z-50">
+      <div className="lg:hidden fixed bottom-6 right-6 z-40">
           <Button
             className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
             size="icon"
