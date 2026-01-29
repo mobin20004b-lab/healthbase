@@ -1,0 +1,12 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 2.1s
+ GET /en/search 200 in 4.5s (compile: 3.4s, proxy.ts: 196ms, generate-params: 1297ms, render: 947ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000 404
+ GET /en/search?specialty=Cardiology&insurance=Salamat 200 in 100ms (compile: 45ms, proxy.ts: 18ms, generate-params: 34ms, render: 37ms)
+[?25h

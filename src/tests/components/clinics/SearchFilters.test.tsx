@@ -54,11 +54,12 @@ describe("SearchFilters", () => {
 
     // Check router push
     expect(mockRouterPush).toHaveBeenCalled();
-    const calledUrl = mockRouterPush.mock.calls[0][0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const calledUrl = (mockRouterPush.mock.calls[0] as any[])[0];
 
     // Check for params
     // URLSearchParams might order keys differently, but we check containment
-    expect(calledUrl).toContain("specialty=Cardiology");
-    expect(calledUrl).toContain("insurance=Salamat");
+    expect(calledUrl as string).toContain("specialty=Cardiology");
+    expect(calledUrl as string).toContain("insurance=Salamat");
   });
 });
