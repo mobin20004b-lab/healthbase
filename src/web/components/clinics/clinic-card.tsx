@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import type { Clinic } from "@prisma/client";
 import { Card } from "@/web/components/ui/card";
 import { Button } from "@/web/components/ui/button";
@@ -34,9 +35,11 @@ export function ClinicCard({
             {/* Image Section */}
             <div className="relative h-48 w-full sm:h-auto sm:w-48 shrink-0 overflow-hidden bg-surface-container-highest">
                 {clinic.image ? (
-                    <img
+                    <Image
                         src={clinic.image}
                         alt={clinic.name}
+                        width={200}
+                        height={200}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                 ) : (

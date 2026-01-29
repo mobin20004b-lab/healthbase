@@ -6,6 +6,7 @@ import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Map, List, Filter } from 'lucide-react';
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
@@ -43,6 +44,7 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
+  const searchParams = useSearchParams();
 
   // const t = useTranslations('Search');
   // Temporary mock until messages are updated
@@ -60,7 +62,7 @@ export default function SearchPage() {
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
       <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
-        <SearchFilters />
+        <SearchFilters key={searchParams.toString()} />
       </div>
 
       {/* Main Content Area */}
@@ -85,7 +87,7 @@ export default function SearchPage() {
                             </SheetTrigger>
                             <SheetContent side="left" className="w-[300px] p-0">
                                 <div className="h-full overflow-y-auto p-4">
-                                    <SearchFilters />
+                                    <SearchFilters key={searchParams.toString()} />
                                 </div>
                             </SheetContent>
                         </Sheet>
