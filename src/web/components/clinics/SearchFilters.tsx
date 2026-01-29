@@ -3,48 +3,68 @@
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import { useRouter } from '@/routing'; // Localized router
+import { useRouter } from '@/routing';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
+import { Checkbox } from '@/web/components/ui/checkbox';
+import { Label } from '@/web/components/ui/label';
 import { getProvinces, getCities } from '@/lib/constants/locations';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface SearchFiltersProps {
-    // locale: string;
-}
+// Constants for filters
+const SPECIALTIES = ['Dentistry', 'Cardiology', 'Dermatology', 'Neurology'];
+const INSURANCES = ['Salamat', 'Tamin', 'NiroohayeMosallah'];
 
-export default function SearchFilters({}: SearchFiltersProps) {
+export default function SearchFilters() {
     const t = useTranslations('Clinics');
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    // Single value filters
     const [city, setCity] = useState(searchParams.get('city') || '');
     const [province, setProvince] = useState(searchParams.get('province') || '');
     const [q, setQ] = useState(searchParams.get('q') || '');
-    const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
-    const [insurance, setInsurance] = useState(searchParams.get('insurance') || '');
+
+    // Multi-value filters
+    const [specialties, setSpecialties] = useState<string[]>(searchParams.getAll('specialty'));
+    const [insurances, setInsurances] = useState<string[]>(searchParams.getAll('insurance'));
 
     const handleSearch = () => {
-        const params = new URLSearchParams(searchParams.toString());
-        if (city) params.set('city', city); else params.delete('city');
-        if (province) params.set('province', province); else params.delete('province');
-        if (q) params.set('q', q); else params.delete('q');
-        if (specialty) params.set('specialty', specialty); else params.delete('specialty');
-        if (insurance) params.set('insurance', insurance); else params.delete('insurance');
+        const params = new URLSearchParams();
+        if (city) params.set('city', city);
+        if (province) params.set('province', province);
+        if (q) params.set('q', q);
 
-        // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        specialties.forEach(s => params.append('specialty', s));
+        insurances.forEach(i => params.append('insurance', i));
+
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
         setCity('');
         setProvince('');
         setQ('');
-        setSpecialty('');
-        setInsurance('');
-        router.push(`/clinics`);
+        setSpecialties([]);
+        setInsurances([]);
+        router.push(`/search`);
+    };
+
+    const toggleSpecialty = (value: string, checked: boolean) => {
+        if (checked) {
+            setSpecialties([...specialties, value]);
+        } else {
+            setSpecialties(specialties.filter(s => s !== value));
+        }
+    };
+
+    const toggleInsurance = (value: string, checked: boolean) => {
+        if (checked) {
+            setInsurances([...insurances, value]);
+        } else {
+            setInsurances(insurances.filter(i => i !== value));
+        }
     };
 
     return (
@@ -81,7 +101,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
                             value={province}
                             onChange={(e) => {
                                 setProvince(e.target.value);
-                                setCity(''); // Reset city when province changes
+                                setCity('');
                             }}
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
                         >
@@ -119,38 +139,39 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Specialty Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('specialty')}</label>
-                    <div className="relative">
-                        <select
-                            value={specialty}
-                            onChange={(e) => setSpecialty(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
-                        >
-                            <option value="">{t('all')}</option>
-                            <option value="Dentistry">{t('specialties.Dentistry')}</option>
-                            <option value="Cardiology">{t('specialties.Cardiology')}</option>
-                            <option value="Dermatology">{t('specialties.Dermatology')}</option>
-                            <option value="Neurology">{t('specialties.Neurology')}</option>
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    <label className="block text-sm font-bold text-on-surface-variant mb-3">{t('specialty')}</label>
+                    <div className="space-y-3">
+                        {SPECIALTIES.map((spec) => (
+                            <div key={spec} className="flex items-center space-x-2 rtl:space-x-reverse">
+                                <Checkbox
+                                    id={`specialty-${spec}`}
+                                    checked={specialties.includes(spec)}
+                                    onCheckedChange={(checked) => toggleSpecialty(spec, checked as boolean)}
+                                />
+                                <Label htmlFor={`specialty-${spec}`} className="cursor-pointer">
+                                    {t(`specialties.${spec}`)}
+                                </Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
                 {/* Insurance Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('insurance')}</label>
-                    <div className="relative">
-                        <select
-                            value={insurance}
-                            onChange={(e) => setInsurance(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
-                        >
-                            <option value="">{t('all')}</option>
-                            <option value="Salamat">{t('insurances.Salamat')}</option>
-                            <option value="Tamin">{t('insurances.Tamin')}</option>
-                            <option value="NiroohayeMosallah">{t('insurances.NiroohayeMosallah')}</option>
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    <label className="block text-sm font-bold text-on-surface-variant mb-3">{t('insurance')}</label>
+                    <div className="space-y-3">
+                        {INSURANCES.map((ins) => (
+                            <div key={ins} className="flex items-center space-x-2 rtl:space-x-reverse">
+                                <Checkbox
+                                    id={`insurance-${ins}`}
+                                    checked={insurances.includes(ins)}
+                                    onCheckedChange={(checked) => toggleInsurance(ins, checked as boolean)}
+                                />
+                                <Label htmlFor={`insurance-${ins}`} className="cursor-pointer">
+                                    {t(`insurances.${ins}`)}
+                                </Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

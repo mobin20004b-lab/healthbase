@@ -1,6 +1,6 @@
 "use client";
 
-// import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
@@ -8,7 +8,7 @@ import { Map, List, Filter } from 'lucide-react';
 import { useState } from 'react';
 import type { Clinic } from '@prisma/client';
 import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/web/components/ui/sheet";
 
 // Mock data for initial implementation
 const MOCK_CLINICS: Partial<Clinic>[] = [
@@ -43,23 +43,12 @@ const MOCK_CLINICS: Partial<Clinic>[] = [
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false);
-
-  // const t = useTranslations('Search');
-  // Temporary mock until messages are updated
-  const t = (key: string) => {
-    const messages: Record<string, string> = {
-      title: 'Find Your Care',
-      mapView: 'Map',
-      listView: 'List',
-      filters: 'Filters',
-    };
-    return messages[key] || key;
-  };
+  const t = useTranslations('Clinics');
 
   return (
     <div className="relative flex h-[calc(100vh-64px)] overflow-hidden">
       {/* Filters Sidebar - Desktop */}
-      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block">
+      <div className="hidden w-80 shrink-0 border-r border-outline-variant/20 overflow-y-auto p-4 lg:block scrollbar-thin">
         <SearchFilters />
       </div>
 
@@ -84,6 +73,7 @@ export default function SearchPage() {
                                 </Button>
                             </SheetTrigger>
                             <SheetContent side="left" className="w-[300px] p-0">
+                                <SheetTitle className="sr-only">{t('filters')}</SheetTitle>
                                 <div className="h-full overflow-y-auto p-4">
                                     <SearchFilters />
                                 </div>
@@ -93,14 +83,20 @@ export default function SearchPage() {
                  </div>
 
                  <div className="grid grid-cols-1 gap-4">
-                     {MOCK_CLINICS.map((clinic) => (
-                         <ClinicCard
-                             key={clinic.id}
-                             clinic={clinic as Clinic}
-                             rating={4.5}
-                             reviewCount={120}
-                         />
-                     ))}
+                     {MOCK_CLINICS.length > 0 ? (
+                        MOCK_CLINICS.map((clinic) => (
+                             <ClinicCard
+                                 key={clinic.id}
+                                 clinic={clinic as Clinic}
+                                 rating={4.5}
+                                 reviewCount={120}
+                             />
+                         ))
+                     ) : (
+                        <div className="text-center py-10 text-on-surface-variant">
+                            {t('noResults')}
+                        </div>
+                     )}
                  </div>
              </div>
         </div>
@@ -113,7 +109,7 @@ export default function SearchPage() {
              <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant">
                  <div className="text-center">
                      <Map className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                     <p>Map View Placeholder</p>
+                     <p>{t('mapView')}</p>
                  </div>
              </div>
         </div>

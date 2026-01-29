@@ -53,6 +53,7 @@
         "all": "All",
         "search": "Search",
         "searchPlaceholder": "Search for clinics, services...",
+        "mapView": "Map View Placeholder",
         "province": "Province",
         "specialties": {
             "Dentistry": "Dentistry",
