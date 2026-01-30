@@ -20,6 +20,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '20');
+    const ids = searchParams.get('ids');
     const city = searchParams.get('city');
     const province = searchParams.get('province');
     const specialty = searchParams.get('specialty');
@@ -31,6 +32,14 @@ export async function GET(request: Request) {
     const skip = (page - 1) * limit;
 
     const andConditions: Record<string, unknown>[] = [];
+
+    // Filter by specific IDs
+    if (ids) {
+        const idsList = ids.split(',').filter(Boolean);
+        if (idsList.length > 0) {
+            andConditions.push({ id: { in: idsList } });
+        }
+    }
 
     // Search in translations as well if q is provided
     if (city) {

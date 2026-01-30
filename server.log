@@ -1,0 +1,61 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 4.3s
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+○ Compiling /[locale]/compare ...
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+ GET /en/compare 200 in 12.7s (compile: 10.6s, proxy.ts: 277ms, generate-params: 1840ms, render: 1889ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/node_modules_@auth_core_36df0127._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/node_modules_@auth_core_36df0127._.js:5330:204)
+⨯ Error [PrismaClientKnownRequestError]:
+Invalid `{imported module ./src/lib/prisma.ts}["default"].clinic.findMany()` invocation in
+/app/.next/dev/server/chunks/[root-of-the-server]__366bd0a5._.js:460:146
+
+  457     };
+  458 }
+  459 const [clinics, total] = await Promise.all([
+→ 460     {imported module ./src/lib/prisma.ts}["default"].clinic.findMany(
+
+    at <unknown> (src/app/api/clinics/route.ts:109:23)
+    at async GET (src/app/api/clinics/route.ts:108:30)
+  107 |
+  108 |     const [clinics, total] = await Promise.all([
+> 109 |         prisma.clinic.findMany({
+      |                       ^
+  110 |             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  111 |             where: where as any,
+  112 |             skip, {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /api/clinics?ids=nonexistent 500 in 2.5s (compile: 1857ms, render: 650ms)
+Failed to fetch clinics for comparison
+ GET /en/compare?ids=nonexistent 200 in 2.9s (compile: 148ms, proxy.ts: 16ms, generate-params: 47ms, render: 2.7s)
