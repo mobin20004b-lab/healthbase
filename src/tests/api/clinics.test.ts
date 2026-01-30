@@ -63,6 +63,7 @@ describe("GET /api/clinics", () => {
     const andConditions = where.AND;
     expect(andConditions).toBeDefined();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const idCondition = andConditions.find((c: any) => c.id && c.id.in);
     expect(idCondition).toBeDefined();
     expect(idCondition.id.in).toEqual(["c1", "c3"]);
@@ -80,6 +81,7 @@ describe("GET /api/clinics", () => {
     // If no filters, where should be {} or { AND: [] } depending on implementation
     // My implementation: const where = andConditions.length > 0 ? { AND: andConditions } : {};
     if (where && where.AND) {
+       // eslint-disable-next-line @typescript-eslint/no-explicit-any
        const idCondition = where.AND.find((c: any) => c.id && c.id.in);
        expect(idCondition).toBeUndefined();
     } else {

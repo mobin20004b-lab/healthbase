@@ -34,6 +34,7 @@ export function ClinicCard({
             {/* Image Section */}
             <div className="relative h-48 w-full sm:h-auto sm:w-48 shrink-0 overflow-hidden bg-surface-container-highest">
                 {clinic.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                         src={clinic.image}
                         alt={clinic.name}

@@ -11,7 +11,8 @@ export default async function PatientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  // const session = await auth();
+  await auth();
 
   return (
     <div className="flex min-h-screen bg-background text-on-surface">

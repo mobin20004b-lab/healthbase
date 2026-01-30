@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
-import { Star, MapPin, Calendar, Wallet, Check, X, ArrowRight } from "lucide-react";
+// import { useTranslations } from "next-intl";
+import { Star, MapPin, Calendar, Wallet, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/web/components/ui/button";
 import { Link } from "@/routing";
 import type { Clinic, Service } from "@prisma/client";
@@ -20,7 +20,7 @@ interface CompareTableProps {
 }
 
 export function CompareTable({ clinics }: CompareTableProps) {
-  const t = useTranslations("Clinics"); // Assuming translation namespace
+  // const t = useTranslations("Clinics"); // Assuming translation namespace
   // Use "Search" or "Common" if "Clinics" lacks specific keys, but we'll stick to generic or defined ones.
   // Actually, I'll use hardcoded fallbacks or simple keys.
 
@@ -48,6 +48,7 @@ export function CompareTable({ clinics }: CompareTableProps) {
                 <div className="flex flex-col gap-3">
                   <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-surface-container-highest">
                     {clinic.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={clinic.image}
                         alt={clinic.name}

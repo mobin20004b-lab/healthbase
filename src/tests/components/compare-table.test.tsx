@@ -11,6 +11,7 @@ mock.module("next-intl", () => ({
 
 // Mock Link
 mock.module("@/routing", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Link: ({ children, href }: any) => <a href={href}>{children}</a>,
 }));
 
