@@ -9,9 +9,8 @@ const mockT = (key: string) => {
     if (key === 'heroSubtitle') return 'Test Subtitle';
     return key;
 };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-mockT.rich = (_key: string, _chunks: any) => 'Rich Text';
-mockT.has = (_key: string) => true;
+mockT.rich = () => 'Rich Text';
+mockT.has = () => true;
 
 const mockRouter = {
     push: mock(),

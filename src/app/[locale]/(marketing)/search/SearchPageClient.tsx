@@ -11,8 +11,14 @@ import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
 import { Pagination } from '@/web/components/ui/pagination';
 
+interface ClinicWithRelations extends Partial<Clinic> {
+    averageRating?: number;
+    reviews?: { rating: number }[];
+    services?: unknown[];
+}
+
 interface SearchPageClientProps {
-    clinics: any[]; // Use any to avoid type mismatches with dates/etc for now
+    clinics: ClinicWithRelations[];
     meta: {
         page: number;
         limit: number;
