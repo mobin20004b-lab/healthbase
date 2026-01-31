@@ -34,6 +34,12 @@
             "choiceDesc": "Compare and choose the best for you."
         }
     },
+    "Search": {
+        "title": "Find Your Care",
+        "mapView": "Map",
+        "listView": "List",
+        "filters": "Filters"
+    },
     "Clinics": {
         "title": "Clinics",
         "subtitle": "Find verified healthcare providers in your area",
