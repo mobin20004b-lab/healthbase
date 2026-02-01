@@ -34,6 +34,13 @@
             "choiceDesc": "Compare and choose the best for you."
         }
     },
+    "Search": {
+        "title": "Find Your Care",
+        "mapView": "Map",
+        "listView": "List",
+        "filters": "Filters",
+        "noResults": "No clinics found matching your criteria."
+    },
     "Clinics": {
         "title": "Clinics",
         "subtitle": "Find verified healthcare providers in your area",
@@ -58,13 +65,20 @@
             "Dentistry": "Dentistry",
             "Cardiology": "Cardiology",
             "Dermatology": "Dermatology",
-            "Neurology": "Neurology"
+            "Neurology": "Neurology",
+            "Orthopedics": "Orthopedics",
+            "Pediatrics": "Pediatrics"
         },
         "insurances": {
             "Salamat": "Public Health (Salamat)",
             "Tamin": "Social Security (Tamin)",
-            "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
+            "NiroohayeMosallah": "Military (Niroohaye Mosallah)",
+            "Dana": "Dana Insurance",
+            "Asia": "Asia Insurance"
         },
+        "rating": "Minimum Rating",
+        "anyRating": "Any",
+        "stars": "Stars",
         "locations": {
         "countries": {
             "Iran": "Iran"

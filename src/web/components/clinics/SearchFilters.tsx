@@ -1,54 +1,84 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
-import { useRouter } from '@/routing'; // Localized router
+import { useRouter, usePathname } from '@/routing';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
+import { Checkbox } from '@/web/components/ui/checkbox';
+import { Label } from '@/web/components/ui/label';
 import { getProvinces, getCities } from '@/lib/constants/locations';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface SearchFiltersProps {
-    // locale: string;
-}
+const SPECIALTIES = ['Dentistry', 'Cardiology', 'Dermatology', 'Neurology', 'Orthopedics', 'Pediatrics'];
+const INSURANCES = ['Salamat', 'Tamin', 'NiroohayeMosallah', 'Dana', 'Asia'];
 
-export default function SearchFilters({}: SearchFiltersProps) {
+export default function SearchFilters() {
     const t = useTranslations('Clinics');
     const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const [city, setCity] = useState(searchParams.get('city') || '');
     const [province, setProvince] = useState(searchParams.get('province') || '');
     const [q, setQ] = useState(searchParams.get('q') || '');
-    const [specialty, setSpecialty] = useState(searchParams.get('specialty') || '');
-    const [insurance, setInsurance] = useState(searchParams.get('insurance') || '');
+    const [specialties, setSpecialties] = useState<string[]>(searchParams.getAll('specialty') || []);
+    const [insurances, setInsurances] = useState<string[]>(searchParams.getAll('insurance') || []);
+    const [minRating, setMinRating] = useState(searchParams.get('minRating') || '');
+
+    // Sync local state with URL params on navigation (e.g. back button)
+    useEffect(() => {
+        setCity(searchParams.get('city') || '');
+        setProvince(searchParams.get('province') || '');
+        setQ(searchParams.get('q') || '');
+        setSpecialties(searchParams.getAll('specialty') || []);
+        setInsurances(searchParams.getAll('insurance') || []);
+        setMinRating(searchParams.get('minRating') || '');
+    }, [searchParams]);
 
     const handleSearch = () => {
-        const params = new URLSearchParams(searchParams.toString());
-        if (city) params.set('city', city); else params.delete('city');
-        if (province) params.set('province', province); else params.delete('province');
-        if (q) params.set('q', q); else params.delete('q');
-        if (specialty) params.set('specialty', specialty); else params.delete('specialty');
-        if (insurance) params.set('insurance', insurance); else params.delete('insurance');
+        const params = new URLSearchParams();
+        if (city) params.set('city', city);
+        if (province) params.set('province', province);
+        if (q) params.set('q', q);
 
-        // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        specialties.forEach(s => params.append('specialty', s));
+        insurances.forEach(i => params.append('insurance', i));
+
+        if (minRating) params.set('minRating', minRating);
+
+        // Reset page on new search
+        // params.delete('page'); // Implicit since we create new URLSearchParams
+
+        router.push(`${pathname}?${params.toString()}`);
     };
 
     const handleClear = () => {
         setCity('');
         setProvince('');
         setQ('');
-        setSpecialty('');
-        setInsurance('');
-        router.push(`/clinics`);
+        setSpecialties([]);
+        setInsurances([]);
+        setMinRating('');
+        router.push(pathname);
+    };
+
+    const toggleSpecialty = (value: string) => {
+        setSpecialties(prev =>
+            prev.includes(value) ? prev.filter(s => s !== value) : [...prev, value]
+        );
+    };
+
+    const toggleInsurance = (value: string) => {
+        setInsurances(prev =>
+            prev.includes(value) ? prev.filter(s => s !== value) : [...prev, value]
+        );
     };
 
     return (
-        <Card variant="bento" className="p-6 sticky top-24">
+        <Card variant="bento" className="p-6 sticky top-24 max-h-[calc(100vh-120px)] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-bold text-on-surface">{t('filters')}</h2>
                 <Button variant="ghost" size="sm" onClick={handleClear} className="font-bold">
@@ -59,7 +89,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
             <div className="space-y-6">
                 {/* Search Input */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('search')}</label>
+                    <Label className="block mb-2 text-on-surface-variant">{t('search')}</Label>
                     <div className="relative">
                         <Input
                             type="text"
@@ -75,13 +105,13 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* Province Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('province')}</label>
+                    <Label className="block mb-2 text-on-surface-variant">{t('province')}</Label>
                     <div className="relative">
                         <select
                             value={province}
                             onChange={(e) => {
                                 setProvince(e.target.value);
-                                setCity(''); // Reset city when province changes
+                                setCity('');
                             }}
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
                         >
@@ -98,7 +128,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
 
                 {/* City Filter */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('city')}</label>
+                    <Label className="block mb-2 text-on-surface-variant">{t('city')}</Label>
                     <div className="relative">
                         <select
                             value={city}
@@ -117,46 +147,65 @@ export default function SearchFilters({}: SearchFiltersProps) {
                     </div>
                 </div>
 
-                {/* Specialty Filter */}
+                {/* Specialty Filter (Checkbox) */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('specialty')}</label>
-                    <div className="relative">
-                        <select
-                            value={specialty}
-                            onChange={(e) => setSpecialty(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
-                        >
-                            <option value="">{t('all')}</option>
-                            <option value="Dentistry">{t('specialties.Dentistry')}</option>
-                            <option value="Cardiology">{t('specialties.Cardiology')}</option>
-                            <option value="Dermatology">{t('specialties.Dermatology')}</option>
-                            <option value="Neurology">{t('specialties.Neurology')}</option>
-                        </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                    <Label className="block mb-3 text-on-surface-variant">{t('specialty')}</Label>
+                    <div className="space-y-3">
+                        {SPECIALTIES.map((spec) => (
+                            <div key={spec} className="flex items-center space-x-2">
+                                <Checkbox
+                                    id={`spec-${spec}`}
+                                    checked={specialties.includes(spec)}
+                                    onChange={() => toggleSpecialty(spec)}
+                                />
+                                <Label htmlFor={`spec-${spec}`} className="font-normal cursor-pointer">
+                                    {t(`specialties.${spec}`) || spec}
+                                </Label>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Insurance Filter */}
+                {/* Insurance Filter (Checkbox) */}
                 <div>
-                    <label className="block text-sm font-bold text-on-surface-variant mb-2">{t('insurance')}</label>
+                    <Label className="block mb-3 text-on-surface-variant">{t('insurance')}</Label>
+                    <div className="space-y-3">
+                        {INSURANCES.map((ins) => (
+                            <div key={ins} className="flex items-center space-x-2">
+                                <Checkbox
+                                    id={`ins-${ins}`}
+                                    checked={insurances.includes(ins)}
+                                    onChange={() => toggleInsurance(ins)}
+                                />
+                                <Label htmlFor={`ins-${ins}`} className="font-normal cursor-pointer">
+                                    {t(`insurances.${ins}`) || ins}
+                                </Label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Rating Filter */}
+                 <div>
+                    <Label className="block mb-2 text-on-surface-variant">{t('rating') || 'Minimum Rating'}</Label>
                     <div className="relative">
                         <select
-                            value={insurance}
-                            onChange={(e) => setInsurance(e.target.value)}
+                            value={minRating}
+                            onChange={(e) => setMinRating(e.target.value)}
                             className="w-full px-4 py-2.5 bg-surface-variant/30 border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-on-surface font-bold"
                         >
-                            <option value="">{t('all')}</option>
-                            <option value="Salamat">{t('insurances.Salamat')}</option>
-                            <option value="Tamin">{t('insurances.Tamin')}</option>
-                            <option value="NiroohayeMosallah">{t('insurances.NiroohayeMosallah')}</option>
+                            <option value="">{t('anyRating') || 'Any'}</option>
+                            <option value="4.5">4.5+ {t('stars') || 'Stars'}</option>
+                            <option value="4">4+ {t('stars') || 'Stars'}</option>
+                            <option value="3">3+ {t('stars') || 'Stars'}</option>
                         </select>
-                        <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
+                         <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-on-surface-variant pointer-events-none" />
                     </div>
                 </div>
 
                 <Button
                     onClick={handleSearch}
-                    className="w-full h-12 text-base"
+                    className="w-full h-12 text-base mt-4"
                 >
                     {t('applyFilters')}
                 </Button>
