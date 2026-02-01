@@ -5,7 +5,7 @@ import { Link } from "@/routing"
 import { useSearchParams } from "next/navigation"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/web/components/ui/button"
+import { buttonVariants, ButtonProps } from "@/web/components/ui/button"
 
 interface PaginationProps extends React.HTMLAttributes<HTMLElement> {
     totalPages: number
@@ -90,15 +90,16 @@ const Pagination = ({ className, totalPages, currentPage, ...props }: Pagination
     )
 }
 
-interface PaginationLinkProps extends React.ComponentProps<typeof Link> {
+type PaginationLinkProps = {
     isActive?: boolean
     disabled?: boolean
-}
+} & Pick<ButtonProps, "size"> & React.ComponentProps<typeof Link>
 
 const PaginationLink = ({
     className,
     isActive,
     disabled,
+    size = "icon",
     ...props
 }: PaginationLinkProps) => (
     <Link
@@ -106,7 +107,7 @@ const PaginationLink = ({
         className={cn(
             buttonVariants({
                 variant: isActive ? "filled" : "ghost",
-                size: "icon",
+                size,
             }),
             disabled && "pointer-events-none opacity-50",
             className
