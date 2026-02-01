@@ -3,6 +3,7 @@ import type { Clinic } from '@prisma/client';
 export interface ClinicWithRelations extends Clinic {
   averageRating?: number;
   reviewCount?: number;
+  services?: unknown[];
 }
 
 const MOCK_CLINICS: Partial<ClinicWithRelations>[] = [
