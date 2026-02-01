@@ -13,11 +13,8 @@ import {
 } from "lucide-react";
 import { NavigationRail, NavigationRailItem } from "@/web/components/ui/nav-rail";
 import { BottomNav, BottomNavItem } from "@/web/components/ui/bottom-nav";
-import { useTranslations } from "next-intl";
-
 export default function AdminNavigation() {
   const pathname = usePathname();
-  // const t = useTranslations("AdminNavigation");
 
   const navItems = [
     { href: "/admin", icon: <LayoutDashboard />, label: "Overview" },

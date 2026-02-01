@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Search, ChevronDown } from 'lucide-react';
 import { useRouter, usePathname } from '@/routing';
 import { useSearchParams } from 'next/navigation';
@@ -28,15 +28,6 @@ export default function SearchFilters() {
     const [insurances, setInsurances] = useState<string[]>(searchParams.getAll('insurance') || []);
     const [minRating, setMinRating] = useState(searchParams.get('minRating') || '');
 
-    // Sync local state with URL params on navigation (e.g. back button)
-    useEffect(() => {
-        setCity(searchParams.get('city') || '');
-        setProvince(searchParams.get('province') || '');
-        setQ(searchParams.get('q') || '');
-        setSpecialties(searchParams.getAll('specialty') || []);
-        setInsurances(searchParams.getAll('insurance') || []);
-        setMinRating(searchParams.get('minRating') || '');
-    }, [searchParams]);
 
     const handleSearch = () => {
         const params = new URLSearchParams();

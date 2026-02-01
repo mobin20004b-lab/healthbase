@@ -7,7 +7,7 @@ import { Menu, Globe } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Session } from 'next-auth';
 import { StickyHeader } from '@/web/components/ui/sticky-header';
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetClose, useSheet } from '@/web/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, useSheet } from '@/web/components/ui/sheet';
 import * as React from "react";
 
 interface NavbarProps {

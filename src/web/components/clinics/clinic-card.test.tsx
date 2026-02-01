@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from "bun:test";
+import { describe, it, expect } from "bun:test";
 import React from "react";
 import { render } from "@testing-library/react";
 import { ClinicCard } from "./clinic-card";
