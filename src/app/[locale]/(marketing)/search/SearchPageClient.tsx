@@ -63,6 +63,7 @@ export default function SearchPageClient({ clinics, totalPages, currentPage }: S
                   clinic={clinic}
                   rating={clinic.averageRating}
                   reviewCount={clinic.reviewCount}
+                  checked={selectedClinics.includes(clinic.id)}
                   onCompareChange={(checked) => handleCompareChange(clinic.id, checked)}
                 />
               ))}
