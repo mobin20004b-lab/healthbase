@@ -132,7 +132,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Right Panel (Map)**: Placeholder for Google Maps/Leaflet. Fixed position.
     *   **Mobile Toggle**: Floating Action Button (FAB) to switch List/Map views.
     *   **Filters**: Sidebar or Drawer with checkboxes for Specialties, Insurance.
-*   [ ] **4.3. Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`)**
+*   [x] **4.3. Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`)**
     *   **Layout**: Table with sticky header row (First column: Labels, Other columns: Clinics).
     *   **Visualizers**:
         *   **Availability**: Green text "Tomorrow" vs Amber "3 weeks".
