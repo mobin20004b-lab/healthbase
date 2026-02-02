@@ -8,25 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
+    # Removed services block to rule out resource constraints
     env:
-      DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      # Must match the provider in schema.prisma (postgresql), even if service is off
+      DATABASE_URL: "postgresql://postgres:password@localhost:5432/test_db"
       NEXTAUTH_SECRET: supersecret
       NEXTAUTH_URL: http://localhost:3000
 

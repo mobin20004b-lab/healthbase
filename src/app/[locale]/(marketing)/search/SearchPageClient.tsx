@@ -9,6 +9,7 @@ import { Filter } from "lucide-react";
 import SearchFilters from "@/web/components/clinics/SearchFilters";
 import { Pagination } from "@/web/components/ui/pagination";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/routing";
 
 interface SearchPageClientProps {
   clinics: ClinicWithRelations[];
@@ -18,6 +19,7 @@ interface SearchPageClientProps {
 
 export default function SearchPageClient({ clinics, totalPages, currentPage }: SearchPageClientProps) {
   const t = useTranslations('Clinics');
+  const router = useRouter();
   const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -68,7 +70,7 @@ export default function SearchPageClient({ clinics, totalPages, currentPage }: S
        ) : (
            <div className="text-center py-20 bg-surface-container-low rounded-xl">
                 <p className="text-on-surface-variant text-lg font-medium">{t('noResults')}</p>
-                <Button variant="text" onClick={() => window.location.href = '/search'}>
+                <Button variant="text" onClick={() => router.push('/search')}>
                     {t('clearAll')}
                 </Button>
            </div>
