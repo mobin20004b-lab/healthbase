@@ -1,13 +1,27 @@
 "use client";
 
 import React from "react";
-import { ClinicWithRelations } from "@/services/clinics";
+// import { ClinicWithRelations } from "@/services/clinics"; // Don't import the type with Dates
 import { Star, MapPin, Wallet, Calendar, Check } from "lucide-react";
 import { Button } from "@/web/components/ui/button";
 import { Link } from "@/routing";
+import Image from "next/image";
+
+// Define a minimal interface for what the UI actually needs,
+// relaxing the Date requirement to allow strings (serialization)
+interface ComparableClinic {
+  id: string;
+  name: string;
+  city: string | null;
+  image: string | null;
+  averageRating: number;
+  reviewCount: number;
+  insurances: { id: string; name: string | null }[];
+  services: { id: string; name: string; priceMin: number | null }[];
+}
 
 interface CompareTableProps {
-  clinics: ClinicWithRelations[];
+  clinics: ComparableClinic[];
 }
 
 export function CompareTable({ clinics }: CompareTableProps) {
@@ -28,7 +42,13 @@ export function CompareTable({ clinics }: CompareTableProps) {
                 <div className="flex flex-col gap-3">
                   <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-surface-container-highest">
                     {clinic.image ? (
-                        <img src={clinic.image} alt={clinic.name} className="h-full w-full object-cover" />
+                        <Image
+                            src={clinic.image}
+                            alt={clinic.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                     ) : (
                         <div className="flex h-full w-full items-center justify-center">
                             <MapPin className="h-8 w-8 text-on-surface-variant/20" />

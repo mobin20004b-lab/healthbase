@@ -83,6 +83,7 @@ export default function SearchPage() {
                              clinic={clinic as Clinic}
                              rating={clinic.averageRating}
                              reviewCount={clinic.reviewCount}
+                             isSelected={selectedClinics.includes(clinic.id)}
                              onCompareChange={(checked) => toggleClinicSelection(clinic.id, checked)}
                          />
                      ))}

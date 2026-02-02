@@ -20,6 +20,9 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
 
   const clinics = await getClinicsByIds(ids);
 
+  // Serialize clinics to remove Dates and pass clean objects to Client Component
+  const serializableClinics = JSON.parse(JSON.stringify(clinics));
+
   return (
     <div className="container mx-auto max-w-7xl p-4 md:p-8 space-y-8">
       <div className="flex items-center gap-4">
@@ -34,7 +37,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
         </div>
       </div>
 
-      <CompareTable clinics={clinics} />
+      <CompareTable clinics={serializableClinics} />
     </div>
   );
 }

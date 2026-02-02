@@ -1,4 +1,4 @@
-import { Clinic, Service, Insurance, Specialty } from '@prisma/client';
+import type { Clinic, Service, Insurance, Specialty } from '@prisma/client';
 
 export interface ClinicWithRelations extends Clinic {
   averageRating: number;
