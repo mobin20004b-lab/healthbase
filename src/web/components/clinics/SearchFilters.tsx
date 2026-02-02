@@ -9,13 +9,13 @@ import { Button } from '@/web/components/ui/button';
 import { Input } from '@/web/components/ui/input';
 import { Card } from '@/web/components/ui/card';
 import { getProvinces, getCities } from '@/lib/constants/locations';
+import { cn } from '@/lib/utils';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface SearchFiltersProps {
-    // locale: string;
+    className?: string;
 }
 
-export default function SearchFilters({}: SearchFiltersProps) {
+export default function SearchFilters({ className }: SearchFiltersProps) {
     const t = useTranslations('Clinics');
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -35,7 +35,7 @@ export default function SearchFilters({}: SearchFiltersProps) {
         if (insurance) params.set('insurance', insurance); else params.delete('insurance');
 
         // useRouter from next-intl automatically handles locale prefix
-        router.push(`/clinics?${params.toString()}`);
+        router.push(`/search?${params.toString()}`);
     };
 
     const handleClear = () => {
@@ -44,11 +44,11 @@ export default function SearchFilters({}: SearchFiltersProps) {
         setQ('');
         setSpecialty('');
         setInsurance('');
-        router.push(`/clinics`);
+        router.push(`/search`);
     };
 
     return (
-        <Card variant="bento" className="p-6 sticky top-24">
+        <Card variant="bento" className={cn("p-6 sticky top-24", className)}>
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-bold text-on-surface">{t('filters')}</h2>
                 <Button variant="ghost" size="sm" onClick={handleClear} className="font-bold">
