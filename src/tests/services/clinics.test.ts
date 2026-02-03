@@ -2,8 +2,9 @@
 import { describe, it, expect, mock, beforeEach } from "bun:test";
 import { getClinics } from "@/services/clinics";
 
-const mockFindMany = mock(() => Promise.resolve([]));
-const mockCount = mock(() => Promise.resolve(0));
+// Explicitly type the mock return to match expected structure loosely or use any
+const mockFindMany = mock(async () => [] as any[]);
+const mockCount = mock(async () => 0);
 
 // Mocking @/lib/prisma
 mock.module("@/lib/prisma", () => ({
@@ -24,14 +25,18 @@ describe("getClinics", () => {
     it("should call findMany with correct pagination", async () => {
         await getClinics({ page: '2', limit: '10' });
         expect(mockFindMany).toHaveBeenCalled();
-        const callArgs = mockFindMany.mock.calls[0][0]; // First call, first arg
+        // Use manual access or cast to avoid strict TS tuple errors in test
+        const calls = mockFindMany.mock.calls;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (calls[0] as any[])[0];
         expect(callArgs.skip).toBe(10);
         expect(callArgs.take).toBe(10);
     });
 
     it("should apply city filter", async () => {
         await getClinics({ city: 'Tehran' });
-        const callArgs = mockFindMany.mock.calls[0][0];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (mockFindMany.mock.calls[0] as any[])[0];
         const where = callArgs.where;
         expect(where.AND).toBeDefined();
         // Check structure roughly
@@ -42,7 +47,8 @@ describe("getClinics", () => {
 
     it("should apply specialty filter to both specialties and services", async () => {
         await getClinics({ specialty: 'Dentistry' });
-        const callArgs = mockFindMany.mock.calls[0][0];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (mockFindMany.mock.calls[0] as any[])[0];
         const where = callArgs.where;
         const json = JSON.stringify(where);
         expect(json).toContain('Dentistry');
@@ -60,8 +66,9 @@ describe("getClinics", () => {
             reviews: [{ rating: 5 }, { rating: 4 }],
             favoritedBy: []
         }];
-        mockFindMany.mockImplementation(() => Promise.resolve(mockClinics));
-        mockCount.mockImplementation(() => Promise.resolve(1));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mockFindMany.mockImplementation(async () => mockClinics as any[]);
+        mockCount.mockImplementation(async () => 1);
 
         const result = await getClinics({});
 

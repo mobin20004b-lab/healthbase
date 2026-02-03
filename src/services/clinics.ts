@@ -7,11 +7,17 @@ const MOCK_CLINICS = [
   {
     id: 'mock-1',
     name: 'Tehran Heart Center (Mock)',
+    description: 'A leading heart center in Tehran.',
+    address: 'North Kargar Street',
     city: 'Tehran',
     province: 'Tehran',
     country: 'Iran',
+    phone: '+98 21 8802 9600',
     image: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&q=80&w=1000',
+    website: 'https://thc.tums.ac.ir',
     isVerified: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     averageRating: 4.5,
     reviewCount: 120,
     services: [],
@@ -22,11 +28,17 @@ const MOCK_CLINICS = [
   {
     id: 'mock-2',
     name: 'Milad Hospital (Mock)',
+    description: 'Large specialized hospital.',
+    address: 'Hemmat Expressway',
     city: 'Tehran',
     province: 'Tehran',
     country: 'Iran',
+    phone: '+98 21 82039',
     image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1000',
+    website: 'https://milad.ir',
     isVerified: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     averageRating: 3.8,
     reviewCount: 45,
     services: [],
@@ -37,11 +49,17 @@ const MOCK_CLINICS = [
   {
     id: 'mock-3',
     name: 'Shiraz Central Clinic (Mock)',
+    description: 'Central clinic in Shiraz.',
+    address: 'Zand Street',
     city: 'Shiraz',
     province: 'Fars',
     country: 'Iran',
+    phone: '+98 71 3233 4455',
     image: 'https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000',
+    website: null,
     isVerified: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
     averageRating: 5.0,
     reviewCount: 12,
     services: [],
@@ -265,11 +283,11 @@ export async function getClinics(
         console.warn("Database operation failed, returning mock data.", error);
         // Basic filtering for mock data to make it slightly interactive
         let filtered = [...MOCK_CLINICS];
-        if (city) filtered = filtered.filter(c => c.city.toLowerCase() === city.toLowerCase());
-        if (province) filtered = filtered.filter(c => c.province.toLowerCase() === province.toLowerCase());
+        if (city) filtered = filtered.filter(c => c.city && c.city.toLowerCase() === city.toLowerCase());
+        if (province) filtered = filtered.filter(c => c.province && c.province.toLowerCase() === province.toLowerCase());
         if (q) filtered = filtered.filter(c =>
             c.name.toLowerCase().includes(q.toLowerCase()) ||
-            c.city.toLowerCase().includes(q.toLowerCase())
+            (c.city && c.city.toLowerCase().includes(q.toLowerCase()))
         );
 
         return {
