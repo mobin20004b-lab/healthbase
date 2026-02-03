@@ -9,6 +9,8 @@
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 
 ## Recent Achievements
+*   Implemented Comparison Tool (Feature 4.3) with `CompareTable` and `ComparePage`.
+*   Enhanced `SearchPage` with comparison selection logic and shared `src/services/clinics` data layer.
 *   Implemented `Sheet` component for mobile navigation.
 *   Refactored `Navbar` to use `StickyHeader` and `Sheet`.
 *   Restructured `src/app/[locale]` to use Route Groups (`(marketing)`).
@@ -18,4 +20,4 @@
 *   Refactored Admin directory structure to `src/app/[locale]/(admin)/admin`.
 
 ## Next Steps
-1.  Implement Feature 4.2 Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`).
+1.  Complete Feature 4.2 Search & Discovery (Filters and Map integration).
