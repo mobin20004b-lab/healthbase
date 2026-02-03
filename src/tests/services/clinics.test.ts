@@ -3,6 +3,7 @@ import { describe, it, expect, mock, beforeEach } from "bun:test";
 import { getClinics } from "@/services/clinics";
 
 // Explicitly type the mock return to match expected structure loosely or use any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockFindMany = mock(async () => [] as any[]);
 const mockCount = mock(async () => 0);
 

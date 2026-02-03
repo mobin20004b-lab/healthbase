@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, Review, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
