@@ -102,8 +102,8 @@ export async function getClinics(
     const limit = parseInt(typeof searchParams.limit === 'string' ? searchParams.limit : '20') || 20;
     const city = typeof searchParams.city === 'string' ? searchParams.city : undefined;
     const province = typeof searchParams.province === 'string' ? searchParams.province : undefined;
-    const specialty = typeof searchParams.specialty === 'string' ? searchParams.specialty : undefined;
-    const insurance = typeof searchParams.insurance === 'string' ? searchParams.insurance : undefined;
+    const specialty = searchParams.specialty;
+    const insurance = searchParams.insurance;
     const q = typeof searchParams.q === 'string' ? searchParams.q : undefined;
     const sort = typeof searchParams.sort === 'string' ? searchParams.sort : 'newest';
 
@@ -131,45 +131,51 @@ export async function getClinics(
     }
 
     if (specialty) {
+        const specialties = Array.isArray(specialty) ? specialty : [specialty];
         andConditions.push({
-            OR: [
-                // Check Clinic Specialties relation
-                {
-                    specialties: {
-                        some: {
-                            OR: [
-                                { name: { contains: specialty, mode: 'insensitive' } },
-                                { translations: { some: { name: { contains: specialty, mode: 'insensitive' }, locale } } }
-                            ]
+            OR: specialties.map((s) => ({
+                OR: [
+                    // Check Clinic Specialties relation
+                    {
+                        specialties: {
+                            some: {
+                                OR: [
+                                    { name: { contains: s, mode: 'insensitive' } },
+                                    { translations: { some: { name: { contains: s, mode: 'insensitive' }, locale } } }
+                                ]
+                            }
+                        }
+                    },
+                    // Check Services
+                    {
+                        services: {
+                            some: {
+                                OR: [
+                                    { name: { contains: s, mode: 'insensitive' } },
+                                    { category: { name: { contains: s, mode: 'insensitive' } } }, // category is relation
+                                    { translations: { some: { name: { contains: s, mode: 'insensitive' }, locale } } }
+                                ]
+                            }
                         }
                     }
-                },
-                // Check Services
-                {
-                    services: {
-                        some: {
-                            OR: [
-                                { name: { contains: specialty, mode: 'insensitive' } },
-                                { category: { name: { contains: specialty, mode: 'insensitive' } } }, // category is relation
-                                { translations: { some: { name: { contains: specialty, mode: 'insensitive' }, locale } } }
-                            ]
-                        }
-                    }
-                }
-            ]
+                ]
+            }))
         });
     }
 
     if (insurance) {
+        const insurances = Array.isArray(insurance) ? insurance : [insurance];
         andConditions.push({
-            insurances: {
-                some: {
-                    OR: [
-                        { name: { contains: insurance, mode: 'insensitive' } },
-                        { translations: { some: { name: { contains: insurance, mode: 'insensitive' }, locale } } }
-                    ]
+            OR: insurances.map((i) => ({
+                insurances: {
+                    some: {
+                        OR: [
+                            { name: { contains: i, mode: 'insensitive' } },
+                            { translations: { some: { name: { contains: i, mode: 'insensitive' }, locale } } }
+                        ]
+                    }
                 }
-            }
+            }))
         });
     }
 

@@ -4,6 +4,7 @@ import React from "react";
 import type { Clinic } from "@prisma/client";
 import { Card } from "@/web/components/ui/card";
 import { Button } from "@/web/components/ui/button";
+import { Checkbox } from "@/web/components/ui/checkbox";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -47,13 +48,12 @@ export function ClinicCard({
 
                 {/* Mobile: Compare Checkbox overlay */}
                 <div className="absolute top-2 right-2 sm:hidden">
-                    <label className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer">
-                        <input
-                            type="checkbox"
-                            className="peer h-4 w-4 rounded border-primary text-primary focus:ring-primary accent-primary"
+                    <div className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer">
+                        <Checkbox
+                            className="h-4 w-4"
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
-                    </label>
+                    </div>
                 </div>
             </div>
 
@@ -102,14 +102,13 @@ export function ClinicCard({
 
                 {/* Actions Footer - Desktop */}
                 <div className="mt-4 flex items-center justify-between border-t border-outline-variant/20 pt-4">
-                    <label className="hidden sm:flex items-center gap-2 text-sm text-on-surface-variant cursor-pointer hover:text-on-surface transition-colors">
-                        <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded border-outline text-primary focus:ring-primary accent-primary"
+                    <div className="hidden sm:flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
+                        <Checkbox
+                            id={`compare-${clinic.id}`}
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
-                        <span>Compare</span>
-                    </label>
+                        <label htmlFor={`compare-${clinic.id}`} className="cursor-pointer select-none">Compare</label>
+                    </div>
 
                     <Button variant="tonal" size="sm" className="ml-auto group/btn">
                         View Profile
