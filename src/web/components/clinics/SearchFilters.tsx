@@ -30,14 +30,25 @@ export default function SearchFilters({}: SearchFiltersProps) {
     const [specialties, setSpecialties] = useState<string[]>(searchParams.getAll('specialty'));
     const [insurances, setInsurances] = useState<string[]>(searchParams.getAll('insurance'));
 
+    // Derived values for effect dependencies
+    const urlCity = searchParams.get('city') || '';
+    const urlProvince = searchParams.get('province') || '';
+    const urlQ = searchParams.get('q') || '';
+    // Use JSON.stringify for stable array comparison
+    const urlSpecialties = searchParams.getAll('specialty');
+    const urlInsurances = searchParams.getAll('insurance');
+    const specialtiesKey = JSON.stringify(urlSpecialties.sort());
+    const insurancesKey = JSON.stringify(urlInsurances.sort());
+
     // Update state when URL changes (e.g. back button)
     useEffect(() => {
-        setCity(searchParams.get('city') || '');
-        setProvince(searchParams.get('province') || '');
-        setQ(searchParams.get('q') || '');
-        setSpecialties(searchParams.getAll('specialty'));
-        setInsurances(searchParams.getAll('insurance'));
-    }, [searchParams]);
+        setCity(urlCity);
+        setProvince(urlProvince);
+        setQ(urlQ);
+        setSpecialties(urlSpecialties);
+        setInsurances(urlInsurances);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [urlCity, urlProvince, urlQ, specialtiesKey, insurancesKey]);
 
     const handleSearch = () => {
         const params = new URLSearchParams(); // Start fresh or copy?
