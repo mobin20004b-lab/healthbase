@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import AdminNavigation from "@/web/components/layout/AdminNavigation";
-import { auth } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Admin Portal | Topmedica",
@@ -11,7 +10,6 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
 
   return (
     <div className="flex min-h-screen bg-surface text-on-surface">

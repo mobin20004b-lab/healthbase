@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import PatientNavigation from "@/web/components/layout/PatientNavigation";
-import { auth } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Patient Portal | Topmedica",
@@ -11,7 +10,6 @@ export default async function PatientLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
 
   return (
     <div className="flex min-h-screen bg-background text-on-surface">

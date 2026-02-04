@@ -6,6 +6,7 @@ import { Card } from "@/web/components/ui/card";
 import { Button } from "@/web/components/ui/button";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface ClinicCardProps {
     clinic: Clinic;
@@ -34,10 +35,12 @@ export function ClinicCard({
             {/* Image Section */}
             <div className="relative h-48 w-full sm:h-auto sm:w-48 shrink-0 overflow-hidden bg-surface-container-highest">
                 {clinic.image ? (
-                    <img
+                    <Image
                         src={clinic.image}
                         alt={clinic.name}
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, 192px"
                     />
                 ) : (
                     <div className="flex h-full w-full items-center justify-center text-on-surface-variant/20">
@@ -46,7 +49,7 @@ export function ClinicCard({
                 )}
 
                 {/* Mobile: Compare Checkbox overlay */}
-                <div className="absolute top-2 right-2 sm:hidden">
+                <div className="absolute top-2 right-2 sm:hidden z-10">
                     <label className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer">
                         <input
                             type="checkbox"
