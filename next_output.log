@@ -1,0 +1,108 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1317ms
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Database operation failed, trying mock data. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__96fdbe37._.js:461:165
+
+  458 }
+  459 async function getClinicById(id, locale = 'fa', userId) {
+  460     try {
+→ 461         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:311:44)
+    at async getClinicById (src/services/clinics.ts:311:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:20:20)
+  309 | ): Promise<ClinicWithRelations | null> {
+  310 |     try {
+> 311 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  312 |             where: { id },
+  313 |             include: {
+  314 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 3.2s (compile: 1932ms, proxy.ts: 180ms, render: 1134ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Database operation failed, trying mock data. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__96fdbe37._.js:461:165
+
+  458 }
+  459 async function getClinicById(id, locale = 'fa', userId) {
+  460     try {
+→ 461         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:311:44)
+    at async getClinicById (src/services/clinics.ts:311:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:20:20)
+  309 | ): Promise<ClinicWithRelations | null> {
+  310 |     try {
+> 311 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  312 |             where: { id },
+  313 |             include: {
+  314 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 500ms (compile: 31ms, proxy.ts: 13ms, render: 456ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Database operation failed, trying mock data. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__96fdbe37._.js:461:165
+
+  458 }
+  459 async function getClinicById(id, locale = 'fa', userId) {
+  460     try {
+→ 461         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:311:44)
+    at async getClinicById (src/services/clinics.ts:311:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:20:20)
+  309 | ): Promise<ClinicWithRelations | null> {
+  310 |     try {
+> 311 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  312 |             where: { id },
+  313 |             include: {
+  314 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 1038ms (compile: 280ms, proxy.ts: 20ms, render: 738ms)
+[?25h
