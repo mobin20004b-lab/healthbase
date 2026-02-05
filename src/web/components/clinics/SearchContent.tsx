@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X } from 'lucide-react';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Pagination } from '@/web/components/ui/pagination';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { Link } from '@/routing';
 import { cn } from '@/lib/utils';
 import type { ClinicWithRelations, PaginationMeta } from '@/services/clinics';
 
@@ -18,7 +19,20 @@ interface SearchContentProps {
 
 export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
+    const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
     const t = useTranslations('Clinics');
+
+    const handleCompareToggle = (id: string, checked: boolean) => {
+        if (checked) {
+            if (selectedClinics.length < 3) {
+                setSelectedClinics([...selectedClinics, id]);
+            } else {
+                 alert(t('compareLimit', { defaultValue: "You can compare up to 3 clinics." }));
+            }
+        } else {
+            setSelectedClinics(selectedClinics.filter(cId => cId !== id));
+        }
+    };
 
     return (
         <div className="flex-1 flex relative h-full overflow-hidden">
@@ -57,7 +71,8 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                                      clinic={clinic}
                                      rating={clinic.averageRating}
                                      reviewCount={clinic.reviewCount}
-                                     // nextAvailable logic is mocked for now
+                                     isSelected={selectedClinics.includes(clinic.id)}
+                                     onCompareChange={(checked) => handleCompareToggle(clinic.id, checked)}
                                  />
                              ))
                          ) : (
@@ -86,8 +101,34 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                  </div>
             </div>
 
+            {/* Compare Bar */}
+            {selectedClinics.length > 0 && (
+                <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4 animate-in slide-in-from-bottom-10 fade-in duration-300">
+                    <div className="bg-surface-container-high/90 backdrop-blur-md text-on-surface border border-outline-variant rounded-full shadow-2xl p-2 pl-6 flex items-center justify-between">
+                        <span className="text-sm font-medium">
+                            {selectedClinics.length} {t('selected', { defaultValue: 'Selected' })}
+                        </span>
+                        <div className="flex items-center gap-2">
+                             <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 rounded-full"
+                                onClick={() => setSelectedClinics([])}
+                             >
+                                <X className="h-4 w-4" />
+                             </Button>
+                             <Button asChild variant="primary" size="sm" className="rounded-full px-6">
+                                <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
+                                    {t('compare', { defaultValue: 'Compare' })}
+                                </Link>
+                             </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Mobile Map Toggle FAB */}
-            <div className="lg:hidden fixed bottom-6 right-6 z-50">
+            <div className="lg:hidden fixed bottom-6 right-6 z-40">
                 <Button
                     className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
                     size="icon"
