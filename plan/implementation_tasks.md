@@ -126,7 +126,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   **Lock**: Animated padlock icon for "HIPAA Secure".
         *   **Testimonials**: Carousel in the third cell.
     *   **Scroll Animations**: Use `framer-motion` `whileInView` for text reveal.
-*   [ ] **4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)**
+*   [x] **4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)**
     *   **Layout**: `grid grid-cols-1 lg:grid-cols-3 h-screen`.
     *   **Left Panel (List)**: Scrollable list of `ClinicCard`.
     *   **Right Panel (Map)**: Placeholder for Google Maps/Leaflet. Fixed position.

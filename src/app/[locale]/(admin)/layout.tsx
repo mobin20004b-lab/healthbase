@@ -11,7 +11,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth();
+  await auth();
 
   return (
     <div className="flex min-h-screen bg-surface text-on-surface">

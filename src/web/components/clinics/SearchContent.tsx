@@ -6,6 +6,7 @@ import { Map, List, Filter } from 'lucide-react';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
+import { Pagination } from '@/web/components/ui/pagination';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
 import { cn } from '@/lib/utils';
 import type { ClinicWithRelations, PaginationMeta } from '@/services/clinics';
@@ -15,7 +16,7 @@ interface SearchContentProps {
     meta: PaginationMeta;
 }
 
-export default function SearchContent({ clinics }: SearchContentProps) {
+export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
     const t = useTranslations('Clinics');
 
@@ -64,6 +65,10 @@ export default function SearchContent({ clinics }: SearchContentProps) {
                                  {t('noResults') || "No clinics found matching your criteria."}
                              </div>
                          )}
+                     </div>
+
+                     <div className="mt-8">
+                         <Pagination currentPage={meta.page} totalPages={meta.totalPages} />
                      </div>
                  </div>
             </div>

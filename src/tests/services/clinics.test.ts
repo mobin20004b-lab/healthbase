@@ -77,4 +77,17 @@ describe("getClinics", () => {
         expect(result.data[0].reviewCount).toBe(2);
         expect(result.meta.total).toBe(1);
     });
+
+    it("should apply multi-select specialty filter", async () => {
+        await getClinics({ specialty: ['Dentistry', 'Cardiology'] });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (mockFindMany.mock.calls[0] as any[])[0];
+        const where = callArgs.where;
+        const json = JSON.stringify(where);
+        expect(json).toContain('Dentistry');
+        expect(json).toContain('Cardiology');
+        // Check for OR logic within the specialty filter block
+        // The exact structure depends on implementation, but it should be present
+        expect(json).toContain('OR');
+    });
 });

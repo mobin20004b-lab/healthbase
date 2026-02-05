@@ -5,11 +5,9 @@ import { Link } from "@/routing";
 import { LayoutDashboard, FileText, Calendar, User, LogOut } from "lucide-react";
 import { NavigationRail, NavigationRailItem } from "@/web/components/ui/nav-rail";
 import { BottomNav, BottomNavItem } from "@/web/components/ui/bottom-nav";
-import { useTranslations } from "next-intl";
 
 export default function PatientNavigation() {
   const pathname = usePathname();
-  const t = useTranslations("Navigation"); // Assuming keys exist, or I'll use hardcoded for now and update messages later.
 
   const navItems = [
     { href: "/dashboard", icon: <LayoutDashboard />, label: "Dashboard" }, // keys: dashboard
