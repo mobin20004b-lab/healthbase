@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Link } from '@/routing';
-import { Star, Check, X, MapPin, Wallet, Calendar } from 'lucide-react';
+import { Star, MapPin, Wallet, Calendar } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { cn } from '@/lib/utils';
 // import type { ClinicWithRelations } from '@/services/clinics';

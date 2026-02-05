@@ -117,7 +117,7 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                              >
                                 <X className="h-4 w-4" />
                              </Button>
-                             <Button asChild variant="primary" size="sm" className="rounded-full px-6">
+                             <Button asChild variant="filled" size="sm" className="rounded-full px-6">
                                 <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
                                     {t('compare', { defaultValue: 'Compare' })}
                                 </Link>

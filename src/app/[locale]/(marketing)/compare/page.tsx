@@ -2,7 +2,6 @@
 import { getClinicsByIds } from '@/services/clinics';
 import { CompareTable, type ComparableClinic } from '@/web/components/clinics/CompareTable';
 import { StickyHeader } from '@/web/components/ui/sticky-header';
-import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Metadata } from 'next';
 
