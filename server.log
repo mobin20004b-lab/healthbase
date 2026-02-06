@@ -1,0 +1,114 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1225ms
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Database operation failed, returning mock data. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__5ca311cc._.js:362:148
+
+  359 }
+  360 try {
+  361     const [clinics, total] = await Promise.all([
+→ 362         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany(
+
+    at <unknown> (src/services/clinics.ts:211:27)
+    at async getClinics (src/services/clinics.ts:210:34)
+    at async SearchPage (src/app/[locale]/(marketing)/search/page.tsx:17:28)
+  209 |     try {
+  210 |         const [clinics, total] = await Promise.all([
+> 211 |             prisma.clinic.findMany({
+      |                           ^
+  212 |                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  213 |                 where: where as any,
+  214 |                 skip, {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ HEAD /en/search 200 in 3.0s (compile: 1874ms, proxy.ts: 221ms, generate-params: 797ms, render: 856ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Database operation failed, returning mock data. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__5ca311cc._.js:362:148
+
+  359 }
+  360 try {
+  361     const [clinics, total] = await Promise.all([
+→ 362         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany(
+
+    at <unknown> (src/services/clinics.ts:211:27)
+    at async getClinics (src/services/clinics.ts:210:34)
+    at async SearchPage (src/app/[locale]/(marketing)/search/page.tsx:17:28)
+  209 |     try {
+  210 |         const [clinics, total] = await Promise.all([
+> 211 |             prisma.clinic.findMany({
+      |                           ^
+  212 |                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  213 |                 where: where as any,
+  214 |                 skip, {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/search 200 in 303ms (compile: 28ms, proxy.ts: 22ms, generate-params: 16ms, render: 252ms)
+⨯ upstream image response failed for https://images.unsplash.com/photo-1516549655169-df83a092fc43?auto=format&fit=crop&q=80&w=1000 404
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+Database operation failed, returning mock data for comparison. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__5ca311cc._.js:472:166
+
+  469 async function getClinicsByIds(ids, locale = 'fa') {
+  470     if (!ids || ids.length === 0) return [];
+  471     try {
+→ 472         const clinics = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany(
+
+    at <unknown> (src/services/clinics.ts:318:45)
+    at async getClinicsByIds (src/services/clinics.ts:318:25)
+    at async ComparePage (src/app/[locale]/(marketing)/compare/page.tsx:31:21)
+  316 |
+  317 |     try {
+> 318 |         const clinics = await prisma.clinic.findMany({
+      |                                             ^
+  319 |             where: {
+  320 |                 id: { in: ids }
+  321 |             }, {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/compare?ids=mock-1%2Cmock-2 200 in 3.1s (compile: 2.8s, proxy.ts: 10ms, generate-params: 1345ms, render: 226ms)

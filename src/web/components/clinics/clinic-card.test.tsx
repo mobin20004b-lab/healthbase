@@ -1,8 +1,12 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect, afterEach } from "bun:test";
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import { ClinicCard } from "./clinic-card";
+
 describe("ClinicCard", () => {
+    afterEach(() => {
+        cleanup();
+    });
     // Mock Clinic object
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockClinic: any = {
@@ -41,5 +45,21 @@ describe("ClinicCard", () => {
     it("renders availability pill", () => {
         render(<ClinicCard clinic={mockClinic} nextAvailable="Tomorrow" />);
         expect(document.body.innerHTML).toContain("Available Tomorrow");
+    });
+
+    it("renders checkbox as checked when isSelected is true", () => {
+        render(<ClinicCard clinic={mockClinic} isSelected={true} />);
+        const checkboxes = screen.getAllByRole("checkbox");
+        checkboxes.forEach((checkbox) => {
+            expect((checkbox as HTMLInputElement).checked).toBe(true);
+        });
+    });
+
+    it("renders checkbox as unchecked when isSelected is false", () => {
+        render(<ClinicCard clinic={mockClinic} isSelected={false} />);
+        const checkboxes = screen.getAllByRole("checkbox");
+        checkboxes.forEach((checkbox) => {
+             expect((checkbox as HTMLInputElement).checked).toBe(false);
+        });
     });
 });

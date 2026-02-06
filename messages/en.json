@@ -230,5 +230,20 @@
     "Auth": {
         "signin": "Sign In",
         "register": "Create Account"
+    },
+    "Compare": {
+        "title": "Compare Clinics",
+        "subtitle": "Comparing {count} clinics side by side.",
+        "back": "Back to Search",
+        "noSelection": "No clinics selected",
+        "selectPrompt": "Please select at least one clinic to compare.",
+        "goToSearch": "Go to Search",
+        "labels": {
+            "availability": "Availability",
+            "rating": "Rating",
+            "cost": "Cost Estimation",
+            "services": "Services",
+            "verified": "Verified"
+        }
     }
 }
