@@ -14,6 +14,7 @@ interface ClinicCardProps {
     rating?: number;
     reviewCount?: number;
     nextAvailable?: string; // e.g., "Tomorrow", "In 3 days"
+    isSelected?: boolean;
     onCompareChange?: (checked: boolean) => void;
     className?: string;
 }
@@ -23,6 +24,7 @@ export function ClinicCard({
     rating = 0,
     reviewCount = 0,
     nextAvailable = "Tomorrow",
+    isSelected = false,
     onCompareChange,
     className,
 }: ClinicCardProps) {
@@ -54,6 +56,7 @@ export function ClinicCard({
                     <div className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer">
                         <Checkbox
                             className="h-4 w-4"
+                            checked={isSelected}
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
                     </div>
@@ -108,6 +111,7 @@ export function ClinicCard({
                     <div className="hidden sm:flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
                         <Checkbox
                             id={`compare-${clinic.id}`}
+                            checked={isSelected}
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
                         <label htmlFor={`compare-${clinic.id}`} className="cursor-pointer select-none">Compare</label>

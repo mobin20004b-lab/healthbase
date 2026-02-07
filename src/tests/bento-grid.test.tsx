@@ -1,9 +1,13 @@
-import { describe, it, expect } from 'bun:test';
+import { describe, it, expect, afterEach } from 'bun:test';
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import { BentoGrid, BentoItem } from '@/web/components/ui/bento-grid';
 
 describe('BentoGrid Component', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   it('renders children correctly', () => {
     const { getByTestId } = render(
       <BentoGrid>

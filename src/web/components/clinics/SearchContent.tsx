@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, ArrowRight } from 'lucide-react';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Pagination } from '@/web/components/ui/pagination';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
 import { cn } from '@/lib/utils';
+import { Link } from '@/routing';
 import type { ClinicWithRelations, PaginationMeta } from '@/services/clinics';
 
 interface SearchContentProps {
@@ -18,13 +19,28 @@ interface SearchContentProps {
 
 export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
+    const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
     const t = useTranslations('Clinics');
+    const tCompare = useTranslations('Compare');
+
+    const toggleClinicSelection = (id: string) => {
+        setSelectedClinics((prev) => {
+            if (prev.includes(id)) {
+                return prev.filter((c) => c !== id);
+            }
+            if (prev.length >= 3) {
+                // Ideally show a toast here
+                return prev;
+            }
+            return [...prev, id];
+        });
+    };
 
     return (
         <div className="flex-1 flex relative h-full overflow-hidden">
             {/* List View */}
             <div className={cn(
-                "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+                "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300 pb-24",
                 showMap ? "hidden lg:block" : "block"
             )}>
                  <div className="max-w-4xl mx-auto space-y-6">
@@ -58,6 +74,8 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                                      rating={clinic.averageRating}
                                      reviewCount={clinic.reviewCount}
                                      // nextAvailable logic is mocked for now
+                                     isSelected={selectedClinics.includes(clinic.id)}
+                                     onCompareChange={() => toggleClinicSelection(clinic.id)}
                                  />
                              ))
                          ) : (
@@ -96,6 +114,24 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                     {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
                 </Button>
             </div>
+
+            {/* Comparison Floating Bar */}
+            {selectedClinics.length > 0 && (
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-surface-container-high border border-outline-variant shadow-xl rounded-full px-6 py-3 flex items-center gap-4 animate-in slide-in-from-bottom-10 fade-in duration-300">
+                    <span className="text-sm font-medium text-on-surface">
+                        {selectedClinics.length} selected
+                    </span>
+                    <Button size="sm" asChild>
+                        <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
+                            {tCompare('compareButton')} <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => setSelectedClinics([])} className="h-8 w-8 p-0 rounded-full">
+                        <span className="sr-only">Clear</span>
+                        <span aria-hidden="true">×</span>
+                    </Button>
+                </div>
+            )}
         </div>
     );
 }

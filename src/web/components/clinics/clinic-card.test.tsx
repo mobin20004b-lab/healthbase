@@ -1,8 +1,12 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect, afterEach } from "bun:test";
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import { ClinicCard } from "./clinic-card";
+
 describe("ClinicCard", () => {
+    afterEach(() => {
+        cleanup();
+    });
     // Mock Clinic object
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockClinic: any = {

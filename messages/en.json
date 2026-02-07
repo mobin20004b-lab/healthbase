@@ -230,5 +230,18 @@
     "Auth": {
         "signin": "Sign In",
         "register": "Create Account"
+    },
+    "Compare": {
+        "title": "Compare Clinics",
+        "subtitle": "Compare services, ratings, and availability side-by-side",
+        "empty": "No clinics selected for comparison.",
+        "availability": "Availability",
+        "rating": "Rating",
+        "cost": "Cost",
+        "city": "City",
+        "services": "Services",
+        "actions": "Actions",
+        "backToSearch": "Back to Search",
+        "compareButton": "Compare"
     }
 }
