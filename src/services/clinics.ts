@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, ClinicTranslation, ServiceTranslation, Insurance, Specialty, InsuranceTranslation, SpecialtyTranslation } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
@@ -23,7 +23,9 @@ const MOCK_CLINICS = [
     services: [],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [],
+    specialties: []
   },
   {
     id: 'mock-2',
@@ -44,7 +46,9 @@ const MOCK_CLINICS = [
     services: [],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [],
+    specialties: []
   },
   {
     id: 'mock-3',
@@ -65,7 +69,9 @@ const MOCK_CLINICS = [
     services: [],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [],
+    specialties: []
   }
 ];
 
@@ -79,6 +85,8 @@ export type ClinicWithRelations = Clinic & {
     reviews?: { rating: number }[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
+    insurances?: (Insurance & { translations?: InsuranceTranslation[] })[];
+    specialties?: (Specialty & { translations?: SpecialtyTranslation[] })[];
 };
 
 export type PaginationMeta = {
@@ -305,5 +313,104 @@ export async function getClinics(
                 totalPages: Math.ceil(filtered.length / limit),
             },
         };
+    }
+}
+
+export async function getClinicById(id: string, locale: string = 'fa', userId?: string): Promise<ClinicWithRelations | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                reviews: {
+                    select: { rating: true }
+                },
+                translations: {
+                    where: { locale }
+                },
+                insurances: {
+                    include: {
+                         translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                specialties: {
+                    include: {
+                         translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            }
+        });
+
+        if (!clinic) return null;
+
+        const translation = clinic.translations[0];
+
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                translations: undefined
+            };
+        });
+
+        const insurances = clinic.insurances.map((insurance) => {
+            const iTranslation = insurance.translations[0];
+            return {
+                ...insurance,
+                name: iTranslation?.name || insurance.name,
+                translations: undefined
+            };
+        });
+
+        const specialties = clinic.specialties.map((specialty) => {
+             const sTranslation = specialty.translations[0];
+             return {
+                 ...specialty,
+                 name: sTranslation?.name || specialty.name,
+                 translations: undefined
+             };
+         });
+
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+        const reviewCount = clinic.reviews.length;
+        const isFavorited = clinic.favoritedBy && clinic.favoritedBy.length > 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            insurances,
+            specialties,
+            averageRating,
+            reviewCount,
+            isFavorited,
+            translations: undefined,
+            reviews: undefined,
+            favoritedBy: undefined
+        };
+    } catch (error) {
+        console.warn(`Error fetching clinic ${id}, using mock fallback if available.`, error);
+        const mock = MOCK_CLINICS.find(c => c.id === id);
+        if (mock) return mock as ClinicWithRelations;
+        return null;
     }
 }

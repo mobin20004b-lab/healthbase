@@ -1,5 +1,5 @@
-import { describe, it, expect, mock } from "bun:test";
-import { render } from "@testing-library/react";
+import { describe, it, expect, mock, afterEach } from "bun:test";
+import { render, cleanup } from "@testing-library/react";
 import Hero from "@/web/components/landing/Hero";
 import TrustBento from "@/web/components/landing/TrustBento";
 import React from "react";
@@ -42,6 +42,10 @@ mock.module("framer-motion", () => ({
 }));
 
 describe("Landing Page Components", () => {
+    afterEach(() => {
+        cleanup();
+    });
+
     describe("Hero", () => {
         it("renders without crashing", () => {
             const { getByText } = render(<Hero />);
