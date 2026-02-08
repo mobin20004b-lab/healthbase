@@ -1,6 +1,6 @@
 
 import { describe, it, expect, mock, beforeEach } from "bun:test";
-import { getClinics } from "@/services/clinics";
+import { getClinics, getClinicsByIds } from "@/services/clinics";
 
 // Explicitly type the mock return to match expected structure loosely or use any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -89,5 +89,40 @@ describe("getClinics", () => {
         // Check for OR logic within the specialty filter block
         // The exact structure depends on implementation, but it should be present
         expect(json).toContain('OR');
+    });
+});
+
+describe("getClinicsByIds", () => {
+    beforeEach(() => {
+        mockFindMany.mockClear();
+    });
+
+    it("should fetch clinics by ids", async () => {
+        const ids = ["1", "2"];
+        // Mock return value structure
+        const mockClinics = [
+            { id: "1", name: "C1", translations: [], services: [], reviews: [], favoritedBy: [] },
+            { id: "2", name: "C2", translations: [], services: [], reviews: [], favoritedBy: [] }
+        ];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mockFindMany.mockImplementation(async () => mockClinics as any[]);
+
+        const result = await getClinicsByIds(ids);
+
+        expect(mockFindMany).toHaveBeenCalled();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (mockFindMany.mock.calls[0] as any[])[0];
+        const where = callArgs.where;
+
+        expect(where.id).toBeDefined();
+        // Need to be careful with structure matching
+        expect(where.id.in).toEqual(ids);
+        expect(result.length).toBe(2);
+    });
+
+    it("should return empty array if no ids provided", async () => {
+        const result = await getClinicsByIds([]);
+        expect(result).toEqual([]);
+        expect(mockFindMany).not.toHaveBeenCalled();
     });
 });

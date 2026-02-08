@@ -40,6 +40,7 @@
         "noResults": "No clinics found",
         "verified": "Verified",
         "services": "Services",
+        "noServices": "No services listed",
         "reviews": "Reviews",
         "contact": "Contact",
         "viewDetails": "View Details",
@@ -230,5 +231,21 @@
     "Auth": {
         "signin": "Sign In",
         "register": "Create Account"
+    },
+    "Compare": {
+        "title": "Compare Clinics",
+        "subtitle": "Compare services, prices, and ratings side-by-side.",
+        "features": "Features",
+        "rating": "Rating",
+        "availability": "Availability",
+        "waitTime": "Wait Time",
+        "priceRange": "Price Range",
+        "services": "Top Services",
+        "viewProfile": "View Profile",
+        "tomorrow": "Tomorrow",
+        "in3weeks": "In 3 weeks",
+        "mins": "mins",
+        "noClinicsSelected": "No clinics selected for comparison.",
+        "backToSearch": "Back to Search"
     }
 }

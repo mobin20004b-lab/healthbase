@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X } from 'lucide-react';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Pagination } from '@/web/components/ui/pagination';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
 import { cn } from '@/lib/utils';
+import { Link } from '@/routing';
 import type { ClinicWithRelations, PaginationMeta } from '@/services/clinics';
 
 interface SearchContentProps {
@@ -18,7 +19,20 @@ interface SearchContentProps {
 
 export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
+    const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
     const t = useTranslations('Clinics');
+
+    const handleCompareChange = (clinicId: string, checked: boolean) => {
+        if (checked) {
+            if (selectedClinics.length >= 3) {
+                 // In a real app, show a toast here
+                 return;
+            }
+            setSelectedClinics([...selectedClinics, clinicId]);
+        } else {
+            setSelectedClinics(selectedClinics.filter(id => id !== clinicId));
+        }
+    };
 
     return (
         <div className="flex-1 flex relative h-full overflow-hidden">
@@ -27,7 +41,7 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                 "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
                 showMap ? "hidden lg:block" : "block"
             )}>
-                 <div className="max-w-4xl mx-auto space-y-6">
+                 <div className="max-w-4xl mx-auto space-y-6 pb-24">
                      <div className="flex items-center justify-between">
                         <h1 className="text-3xl font-bold text-on-surface">{t('title')}</h1>
 
@@ -57,7 +71,8 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                                      clinic={clinic}
                                      rating={clinic.averageRating}
                                      reviewCount={clinic.reviewCount}
-                                     // nextAvailable logic is mocked for now
+                                     isComparing={selectedClinics.includes(clinic.id)}
+                                     onCompareChange={(checked) => handleCompareChange(clinic.id, checked)}
                                  />
                              ))
                          ) : (
@@ -87,7 +102,7 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
             </div>
 
             {/* Mobile Map Toggle FAB */}
-            <div className="lg:hidden fixed bottom-6 right-6 z-50">
+            <div className="lg:hidden fixed bottom-6 right-6 z-40">
                 <Button
                     className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
                     size="icon"
@@ -96,6 +111,31 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                     {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
                 </Button>
             </div>
+
+            {/* Comparison Floating Bar */}
+            {selectedClinics.length > 0 && (
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-5 fade-in duration-300 w-full max-w-md px-4">
+                    <div className="bg-surface-container-high text-on-surface shadow-xl rounded-full px-6 py-3 flex items-center justify-between border border-outline-variant/50">
+                        <span className="text-sm font-medium">{selectedClinics.length} Selected</span>
+                        <div className="flex items-center gap-2">
+                            <Button variant="filled" size="sm" asChild className="rounded-full">
+                                <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
+                                    Compare
+                                </Link>
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 text-on-surface-variant hover:text-on-surface rounded-full"
+                                onClick={() => setSelectedClinics([])}
+                            >
+                                <span className="sr-only">Clear</span>
+                                <X className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

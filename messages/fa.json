@@ -30,6 +30,7 @@
         "noResults": "کلینیکی یافت نشد",
         "verified": "تایید شده",
         "services": "خدمات",
+        "noServices": "خدماتی ثبت نشده",
         "reviews": "نظرات",
         "contact": "تماس",
         "viewDetails": "مشاهده جزئیات",
@@ -223,5 +224,21 @@
     "Auth": {
         "signin": "ورود",
         "register": "ایجاد حساب کاربری"
+    },
+    "Compare": {
+        "title": "مقایسه کلینیک‌ها",
+        "subtitle": "مقایسه خدمات، قیمت‌ها و امتیازات در کنار هم.",
+        "features": "ویژگی‌ها",
+        "rating": "امتیاز",
+        "availability": "نوبت‌دهی",
+        "waitTime": "زمان انتظار",
+        "priceRange": "محدوده قیمت",
+        "services": "خدمات برتر",
+        "viewProfile": "مشاهده پروفایل",
+        "tomorrow": "فردا",
+        "in3weeks": "۳ هفته دیگر",
+        "mins": "دقیقه",
+        "noClinicsSelected": "کلینیکی برای مقایسه انتخاب نشده است.",
+        "backToSearch": "بازگشت به جستجو"
     }
 }
