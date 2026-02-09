@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, ClinicTranslation, ServiceTranslation, Category, CategoryTranslation } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
@@ -19,10 +19,13 @@ const MOCK_CLINICS = [
     createdAt: new Date(),
     updatedAt: new Date(),
     averageRating: 4.5,
-    reviewCount: 120,
+    reviewCount: 2,
     services: [],
     translations: [],
-    reviews: [],
+    reviews: [
+      { id: 'r1', rating: 5, comment: 'Excellent service!', user: { name: 'Ali', image: null }, userId: 'u1' },
+      { id: 'r2', rating: 4, comment: 'Good but busy.', user: { name: 'Sara', image: null }, userId: 'u2' }
+    ],
     favoritedBy: []
   },
   {
@@ -74,9 +77,16 @@ export type ClinicWithRelations = Clinic & {
     reviewCount: number;
     services: (Service & {
         translations?: ServiceTranslation[];
+        category?: (Category & { translations?: CategoryTranslation[] }) | null;
     })[];
     translations?: ClinicTranslation[];
-    reviews?: { rating: number }[];
+    reviews?: {
+        id?: string;
+        rating: number;
+        comment?: string | null;
+        user?: { name?: string | null; image?: string | null };
+        userId?: string;
+    }[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
 };
@@ -305,5 +315,89 @@ export async function getClinics(
                 totalPages: Math.ceil(filtered.length / limit),
             },
         };
+    }
+}
+
+export async function getClinicById(
+    id: string,
+    locale: string = 'fa',
+    userId?: string
+): Promise<ClinicWithRelations | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        },
+                        category: {
+                            include: {
+                                translations: {
+                                    where: { locale }
+                                }
+                            }
+                        }
+                    }
+                },
+                reviews: {
+                    select: { id: true, rating: true, comment: true, userId: true, user: { select: { name: true, image: true } } },
+                    where: { status: 'APPROVED' }
+                },
+                translations: {
+                    where: { locale }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            },
+        });
+
+        if (!clinic) return null;
+
+        // Apply translations in memory
+        const translation = clinic.translations[0];
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            const cTranslation = service.category?.translations?.[0];
+
+            const category = service.category ? {
+                ...service.category,
+                name: cTranslation?.name || service.category.name,
+                translations: undefined
+            } : null;
+
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                category,
+                translations: undefined
+            };
+        });
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+        const reviewCount = clinic.reviews.length;
+        const isFavorited = clinic.favoritedBy && clinic.favoritedBy.length > 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            averageRating,
+            reviewCount,
+            isFavorited,
+            translations: undefined, // Clear raw translations
+            reviews: clinic.reviews, // Keep full reviews with details
+            favoritedBy: undefined
+        };
+    } catch (error) {
+        console.warn(`Database operation failed for getClinicById(${id}), returning mock data.`, error);
+        const mockClinic = MOCK_CLINICS.find(c => c.id === id);
+        return mockClinic ? (mockClinic as unknown as ClinicWithRelations) : null;
     }
 }

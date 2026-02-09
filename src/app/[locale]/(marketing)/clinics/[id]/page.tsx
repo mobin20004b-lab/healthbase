@@ -5,20 +5,8 @@ import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import Link from 'next/link';
-
-// Fetch single clinic from API
-async function getClinic(id: string, locale: string) {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/clinics/${id}?lang=${locale}`, {
-            cache: 'no-store'
-        });
-        if (!res.ok) return null;
-        return res.json();
-    } catch (error) {
-        console.error('Error fetching clinic:', error);
-        return null;
-    }
-}
+import { getClinicById } from '@/services/clinics';
+import { auth } from '@/auth';
 
 export default async function ClinicDetailPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
     const { id, locale } = await params;
@@ -27,13 +15,14 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
     setRequestLocale(locale);
 
     const t = await getTranslations('ClinicDetail');
-    const clinic = await getClinic(id, locale);
+    const session = await auth();
+    const clinic = await getClinicById(id, locale, session?.user?.id);
 
     if (!clinic) {
         notFound();
     }
 
-    const avgRating = clinic.reviews?.length > 0
+    const avgRating = clinic.reviews?.length && clinic.reviews.length > 0
         ? clinic.reviews.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / clinic.reviews.length
         : 0;
 
@@ -135,12 +124,14 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             </h2>
                             {clinic.services?.length > 0 ? (
                                 <div className="grid gap-6">
-                                    {clinic.services.map((service: { id: string; name: string; category?: string; priceMin?: number; priceMax?: number; currency?: string }) => (
+                                    {clinic.services.map((service) => (
                                         <div key={service.id} className="flex items-center justify-between p-6 rounded-2xl bg-surface-container-low/40 border border-outline-variant/10 hover:border-primary/20 transition-all group">
                                             <div>
                                                 <p className="text-xl font-bold text-on-surface group-hover:text-primary transition-colors">{service.name}</p>
                                                 {service.category && (
-                                                    <p className="text-xs font-bold text-on-surface-variant/50 uppercase tracking-widest mt-1">{service.category}</p>
+                                                    <p className="text-xs font-bold text-on-surface-variant/50 uppercase tracking-widest mt-1">
+                                                        {typeof service.category === 'object' ? service.category.name : service.category}
+                                                    </p>
                                                 )}
                                             </div>
                                             {(service.priceMin || service.priceMax) && (
@@ -172,10 +163,10 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                                     </Button>
                                 </Link>
                             </div>
-                            {clinic.reviews?.length > 0 ? (
+                            {clinic.reviews?.length && clinic.reviews.length > 0 ? (
                                 <div className="space-y-8">
-                                    {clinic.reviews.map((review: { id: string; rating: number; user?: { name?: string }; comment?: string }) => (
-                                        <div key={review.id} className="space-y-4">
+                                    {clinic.reviews.map((review) => (
+                                        <div key={review.id || Math.random()} className="space-y-4">
                                             <div className="flex items-center gap-5">
                                                 <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 shadow-inner m3-shape-flower">
                                                     <span className="text-xl font-black text-primary">

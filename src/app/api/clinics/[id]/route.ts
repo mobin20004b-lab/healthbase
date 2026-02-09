@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 import { z } from 'zod';
+import { getClinicById } from '@/services/clinics';
 
 const clinicUpdateSchema = z.object({
     name: z.string().min(1, 'Name is required').optional(),
@@ -24,61 +25,34 @@ export async function GET(
     const lang = searchParams.get('lang') || 'fa';
     const id = (await params).id;
 
-    const clinic = await prisma.clinic.findUnique({
-        where: { id },
-        include: {
-            services: {
-                include: {
-                    translations: lang === 'all' ? true : {
-                        where: { locale: lang }
+    if (lang === 'all') {
+         const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: true
                     }
-                }
+                },
+                reviews: {
+                    select: { id: true, rating: true, comment: true, userId: true, user: { select: { name: true, image: true } } },
+                    where: { status: 'APPROVED' }
+                },
+                translations: true,
+                favoritedBy: session?.user?.id ? { where: { id: session.user.id }, select: { id: true } } : false
             },
-            reviews: {
-                select: { id: true, rating: true, comment: true, userId: true, user: { select: { name: true, image: true } } },
-                where: { status: 'APPROVED' }
-            },
-            translations: lang === 'all' ? true : {
-                where: { locale: lang }
-            },
-            favoritedBy: session?.user?.id ? { where: { id: session.user.id }, select: { id: true } } : false
-        },
-    });
+        });
+        if (!clinic) return NextResponse.json({ error: 'Clinic not found' }, { status: 404 });
+        return NextResponse.json(clinic);
+    }
+
+    const clinic = await getClinicById(id, lang, session?.user?.id);
 
     if (!clinic) {
         return NextResponse.json({ error: 'Clinic not found' }, { status: 404 });
     }
 
-    if (lang === 'all') {
-        return NextResponse.json(clinic);
-    }
-
-    // Apply translations in memory
-    const translation = clinic.translations[0];
-    const services = clinic.services.map((service) => {
-        const sTranslation = service.translations[0];
-        return {
-            ...service,
-            name: sTranslation?.name || service.name,
-            description: sTranslation?.description || service.description,
-            translations: undefined
-        };
-    });
-
-    const clinicsWithTranslations = {
-        ...clinic,
-        name: translation?.name || clinic.name,
-        description: translation?.description || clinic.description,
-        address: translation?.address || clinic.address,
-        city: translation?.city || clinic.city,
-        province: translation?.province || clinic.province,
-        services,
-        isFavorited: clinic.favoritedBy?.length > 0,
-        translations: undefined,
-        favoritedBy: undefined
-    };
-
-    return NextResponse.json(clinicsWithTranslations);
+    return NextResponse.json(clinic);
 }
 
 export async function PUT(
