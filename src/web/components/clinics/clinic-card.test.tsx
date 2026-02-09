@@ -2,15 +2,16 @@ import { describe, it, expect, mock } from "bun:test";
 import React from "react";
 import { render, cleanup } from "@testing-library/react";
 import { ClinicCard } from "./clinic-card";
+import type { Clinic } from "@prisma/client";
 
 // Mock @/routing
 mock.module("@/routing", () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Link: ({ children, href, ...props }: any) => <a href={href} {...props}>{children}</a>,
 }));
 
 describe("ClinicCard", () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mockClinic: any = {
+    const mockClinic: Clinic = {
         id: "c1",
         name: "Tehran Heart Center",
         city: "Tehran",
