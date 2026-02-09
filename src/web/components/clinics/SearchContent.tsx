@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X } from 'lucide-react';
+import { Link } from '@/routing';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
@@ -18,13 +19,25 @@ interface SearchContentProps {
 
 export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const t = useTranslations('Clinics');
+
+    const toggleSelection = (id: string) => {
+        setSelectedIds(prev => {
+            if (prev.includes(id)) {
+                return prev.filter(i => i !== id);
+            } else {
+                if (prev.length >= 3) return prev; // Limit to 3
+                return [...prev, id];
+            }
+        });
+    };
 
     return (
         <div className="flex-1 flex relative h-full overflow-hidden">
             {/* List View */}
             <div className={cn(
-                "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+                "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300 pb-24",
                 showMap ? "hidden lg:block" : "block"
             )}>
                  <div className="max-w-4xl mx-auto space-y-6">
@@ -57,7 +70,8 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                                      clinic={clinic}
                                      rating={clinic.averageRating}
                                      reviewCount={clinic.reviewCount}
-                                     // nextAvailable logic is mocked for now
+                                     isSelected={selectedIds.includes(clinic.id)}
+                                     onCompareChange={() => toggleSelection(clinic.id)}
                                  />
                              ))
                          ) : (
@@ -85,6 +99,28 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                      </div>
                  </div>
             </div>
+
+            {/* Comparison FAB */}
+            {selectedIds.length > 0 && (
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 bg-surface-container-highest p-4 rounded-2xl shadow-xl animate-in slide-in-from-bottom-10 fade-in duration-300 border border-outline-variant/20">
+                    <span className="text-sm font-medium text-on-surface-variant">
+                        {selectedIds.length} / 3 selected
+                    </span>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8 -ml-2 text-on-surface-variant hover:text-error"
+                        onClick={() => setSelectedIds([])}
+                    >
+                        <X className="h-4 w-4" />
+                    </Button>
+                    <Button asChild variant="filled" className="rounded-xl">
+                        <Link href={`/compare?ids=${selectedIds.join(',')}`}>
+                            Compare
+                        </Link>
+                    </Button>
+                </div>
+            )}
 
             {/* Mobile Map Toggle FAB */}
             <div className="lg:hidden fixed bottom-6 right-6 z-50">

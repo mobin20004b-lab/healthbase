@@ -307,3 +307,71 @@ export async function getClinics(
         };
     }
 }
+
+export async function getClinicsByIds(
+    ids: string[],
+    locale: string = 'fa'
+): Promise<ClinicWithRelations[]> {
+    if (!ids || ids.length === 0) return [];
+
+    try {
+        const clinics = await prisma.clinic.findMany({
+            where: {
+                id: { in: ids }
+            },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                reviews: {
+                    select: { rating: true }
+                },
+                translations: {
+                    where: { locale }
+                },
+                favoritedBy: { select: { id: true } }
+            }
+        });
+
+        // Apply translations and calculations
+        return clinics.map((clinic) => {
+            const translation = clinic.translations[0];
+            const services = clinic.services.map((service) => {
+                const sTranslation = service.translations[0];
+                return {
+                    ...service,
+                    name: sTranslation?.name || service.name,
+                    description: sTranslation?.description || service.description,
+                    translations: undefined
+                };
+            });
+
+            const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+            const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+            const reviewCount = clinic.reviews.length;
+
+            return {
+                ...clinic,
+                name: translation?.name || clinic.name,
+                description: translation?.description || clinic.description,
+                address: translation?.address || clinic.address,
+                city: translation?.city || clinic.city,
+                province: translation?.province || clinic.province,
+                services,
+                averageRating,
+                reviewCount,
+                isFavorited: false, // Not contextually relevant for comparison fetch usually
+                translations: undefined,
+                reviews: undefined,
+                favoritedBy: undefined
+            };
+        });
+    } catch (error) {
+         console.error("Database operation failed, returning mock data for IDs.", error);
+         return MOCK_CLINICS.filter(c => ids.includes(c.id)) as ClinicWithRelations[];
+    }
+}

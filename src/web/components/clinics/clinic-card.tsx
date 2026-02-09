@@ -7,6 +7,7 @@ import { Card } from "@/web/components/ui/card";
 import { Button } from "@/web/components/ui/button";
 import { Checkbox } from "@/web/components/ui/checkbox";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
+import { Link } from '@/routing';
 import { cn } from "@/lib/utils";
 
 interface ClinicCardProps {
@@ -14,6 +15,7 @@ interface ClinicCardProps {
     rating?: number;
     reviewCount?: number;
     nextAvailable?: string; // e.g., "Tomorrow", "In 3 days"
+    isSelected?: boolean;
     onCompareChange?: (checked: boolean) => void;
     className?: string;
 }
@@ -23,6 +25,7 @@ export function ClinicCard({
     rating = 0,
     reviewCount = 0,
     nextAvailable = "Tomorrow",
+    isSelected = false,
     onCompareChange,
     className,
 }: ClinicCardProps) {
@@ -50,10 +53,11 @@ export function ClinicCard({
                 )}
 
                 {/* Mobile: Compare Checkbox overlay */}
-                <div className="absolute top-2 right-2 sm:hidden">
-                    <div className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer">
+                <div className="absolute top-2 right-2 sm:hidden z-10">
+                    <div className="flex items-center justify-center h-8 w-8 rounded-full bg-surface/80 backdrop-blur text-primary shadow-sm cursor-pointer hover:bg-surface transition-colors">
                         <Checkbox
                             className="h-4 w-4"
+                            checked={isSelected}
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
                     </div>
@@ -65,9 +69,11 @@ export function ClinicCard({
                 <div className="flex flex-col gap-2">
                     <div className="flex items-start justify-between">
                         <div>
-                            <h3 className="text-xl font-semibold text-on-surface group-hover:text-primary transition-colors">
-                                {clinic.name}
-                            </h3>
+                            <Link href={`/clinics/${clinic.id}`} className="hover:underline decoration-primary decoration-2 underline-offset-4">
+                                <h3 className="text-xl font-semibold text-on-surface group-hover:text-primary transition-colors">
+                                    {clinic.name}
+                                </h3>
+                            </Link>
                             <div className="flex items-center gap-1 text-sm text-on-surface-variant mt-1">
                                 <MapPin className="h-3.5 w-3.5" />
                                 <span>{clinic.city || "Unknown City"}, {clinic.country}</span>
@@ -108,14 +114,17 @@ export function ClinicCard({
                     <div className="hidden sm:flex items-center gap-2 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
                         <Checkbox
                             id={`compare-${clinic.id}`}
+                            checked={isSelected}
                             onChange={(e) => onCompareChange?.(e.target.checked)}
                         />
                         <label htmlFor={`compare-${clinic.id}`} className="cursor-pointer select-none">Compare</label>
                     </div>
 
-                    <Button variant="tonal" size="sm" className="ml-auto group/btn">
-                        View Profile
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
+                    <Button asChild variant="tonal" size="sm" className="ml-auto group/btn">
+                        <Link href={`/clinics/${clinic.id}`}>
+                            View Profile
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
+                        </Link>
                     </Button>
                 </div>
             </div>
