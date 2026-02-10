@@ -1,0 +1,53 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 3.7s
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+○ Compiling /[locale]/clinics/[id] ...
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+Error fetching clinic mock-1: Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__860f6db9._.js:679:165
+
+  676 }
+  677 async function getClinicById(id, locale = 'fa', userId) {
+  678     try {
+→ 679         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:320:44)
+    at async getClinicById (src/services/clinics.ts:320:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:19:20)
+  318 | export async function getClinicById(id: string, locale: string = 'fa', userId?: string): Promise<ClinicWithRelations | null> {
+  319 |     try {
+> 320 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  321 |             where: { id },
+  322 |             include: {
+  323 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 10.0s (compile: 7.8s, proxy.ts: 251ms, render: 1937ms)

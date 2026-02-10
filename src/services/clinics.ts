@@ -74,9 +74,16 @@ export type ClinicWithRelations = Clinic & {
     reviewCount: number;
     services: (Service & {
         translations?: ServiceTranslation[];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        category?: any;
     })[];
     translations?: ClinicTranslation[];
-    reviews?: { rating: number }[];
+    reviews?: {
+        id?: string;
+        rating: number;
+        comment?: string | null;
+        user?: { name?: string | null; image?: string | null } | null;
+    }[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
 };
@@ -305,5 +312,75 @@ export async function getClinics(
                 totalPages: Math.ceil(filtered.length / limit),
             },
         };
+    }
+}
+
+export async function getClinicById(id: string, locale: string = 'fa', userId?: string): Promise<ClinicWithRelations | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        },
+                        category: true // Include category relation
+                    }
+                },
+                reviews: {
+                    include: {
+                        user: {
+                            select: { name: true, image: true }
+                        }
+                    },
+                    orderBy: { createdAt: 'desc' }
+                },
+                translations: {
+                    where: { locale }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            }
+        });
+
+        if (!clinic) return null;
+
+        const translation = clinic.translations[0];
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                translations: undefined
+            };
+        });
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+        const reviewCount = clinic.reviews.length;
+        const isFavorited = clinic.favoritedBy && clinic.favoritedBy.length > 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            averageRating,
+            reviewCount,
+            isFavorited,
+            translations: undefined,
+            reviews: clinic.reviews.map(r => ({ ...r, user: r.user || { name: 'Anonymous' } })),
+            favoritedBy: undefined
+        };
+    } catch (error) {
+        console.warn(`Error fetching clinic ${id}:`, error);
+        // Fallback to mock data if DB fails or id matches mock format
+        const mock = MOCK_CLINICS.find(c => c.id === id);
+        if (mock) return mock as unknown as ClinicWithRelations;
+        return null;
     }
 }
