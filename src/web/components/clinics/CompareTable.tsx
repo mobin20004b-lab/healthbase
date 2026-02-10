@@ -1,6 +1,5 @@
 "use client";
 
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { Link } from '@/routing';
 import { X, Star, Calendar, Wallet, MapPin } from 'lucide-react';
@@ -13,8 +12,6 @@ interface CompareTableProps {
 }
 
 export function CompareTable({ clinics }: CompareTableProps) {
-    const t = useTranslations('Clinics');
-
     // Helper to remove a clinic from the URL
     const getRemoveUrl = (idToRemove: string) => {
          const remainingIds = clinics.filter(c => c.id !== idToRemove).map(c => c.id);
@@ -95,8 +92,8 @@ export function CompareTable({ clinics }: CompareTableProps) {
                 {/* Availability Row */}
                 <div className="p-4 font-medium text-on-surface-variant border-b border-outline-variant/10 bg-surface-container-low/30">Availability</div>
                 {clinics.map(clinic => {
-                    // Mock availability randomly
-                    const isSoon = Math.random() > 0.5;
+                    // Mock availability based on clinic ID for stability
+                    const isSoon = clinic.id.charCodeAt(clinic.id.length - 1) % 2 === 0;
                     return (
                         <div key={`avail-${clinic.id}`} className="p-4 border-b border-outline-variant/10 flex justify-center items-center bg-surface/50">
                             <div className={cn(
