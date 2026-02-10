@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Map, List, Filter } from 'lucide-react';
+import { Map, List, Filter, X } from 'lucide-react';
+import { Link } from '@/routing';
 import { ClinicCard } from '@/web/components/clinics/clinic-card';
 import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
@@ -18,7 +19,21 @@ interface SearchContentProps {
 
 export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
+    const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
     const t = useTranslations('Clinics');
+
+    const handleCompareToggle = (id: string, checked: boolean) => {
+        if (checked) {
+            if (selectedClinics.length >= 3) {
+                // Ideally use a toast here
+                alert(t('compareLimit') || "You can only compare up to 3 clinics.");
+                return;
+            }
+            setSelectedClinics([...selectedClinics, id]);
+        } else {
+            setSelectedClinics(selectedClinics.filter(cId => cId !== id));
+        }
+    };
 
     return (
         <div className="flex-1 flex relative h-full overflow-hidden">
@@ -57,6 +72,8 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                                      clinic={clinic}
                                      rating={clinic.averageRating}
                                      reviewCount={clinic.reviewCount}
+                                     isSelected={selectedClinics.includes(clinic.id)}
+                                     onCompareChange={(checked) => handleCompareToggle(clinic.id, checked)}
                                      // nextAvailable logic is mocked for now
                                  />
                              ))
@@ -85,6 +102,32 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                      </div>
                  </div>
             </div>
+
+            {/* Comparison Bar */}
+            {selectedClinics.length > 0 && (
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-md animate-in slide-in-from-bottom duration-300">
+                    <div className="flex items-center justify-between bg-surface-container-highest border border-outline-variant/20 rounded-2xl shadow-xl p-3 pl-5">
+                        <div className="text-sm font-medium text-on-surface">
+                            {selectedClinics.length} {selectedClinics.length === 1 ? 'clinic' : 'clinics'} selected
+                        </div>
+                        <div className="flex items-center gap-2">
+                             <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 rounded-full hover:bg-surface-container-high"
+                                onClick={() => setSelectedClinics([])}
+                             >
+                                <X className="h-4 w-4" />
+                             </Button>
+                             <Button asChild variant="primary" size="sm" className="rounded-xl px-4">
+                                <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
+                                    Compare
+                                </Link>
+                             </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Mobile Map Toggle FAB */}
             <div className="lg:hidden fixed bottom-6 right-6 z-50">

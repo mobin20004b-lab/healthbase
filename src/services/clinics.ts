@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, ClinicTranslation, ServiceTranslation, Insurance, InsuranceTranslation, Specialty, SpecialtyTranslation } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
@@ -74,11 +74,14 @@ export type ClinicWithRelations = Clinic & {
     reviewCount: number;
     services: (Service & {
         translations?: ServiceTranslation[];
+        category?: { name: string | null } | null;
     })[];
     translations?: ClinicTranslation[];
     reviews?: { rating: number }[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
+    insurances?: (Insurance & { translations?: InsuranceTranslation[] })[];
+    specialties?: (Specialty & { translations?: SpecialtyTranslation[] })[];
 };
 
 export type PaginationMeta = {
@@ -305,5 +308,108 @@ export async function getClinics(
                 totalPages: Math.ceil(filtered.length / limit),
             },
         };
+    }
+}
+
+export async function getClinicsByIds(
+    ids: string[],
+    locale: string = 'fa'
+): Promise<ClinicWithRelations[]> {
+    if (!ids || ids.length === 0) return [];
+
+    try {
+        const clinics = await prisma.clinic.findMany({
+            where: { id: { in: ids } },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        },
+                        category: true
+                    }
+                },
+                reviews: {
+                    select: { rating: true }
+                },
+                translations: {
+                    where: { locale }
+                },
+                insurances: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                specialties: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Apply translations in memory
+        const clinicsWithData: ClinicWithRelations[] = clinics.map((clinic) => {
+            const translation = clinic.translations[0];
+            const services = clinic.services.map((service) => {
+                const sTranslation = service.translations[0];
+                return {
+                    ...service,
+                    name: sTranslation?.name || service.name,
+                    description: sTranslation?.description || service.description,
+                    translations: undefined
+                };
+            });
+
+            const insurances = clinic.insurances.map((insurance) => {
+                const iTranslation = insurance.translations[0];
+                return {
+                    ...insurance,
+                    name: iTranslation?.name || insurance.name,
+                    translations: undefined
+                };
+            });
+
+             const specialties = clinic.specialties.map((specialty) => {
+                const sTranslation = specialty.translations[0];
+                return {
+                    ...specialty,
+                    name: sTranslation?.name || specialty.name,
+                    translations: undefined
+                };
+            });
+
+            const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+            const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+            const reviewCount = clinic.reviews.length;
+
+            return {
+                ...clinic,
+                name: translation?.name || clinic.name,
+                description: translation?.description || clinic.description,
+                address: translation?.address || clinic.address,
+                city: translation?.city || clinic.city,
+                province: translation?.province || clinic.province,
+                services,
+                averageRating,
+                reviewCount,
+                insurances,
+                specialties,
+                translations: undefined,
+                reviews: undefined,
+                favoritedBy: undefined
+            };
+        });
+
+        return clinicsWithData;
+    } catch (error) {
+        console.warn("Database operation failed, returning mock data.", error);
+        const filtered = MOCK_CLINICS.filter(c => ids.includes(c.id));
+        // Cast mock data to ClinicWithRelations (mock data is missing new fields but that's fine for fallback)
+        return filtered as ClinicWithRelations[];
     }
 }
