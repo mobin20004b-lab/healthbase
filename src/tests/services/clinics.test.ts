@@ -1,11 +1,13 @@
 
 import { describe, it, expect, mock, beforeEach } from "bun:test";
-import { getClinics } from "@/services/clinics";
+import { getClinics, getClinicById } from "@/services/clinics";
 
 // Explicitly type the mock return to match expected structure loosely or use any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockFindMany = mock(async () => [] as any[]);
 const mockCount = mock(async () => 0);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mockFindUnique = mock(async () => null as any);
 
 // Mocking @/lib/prisma
 mock.module("@/lib/prisma", () => ({
@@ -13,6 +15,7 @@ mock.module("@/lib/prisma", () => ({
         clinic: {
             findMany: mockFindMany,
             count: mockCount,
+            findUnique: mockFindUnique,
         }
     }
 }));
@@ -89,5 +92,63 @@ describe("getClinics", () => {
         // Check for OR logic within the specialty filter block
         // The exact structure depends on implementation, but it should be present
         expect(json).toContain('OR');
+    });
+});
+
+describe("getClinicById", () => {
+    beforeEach(() => {
+        mockFindUnique.mockClear();
+    });
+
+    it("should call findUnique with correct id and relations", async () => {
+        await getClinicById('123', 'fa');
+        expect(mockFindUnique).toHaveBeenCalled();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (mockFindUnique.mock.calls[0] as any[])[0];
+        expect(callArgs.where.id).toBe('123');
+        expect(callArgs.include.services.include.category).toBe(true); // Updated expectation
+        expect(callArgs.include.reviews).toBeDefined();
+        expect(callArgs.include.translations).toBeDefined();
+        expect(callArgs.include.favoritedBy).toBe(false);
+    });
+
+    it("should check favoritedBy if userId is provided", async () => {
+        await getClinicById('123', 'fa', 'user-1');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArgs = (mockFindUnique.mock.calls[0] as any[])[0];
+        expect(callArgs.include.favoritedBy).toEqual({ where: { id: 'user-1' }, select: { id: true } });
+    });
+
+    it("should return correctly formatted clinic data", async () => {
+        const mockClinic = {
+            id: '123',
+            name: 'Clinic X',
+            translations: [{ name: 'کلینیک ایکس', description: 'توضیحات', address: 'آدرس', city: 'شهر', province: 'استان', locale: 'fa' }],
+            services: [{ name: 'Service A', translations: [{ name: 'خدمت آ' }], category: { name: 'Cat A' } }],
+            reviews: [{ rating: 5, comment: 'Great' }, { rating: 5 }],
+            favoritedBy: [{ id: 'user-1' }]
+        };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mockFindUnique.mockImplementation(async () => mockClinic as any);
+
+        const result = await getClinicById('123', 'fa', 'user-1');
+
+        expect(result).not.toBeNull();
+        expect(result?.name).toBe('کلینیک ایکس'); // Translated
+        expect(result?.services[0].name).toBe('خدمت آ'); // Translated service
+        expect(result?.services[0].category?.name).toBe('Cat A'); // Category included
+        expect(result?.averageRating).toBe(5);
+        expect(result?.reviewCount).toBe(2);
+        expect(result?.isFavorited).toBe(true);
+        expect(result?.translations).toBeUndefined();
+        expect(result?.favoritedBy).toBeUndefined();
+    });
+
+    it("should return null if clinic not found", async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mockFindUnique.mockImplementation(async () => null);
+
+        const result = await getClinicById('non-existent');
+        expect(result).toBeNull();
     });
 });

@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, ClinicTranslation, ServiceTranslation, Category, Review } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
@@ -74,9 +74,10 @@ export type ClinicWithRelations = Clinic & {
     reviewCount: number;
     services: (Service & {
         translations?: ServiceTranslation[];
+        category?: Category | null;
     })[];
     translations?: ClinicTranslation[];
-    reviews?: { rating: number }[];
+    reviews?: (Review & { user?: { name: string | null; image: string | null } })[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
 };
@@ -218,7 +219,8 @@ export async function getClinics(
                         include: {
                             translations: {
                                 where: { locale }
-                            }
+                            },
+                            category: true
                         }
                     },
                     reviews: {
@@ -305,5 +307,80 @@ export async function getClinics(
                 totalPages: Math.ceil(filtered.length / limit),
             },
         };
+    }
+}
+
+export async function getClinicById(id: string, locale: string = 'fa', userId?: string): Promise<ClinicWithRelations | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        },
+                        category: true
+                    }
+                },
+                reviews: {
+                    include: {
+                        user: {
+                            select: { name: true, image: true }
+                        }
+                    },
+                    orderBy: { createdAt: 'desc' }
+                },
+                translations: {
+                    where: { locale }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            }
+        });
+
+        if (!clinic) return null;
+
+        const translation = clinic.translations[0];
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                translations: undefined
+            };
+        });
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+        const reviewCount = clinic.reviews.length;
+        const isFavorited = clinic.favoritedBy && clinic.favoritedBy.length > 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            averageRating,
+            reviewCount,
+            isFavorited,
+            translations: undefined,
+            favoritedBy: undefined
+        };
+    } catch (error) {
+        console.warn("Database operation failed, returning mock data.", error);
+        const mockClinic = MOCK_CLINICS.find(c => c.id === id);
+        if (!mockClinic) return null;
+        return {
+            ...mockClinic,
+            averageRating: 4.5,
+            reviewCount: 120,
+            services: [],
+            reviews: [],
+            isFavorited: false,
+        } as unknown as ClinicWithRelations;
     }
 }
