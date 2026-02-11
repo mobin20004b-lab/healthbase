@@ -8,8 +8,10 @@ import SearchFilters from '@/web/components/clinics/SearchFilters';
 import { Button } from '@/web/components/ui/button';
 import { Pagination } from '@/web/components/ui/pagination';
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet";
+import { Link } from '@/routing';
 import { cn } from '@/lib/utils';
 import type { ClinicWithRelations, PaginationMeta } from '@/services/clinics';
+import { toast } from 'sonner';
 
 interface SearchContentProps {
     clinics: ClinicWithRelations[];
@@ -18,13 +20,30 @@ interface SearchContentProps {
 
 export default function SearchContent({ clinics, meta }: SearchContentProps) {
     const [showMap, setShowMap] = useState(false);
+    const [selectedClinics, setSelectedClinics] = useState<string[]>([]);
     const t = useTranslations('Clinics');
+
+    const handleCompareToggle = (clinicId: string) => {
+        setSelectedClinics(prev => {
+            if (prev.includes(clinicId)) {
+                return prev.filter(id => id !== clinicId);
+            } else {
+                if (prev.length >= 3) {
+                    toast.error("You can compare up to 3 clinics.");
+                    return prev;
+                }
+                return [...prev, clinicId];
+            }
+        });
+    };
+
+    const clearComparison = () => setSelectedClinics([]);
 
     return (
         <div className="flex-1 flex relative h-full overflow-hidden">
             {/* List View */}
             <div className={cn(
-                "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300",
+                "flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 scroll-smooth transition-opacity duration-300 pb-24",
                 showMap ? "hidden lg:block" : "block"
             )}>
                  <div className="max-w-4xl mx-auto space-y-6">
@@ -57,7 +76,8 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                                      clinic={clinic}
                                      rating={clinic.averageRating}
                                      reviewCount={clinic.reviewCount}
-                                     // nextAvailable logic is mocked for now
+                                     isSelected={selectedClinics.includes(clinic.id)}
+                                     onCompareChange={() => handleCompareToggle(clinic.id)}
                                  />
                              ))
                          ) : (
@@ -87,7 +107,7 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
             </div>
 
             {/* Mobile Map Toggle FAB */}
-            <div className="lg:hidden fixed bottom-6 right-6 z-50">
+            <div className={cn("lg:hidden fixed bottom-6 right-6 z-40 transition-all duration-300", selectedClinics.length > 0 ? "bottom-24" : "bottom-6")}>
                 <Button
                     className="rounded-full shadow-xl h-14 w-14 p-0 animate-in zoom-in duration-300"
                     size="icon"
@@ -96,6 +116,27 @@ export default function SearchContent({ clinics, meta }: SearchContentProps) {
                     {showMap ? <List className="h-6 w-6" /> : <Map className="h-6 w-6" />}
                 </Button>
             </div>
+
+             {/* Comparison Bar */}
+             {selectedClinics.length > 0 && (
+                <div className="fixed bottom-0 left-0 right-0 z-50 bg-surface-container-high border-t border-outline-variant/20 p-4 shadow-xl animate-in slide-in-from-bottom-full duration-300">
+                    <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+                        <div className="text-on-surface font-medium text-sm sm:text-base">
+                            <span className="font-bold text-primary">{selectedClinics.length}</span> clinics selected
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Button variant="text" size="sm" onClick={clearComparison} className="text-error hover:text-error-container hover:bg-error/10">
+                                Clear
+                            </Button>
+                            <Link href={`/compare?ids=${selectedClinics.join(',')}`}>
+                                 <Button variant="filled" size="sm" className="bg-primary text-on-primary hover:bg-primary/90">
+                                    Compare Now
+                                 </Button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
