@@ -24,7 +24,7 @@ const MOCK_CLINICS = [
     insurances: [
         { id: 'ins-1', name: 'Social Security', createdAt: new Date(), updatedAt: new Date() },
         { id: 'ins-2', name: 'Salamat', createdAt: new Date(), updatedAt: new Date() }
-    ] as any,
+    ] as (Insurance & { translations?: InsuranceTranslation[] })[],
     translations: [],
     reviews: [],
     favoritedBy: []
@@ -477,9 +477,7 @@ export async function getClinicById(
         };
     } catch (error) {
         console.warn("Database operation failed in getClinicById, returning mock data.", error);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mockClinic = MOCK_CLINICS.find(c => c.id === id);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return mockClinic ? { ...mockClinic, insurances: mockClinic.insurances || [] } as any : null;
+        return mockClinic ? { ...mockClinic, insurances: mockClinic.insurances || [] } as ClinicWithRelations : null;
     }
 }
