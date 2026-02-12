@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { MapPin, Phone, Globe, BadgeCheck, Star, Edit } from 'lucide-react';
+import { MapPin, Phone, Globe, BadgeCheck, Star, Edit, ShieldCheck } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
@@ -157,6 +157,30 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             ) : (
                                 <div className="py-12 text-center bg-surface-container-low/20 rounded-3xl border-2 border-dashed border-outline-variant/30">
                                     <p className="text-on-surface-variant font-bold">{t('noServices')}</p>
+                                </div>
+                            )}
+                        </Card>
+
+                        {/* Insurances Section */}
+                        <Card variant="bento" className="p-10 bg-surface-container-lowest">
+                            <h2 className="text-3xl font-black text-on-surface mb-10 flex items-center gap-4">
+                                <ShieldCheck className="h-8 w-8 text-primary" />
+                                {t('insurances')}
+                            </h2>
+                            {clinic.insurances?.length > 0 ? (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {clinic.insurances.map((insurance: { id: string; name: string }) => (
+                                        <div key={insurance.id} className="flex items-center gap-4 p-4 rounded-2xl bg-surface-container-low/40 border border-outline-variant/10">
+                                            <div className="h-10 w-10 rounded-full bg-tertiary/10 flex items-center justify-center flex-shrink-0">
+                                                <ShieldCheck className="h-5 w-5 text-tertiary" />
+                                            </div>
+                                            <p className="text-lg font-bold text-on-surface">{insurance.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="py-12 text-center bg-surface-container-low/20 rounded-3xl border-2 border-dashed border-outline-variant/30">
+                                    <p className="text-on-surface-variant font-bold">{t('noInsurances')}</p>
                                 </div>
                             )}
                         </Card>

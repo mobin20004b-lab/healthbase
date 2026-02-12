@@ -8,8 +8,11 @@
 *   [x] 3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 *   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
+*   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
 
 ## Recent Achievements
+*   Implemented "Accepted Insurances" section in Clinic Detail Page.
+*   Refactored `getClinicById` service to handle relations and localization efficiently.
 *   Enhanced Search & Discovery with Multi-select Filters (Specialty, Insurance) and Pagination.
 *   Created `Checkbox` and `Pagination` UI components.
 *   Updated `src/services/clinics.ts` to support array filters with OR logic.
@@ -19,4 +22,4 @@
 *   Implemented `SearchContent` client component for interactive map/list toggle.
 
 ## Next Steps
-1.  Implement Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`).
+1.  Implement User Authentication Flows (`src/app/[locale]/auth/login/page.tsx`, etc.).

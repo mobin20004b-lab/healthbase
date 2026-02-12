@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, Insurance, ClinicTranslation, ServiceTranslation, InsuranceTranslation } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
@@ -21,6 +21,10 @@ const MOCK_CLINICS = [
     averageRating: 4.5,
     reviewCount: 120,
     services: [],
+    insurances: [
+        { id: 'ins-1', name: 'Social Security', createdAt: new Date(), updatedAt: new Date() },
+        { id: 'ins-2', name: 'Salamat', createdAt: new Date(), updatedAt: new Date() }
+    ] as any,
     translations: [],
     reviews: [],
     favoritedBy: []
@@ -74,6 +78,9 @@ export type ClinicWithRelations = Clinic & {
     reviewCount: number;
     services: (Service & {
         translations?: ServiceTranslation[];
+    })[];
+    insurances?: (Insurance & {
+        translations?: InsuranceTranslation[];
     })[];
     translations?: ClinicTranslation[];
     reviews?: { rating: number }[];
@@ -327,6 +334,13 @@ export async function getClinicsByIds(
                         }
                     }
                 },
+                insurances: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                },
                 reviews: {
                     select: { rating: true }
                 },
@@ -348,6 +362,15 @@ export async function getClinicsByIds(
                 };
             });
 
+            const insurances = clinic.insurances.map((insurance) => {
+                const iTranslation = insurance.translations[0];
+                return {
+                    ...insurance,
+                    name: iTranslation?.name || insurance.name,
+                    translations: undefined
+                };
+            });
+
             const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
             const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
             const reviewCount = clinic.reviews.length;
@@ -360,6 +383,7 @@ export async function getClinicsByIds(
                 city: translation?.city || clinic.city,
                 province: translation?.province || clinic.province,
                 services,
+                insurances,
                 averageRating,
                 reviewCount,
                 translations: undefined, // Clear raw translations
@@ -371,5 +395,91 @@ export async function getClinicsByIds(
     } catch (error) {
         console.warn("Database operation failed in getClinicsByIds, returning mock data.", error);
         return MOCK_CLINICS.filter(c => ids.includes(c.id)) as ClinicWithRelations[];
+    }
+}
+
+export async function getClinicById(
+    id: string,
+    locale: string = 'fa',
+    userId?: string
+): Promise<ClinicWithRelations | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                insurances: {
+                    include: {
+                        translations: {
+                            where: { locale }
+                        }
+                    }
+                },
+                reviews: {
+                    select: { id: true, rating: true, comment: true, userId: true, user: { select: { name: true, image: true } } },
+                    where: { status: 'APPROVED' }
+                },
+                translations: {
+                    where: { locale }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            }
+        });
+
+        if (!clinic) return null;
+
+        const translation = clinic.translations[0];
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                translations: undefined
+            };
+        });
+
+        const insurances = clinic.insurances.map((insurance) => {
+            const iTranslation = insurance.translations[0];
+            return {
+                ...insurance,
+                name: iTranslation?.name || insurance.name,
+                translations: undefined
+            };
+        });
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+        const reviewCount = clinic.reviews.length;
+        const isFavorited = clinic.favoritedBy && clinic.favoritedBy.length > 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            insurances,
+            averageRating,
+            reviewCount,
+            isFavorited,
+            translations: undefined,
+            reviews: clinic.reviews, // Keep reviews for detail page
+            favoritedBy: undefined
+        };
+    } catch (error) {
+        console.warn("Database operation failed in getClinicById, returning mock data.", error);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mockClinic = MOCK_CLINICS.find(c => c.id === id);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return mockClinic ? { ...mockClinic, insurances: mockClinic.insurances || [] } as any : null;
     }
 }

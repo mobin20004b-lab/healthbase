@@ -102,6 +102,8 @@
         "reviews": "Patient Reviews",
         "writeReview": "Write a Review",
         "noServices": "No services listed",
+        "insurances": "Accepted Insurances",
+        "noInsurances": "No insurances listed",
         "noReviews": "No reviews yet",
         "verified": "Verified Clinic",
         "phone": "Phone",
