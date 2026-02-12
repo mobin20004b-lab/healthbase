@@ -6,6 +6,7 @@ import { ClinicWithRelations } from '@/services/clinics';
 
 // Mock next/image
 mock.module('next/image', () => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @next/next/no-img-element, jsx-a11y/alt-text
     default: (props: any) => <img {...props} />
 }));
 

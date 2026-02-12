@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: ComparePageProps): Promise<Me
     const { locale } = await params;
     const t = await getTranslations({ locale, namespace: 'Clinics' });
     return {
-        title: `Compare Clinics - Topmedica`, // Should be localized ideally
+        title: `${t('title', { defaultMessage: 'Compare Clinics' })} - Topmedica`,
     };
 }
 
