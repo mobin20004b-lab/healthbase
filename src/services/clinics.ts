@@ -1,6 +1,6 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type { Clinic, Service, ClinicTranslation, ServiceTranslation, Review, Category, Specialty, Insurance, SpecialtyTranslation, InsuranceTranslation, CategoryTranslation } from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
@@ -20,10 +20,16 @@ const MOCK_CLINICS = [
     updatedAt: new Date(),
     averageRating: 4.5,
     reviewCount: 120,
-    services: [],
+    services: [
+        { id: 's1', name: 'Cardiology Consultation', priceMin: 5000000, priceMax: 10000000, currency: 'IRR', category: 'Consultation' }
+    ],
     translations: [],
-    reviews: [],
-    favoritedBy: []
+    reviews: [
+        { id: 'r1', rating: 5, comment: 'Excellent service', user: { name: 'Ali' }, createdAt: new Date() }
+    ],
+    favoritedBy: [],
+    insurances: [],
+    specialties: []
   },
   {
     id: 'mock-2',
@@ -44,7 +50,9 @@ const MOCK_CLINICS = [
     services: [],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [],
+    specialties: []
   },
   {
     id: 'mock-3',
@@ -65,7 +73,9 @@ const MOCK_CLINICS = [
     services: [],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [],
+    specialties: []
   }
 ];
 
@@ -74,11 +84,20 @@ export type ClinicWithRelations = Clinic & {
     reviewCount: number;
     services: (Service & {
         translations?: ServiceTranslation[];
+        category?: string;
     })[];
     translations?: ClinicTranslation[];
-    reviews?: { rating: number }[];
+    reviews?: {
+        id: string;
+        rating: number;
+        comment?: string | null;
+        user?: { name?: string | null; image?: string | null };
+        createdAt?: Date;
+    }[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
+    insurances?: (Insurance & { translations?: InsuranceTranslation[] })[];
+    specialties?: (Specialty & { translations?: SpecialtyTranslation[] })[];
 };
 
 export type PaginationMeta = {
@@ -370,6 +389,109 @@ export async function getClinicsByIds(
         return clinicsWithData;
     } catch (error) {
         console.warn("Database operation failed in getClinicsByIds, returning mock data.", error);
-        return MOCK_CLINICS.filter(c => ids.includes(c.id)) as ClinicWithRelations[];
+        return MOCK_CLINICS.filter(c => ids.includes(c.id)) as unknown as ClinicWithRelations[];
+    }
+}
+
+export async function getClinicById(
+    id: string,
+    locale: string = 'fa',
+    userId?: string
+): Promise<ClinicWithRelations | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: { where: { locale } },
+                        category: {
+                            include: {
+                                translations: { where: { locale } }
+                            }
+                        }
+                    }
+                },
+                reviews: {
+                    where: { status: 'APPROVED' },
+                    include: {
+                        user: { select: { name: true, image: true } }
+                    },
+                    orderBy: { createdAt: 'desc' }
+                },
+                translations: { where: { locale } },
+                insurances: {
+                    include: { translations: { where: { locale } } }
+                },
+                specialties: {
+                    include: { translations: { where: { locale } } }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            }
+        });
+
+        if (!clinic) return null;
+
+        const translation = clinic.translations[0];
+
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            const cTranslation = service.category?.translations?.[0];
+            const categoryName = cTranslation?.name || service.category?.name || undefined;
+
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                category: categoryName,
+                translations: undefined,
+            };
+        });
+
+        const insurances = clinic.insurances.map(i => ({
+            ...i,
+            name: i.translations[0]?.name || i.name,
+            translations: undefined
+        }));
+
+        const specialties = clinic.specialties.map(s => ({
+            ...s,
+            name: s.translations[0]?.name || s.name,
+            translations: undefined
+        }));
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            averageRating,
+            reviewCount: clinic.reviews.length,
+            isFavorited: clinic.favoritedBy && clinic.favoritedBy.length > 0,
+            reviews: clinic.reviews.map(r => ({
+                id: r.id,
+                rating: r.rating,
+                comment: r.comment,
+                user: r.user,
+                createdAt: r.createdAt
+            })),
+            insurances,
+            specialties,
+            translations: undefined,
+            favoritedBy: undefined
+        };
+    } catch (error) {
+        console.warn("Database operation failed in getClinicById, returning mock data.", error);
+        const mock = MOCK_CLINICS.find(c => c.id === id);
+        if (mock) {
+             return mock as unknown as ClinicWithRelations;
+        }
+        return null;
     }
 }
