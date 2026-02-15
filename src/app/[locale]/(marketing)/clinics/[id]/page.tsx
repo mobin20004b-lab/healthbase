@@ -182,13 +182,13 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             </div>
                             {clinic.reviews && clinic.reviews.length > 0 ? (
                                 <div className="space-y-8">
-                                    {clinic.reviews.map((review) => {
+                                    {clinic.reviews.map((review, index) => {
                                         const user = 'user' in review ? review.user : null;
                                         const comment = 'comment' in review ? review.comment : null;
                                         const userName = user?.name || 'Anonymous';
 
                                         return (
-                                            <div key={'id' in review ? review.id : Math.random()} className="space-y-4">
+                                            <div key={'id' in review ? review.id : `review-${index}`} className="space-y-4">
                                                 <div className="flex items-center gap-5">
                                                     <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 shadow-inner m3-shape-flower">
                                                         <span className="text-xl font-black text-primary">
