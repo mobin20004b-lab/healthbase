@@ -5,20 +5,7 @@ import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import Link from 'next/link';
-
-// Fetch single clinic from API
-async function getClinic(id: string, locale: string) {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/clinics/${id}?lang=${locale}`, {
-            cache: 'no-store'
-        });
-        if (!res.ok) return null;
-        return res.json();
-    } catch (error) {
-        console.error('Error fetching clinic:', error);
-        return null;
-    }
-}
+import { getClinicById } from '@/services/clinics';
 
 export default async function ClinicDetailPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
     const { id, locale } = await params;
@@ -27,14 +14,14 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
     setRequestLocale(locale);
 
     const t = await getTranslations('ClinicDetail');
-    const clinic = await getClinic(id, locale);
+    const clinic = await getClinicById(id, locale);
 
     if (!clinic) {
         notFound();
     }
 
-    const avgRating = clinic.reviews?.length > 0
-        ? clinic.reviews.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / clinic.reviews.length
+    const avgRating = clinic.reviews && clinic.reviews.length > 0
+        ? clinic.reviews.reduce((acc, r) => acc + r.rating, 0) / clinic.reviews.length
         : 0;
 
     return (
@@ -135,12 +122,12 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             </h2>
                             {clinic.services?.length > 0 ? (
                                 <div className="grid gap-6">
-                                    {clinic.services.map((service: { id: string; name: string; category?: string; priceMin?: number; priceMax?: number; currency?: string }) => (
+                                    {clinic.services.map((service) => (
                                         <div key={service.id} className="flex items-center justify-between p-6 rounded-2xl bg-surface-container-low/40 border border-outline-variant/10 hover:border-primary/20 transition-all group">
                                             <div>
                                                 <p className="text-xl font-bold text-on-surface group-hover:text-primary transition-colors">{service.name}</p>
-                                                {service.category && (
-                                                    <p className="text-xs font-bold text-on-surface-variant/50 uppercase tracking-widest mt-1">{service.category}</p>
+                                                {service.category?.name && (
+                                                    <p className="text-xs font-bold text-on-surface-variant/50 uppercase tracking-widest mt-1">{service.category.name}</p>
                                                 )}
                                             </div>
                                             {(service.priceMin || service.priceMax) && (
@@ -161,6 +148,27 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             )}
                         </Card>
 
+                        {/* Insurance Section */}
+                        <Card variant="bento" className="p-10 bg-surface-container-lowest">
+                            <h2 className="text-3xl font-black text-on-surface mb-10 flex items-center gap-4">
+                                <BadgeCheck className="h-8 w-8 text-primary" />
+                                {t('insurances') || 'Insurances'}
+                            </h2>
+                            {clinic.insurances && clinic.insurances.length > 0 ? (
+                                <div className="flex flex-wrap gap-4">
+                                    {clinic.insurances.map((insurance) => (
+                                        <div key={insurance.id} className="flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-low border border-outline-variant/10 text-lg font-bold text-on-surface">
+                                            {insurance.name}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="py-12 text-center bg-surface-container-low/20 rounded-3xl border-2 border-dashed border-outline-variant/30">
+                                    <p className="text-on-surface-variant font-bold">{t('noInsurances') || 'No insurance information provided'}</p>
+                                </div>
+                            )}
+                        </Card>
+
                         {/* Reviews Section */}
                         <Card variant="bento" className="p-10 bg-surface-container-lowest">
                             <div className="flex items-center justify-between mb-12">
@@ -172,35 +180,41 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                                     </Button>
                                 </Link>
                             </div>
-                            {clinic.reviews?.length > 0 ? (
+                            {clinic.reviews && clinic.reviews.length > 0 ? (
                                 <div className="space-y-8">
-                                    {clinic.reviews.map((review: { id: string; rating: number; user?: { name?: string }; comment?: string }) => (
-                                        <div key={review.id} className="space-y-4">
-                                            <div className="flex items-center gap-5">
-                                                <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 shadow-inner m3-shape-flower">
-                                                    <span className="text-xl font-black text-primary">
-                                                        {review.user?.name?.[0] || 'U'}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <p className="text-lg font-black text-on-surface">{review.user?.name || 'Anonymous'}</p>
-                                                    <div className="flex items-center gap-1 mt-1">
-                                                        {[...Array(5)].map((_, i) => (
-                                                            <Star
-                                                                key={i}
-                                                                className={`h-4 w-4 ${i < review.rating ? 'text-primary fill-primary' : 'text-outline-variant/30'}`}
-                                                            />
-                                                        ))}
+                                    {clinic.reviews.map((review) => {
+                                        const user = 'user' in review ? review.user : null;
+                                        const comment = 'comment' in review ? review.comment : null;
+                                        const userName = user?.name || 'Anonymous';
+
+                                        return (
+                                            <div key={'id' in review ? review.id : Math.random()} className="space-y-4">
+                                                <div className="flex items-center gap-5">
+                                                    <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 shadow-inner m3-shape-flower">
+                                                        <span className="text-xl font-black text-primary">
+                                                            {userName?.[0] || 'U'}
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-lg font-black text-on-surface">{userName}</p>
+                                                        <div className="flex items-center gap-1 mt-1">
+                                                            {[...Array(5)].map((_, i) => (
+                                                                <Star
+                                                                    key={i}
+                                                                    className={`h-4 w-4 ${i < review.rating ? 'text-primary fill-primary' : 'text-outline-variant/30'}`}
+                                                                />
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                {comment && (
+                                                    <p className="text-base text-on-surface-variant font-medium leading-relaxed bg-surface-container-low/20 p-6 rounded-2xl border border-outline-variant/10 italic">
+                                                        &quot;{comment}&quot;
+                                                    </p>
+                                                )}
                                             </div>
-                                            {review.comment && (
-                                                <p className="text-base text-on-surface-variant font-medium leading-relaxed bg-surface-container-low/20 p-6 rounded-2xl border border-outline-variant/10 italic">
-                                                    &quot;{review.comment}&quot;
-                                                </p>
-                                            )}
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             ) : (
                                 <div className="py-12 text-center bg-surface-container-low/20 rounded-3xl border-2 border-dashed border-outline-variant/30">
