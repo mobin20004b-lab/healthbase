@@ -1,15 +1,28 @@
 "use client";
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { ClinicWithRelations } from '@/services/clinics';
-import { Star, MapPin, Calendar, Wallet } from 'lucide-react';
+import { MapPin } from 'lucide-react';
+import { getClinicComparisonDetails } from './comparison/mock-data';
+import { AvailabilityVisualizer } from './comparison/AvailabilityVisualizer';
+import { RatingVisualizer } from './comparison/RatingVisualizer';
+import { CostVisualizer } from './comparison/CostVisualizer';
 
 interface CompareTableProps {
     clinics: ClinicWithRelations[];
 }
 
 export default function CompareTable({ clinics }: CompareTableProps) {
+    // Memoize the comparison details to avoid recalculating on every render
+    const comparisonDetails = useMemo(() => {
+        const details: Record<string, ReturnType<typeof getClinicComparisonDetails>> = {};
+        clinics.forEach(clinic => {
+            details[clinic.id] = getClinicComparisonDetails(clinic.id);
+        });
+        return details;
+    }, [clinics]);
+
     if (clinics.length === 0) {
         return <div className="text-center p-10 text-on-surface-variant">No clinics selected for comparison.</div>;
     }
@@ -46,43 +59,46 @@ export default function CompareTable({ clinics }: CompareTableProps) {
 
                 {/* Rating Row */}
                 <div className="font-semibold text-on-surface-variant p-4 bg-surface-container-low/50 flex items-center sticky left-0 backdrop-blur-sm">
-                    Rating
+                    Rating & Wait Time
                 </div>
-                {clinics.map(clinic => (
-                    <div key={clinic.id} className="p-4 bg-surface-container-low/50 flex items-center gap-2">
-                         <div className="flex items-center bg-surface-container px-2.5 py-1 rounded-full shadow-sm">
-                            <Star className="w-4 h-4 text-yellow-400 fill-yellow-400 mr-1.5" />
-                            <span className="font-bold text-on-surface">{clinic.averageRating.toFixed(1)}</span>
-                         </div>
-                         <span className="text-sm text-on-surface-variant">({clinic.reviewCount} reviews)</span>
-                    </div>
-                ))}
+                {clinics.map(clinic => {
+                    const details = comparisonDetails[clinic.id];
+                    return (
+                        <div key={clinic.id} className="p-4 bg-surface-container-low/50 flex items-center">
+                            <RatingVisualizer
+                                rating={clinic.averageRating}
+                                reviewCount={clinic.reviewCount}
+                                waitTime={details.waitTime}
+                            />
+                        </div>
+                    );
+                })}
 
-                {/* Availability Row (Mocked) */}
+                {/* Availability Row */}
                 <div className="font-semibold text-on-surface-variant p-4 flex items-center sticky left-0 bg-surface/50 backdrop-blur-sm">
                     Next Available
                 </div>
-                {clinics.map(clinic => (
-                    <div key={clinic.id} className="p-4 flex items-center">
-                        <div className="flex items-center text-green-700 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2.5 py-1 rounded-md text-sm font-medium">
-                            <Calendar className="w-4 h-4 mr-1.5" />
-                            Tomorrow
+                {clinics.map(clinic => {
+                    const details = comparisonDetails[clinic.id];
+                    return (
+                        <div key={clinic.id} className="p-4 flex items-center">
+                            <AvailabilityVisualizer availability={details.availability} />
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
 
-                 {/* Cost Row (Mocked) */}
+                 {/* Cost Row */}
                 <div className="font-semibold text-on-surface-variant p-4 bg-surface-container-low/50 flex items-center sticky left-0 backdrop-blur-sm">
                     Estimated Cost
                 </div>
-                {clinics.map(clinic => (
-                    <div key={clinic.id} className="p-4 bg-surface-container-low/50 flex items-center">
-                        <div className="flex items-center text-on-surface font-medium">
-                            <Wallet className="w-4 h-4 mr-2 text-primary" />
-                            $$$
+                {clinics.map(clinic => {
+                    const details = comparisonDetails[clinic.id];
+                    return (
+                        <div key={clinic.id} className="p-4 bg-surface-container-low/50 flex items-center">
+                            <CostVisualizer costRange={details.costRange} />
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
 
                  {/* Services Row */}
                  <div className="font-semibold text-on-surface-variant p-4 flex items-start pt-4 sticky left-0 bg-surface/50 backdrop-blur-sm">
