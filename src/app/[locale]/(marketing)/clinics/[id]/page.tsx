@@ -5,20 +5,7 @@ import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import Link from 'next/link';
-
-// Fetch single clinic from API
-async function getClinic(id: string, locale: string) {
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/clinics/${id}?lang=${locale}`, {
-            cache: 'no-store'
-        });
-        if (!res.ok) return null;
-        return res.json();
-    } catch (error) {
-        console.error('Error fetching clinic:', error);
-        return null;
-    }
-}
+import { getClinicById } from '@/services/clinics';
 
 export default async function ClinicDetailPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
     const { id, locale } = await params;
@@ -27,14 +14,14 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
     setRequestLocale(locale);
 
     const t = await getTranslations('ClinicDetail');
-    const clinic = await getClinic(id, locale);
+    const clinic = await getClinicById(id, locale);
 
     if (!clinic) {
         notFound();
     }
 
     const avgRating = clinic.reviews?.length > 0
-        ? clinic.reviews.reduce((acc: number, r: { rating: number }) => acc + r.rating, 0) / clinic.reviews.length
+        ? clinic.reviews.reduce((acc, r) => acc + r.rating, 0) / clinic.reviews.length
         : 0;
 
     return (
@@ -135,12 +122,12 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             </h2>
                             {clinic.services?.length > 0 ? (
                                 <div className="grid gap-6">
-                                    {clinic.services.map((service: { id: string; name: string; category?: string; priceMin?: number; priceMax?: number; currency?: string }) => (
+                                    {clinic.services.map((service) => (
                                         <div key={service.id} className="flex items-center justify-between p-6 rounded-2xl bg-surface-container-low/40 border border-outline-variant/10 hover:border-primary/20 transition-all group">
                                             <div>
                                                 <p className="text-xl font-bold text-on-surface group-hover:text-primary transition-colors">{service.name}</p>
-                                                {service.category && (
-                                                    <p className="text-xs font-bold text-on-surface-variant/50 uppercase tracking-widest mt-1">{service.category}</p>
+                                                {service.category?.name && (
+                                                    <p className="text-xs font-bold text-on-surface-variant/50 uppercase tracking-widest mt-1">{service.category.name}</p>
                                                 )}
                                             </div>
                                             {(service.priceMin || service.priceMax) && (
@@ -174,7 +161,7 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                             </div>
                             {clinic.reviews?.length > 0 ? (
                                 <div className="space-y-8">
-                                    {clinic.reviews.map((review: { id: string; rating: number; user?: { name?: string }; comment?: string }) => (
+                                    {clinic.reviews.map((review) => (
                                         <div key={review.id} className="space-y-4">
                                             <div className="flex items-center gap-5">
                                                 <div className="h-14 w-14 rounded-full bg-primary/10 flex items-center justify-center border-2 border-primary/20 shadow-inner m3-shape-flower">
@@ -212,7 +199,7 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
 
                     {/* Sidebar Information Card */}
                     <aside className="space-y-8">
-                        <Card variant="bento" className="p-10 bg-surface-container-low sticky top-24 shadow-2xl shadow-on-surface/5 border-outline-variant/20">
+                        <Card variant="bento" className="p-10 bg-surface-container-low sticky top-24 shadow-2xl shadow-on-surface/5 border-outline-variant/20 z-10">
                             <h3 className="text-2xl font-black text-on-surface mb-8 border-b border-outline-variant/20 pb-6">{t('address')}</h3>
                             <div className="space-y-6">
                                 <div className="flex gap-4 items-start">
@@ -242,6 +229,35 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                                 )}
                             </div>
                         </Card>
+
+                        {/* Specialties */}
+                        {clinic.specialties && clinic.specialties.length > 0 && (
+                            <Card variant="bento" className="p-10 bg-surface-container-low border-outline-variant/20">
+                                <h3 className="text-2xl font-black text-on-surface mb-6 border-b border-outline-variant/20 pb-4">{t('specialties')}</h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {clinic.specialties.map((specialty) => (
+                                        <span key={specialty.id} className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold border border-primary/20">
+                                            {specialty.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </Card>
+                        )}
+
+                        {/* Insurances */}
+                        {clinic.insurances && clinic.insurances.length > 0 && (
+                            <Card variant="bento" className="p-10 bg-surface-container-low border-outline-variant/20">
+                                <h3 className="text-2xl font-black text-on-surface mb-6 border-b border-outline-variant/20 pb-4">{t('insurances')}</h3>
+                                <ul className="space-y-3">
+                                    {clinic.insurances.map((insurance) => (
+                                        <li key={insurance.id} className="flex items-center gap-3 text-on-surface-variant font-medium">
+                                            <BadgeCheck className="h-5 w-5 text-secondary" />
+                                            {insurance.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Card>
+                        )}
                     </aside>
                 </div>
             </div>
