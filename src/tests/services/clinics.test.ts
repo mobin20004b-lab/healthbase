@@ -71,8 +71,8 @@ describe("getClinics", () => {
             reviews: [{ rating: 5 }, { rating: 4 }],
             favoritedBy: []
         }];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        mockFindMany.mockImplementation(async () => mockClinics as any[]);
+
+        mockFindMany.mockImplementation(async () => mockClinics as unknown[]);
         mockCount.mockImplementation(async () => 1);
 
         const result = await getClinics({});
@@ -84,8 +84,7 @@ describe("getClinics", () => {
 
     it("should apply multi-select specialty filter", async () => {
         await getClinics({ specialty: ['Dentistry', 'Cardiology'] });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const callArgs = (mockFindMany.mock.calls[0] as any[])[0];
+        const callArgs = (mockFindMany.mock.calls[0] as unknown[])[0] as { where: Record<string, unknown> };
         const where = callArgs.where;
         const json = JSON.stringify(where);
         expect(json).toContain('Dentistry');
@@ -98,7 +97,6 @@ describe("getClinics", () => {
 
 describe("getClinicById", () => {
     it("should fetch clinic with relations", async () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         mockFindUnique.mockImplementation(async () => ({
             id: '1',
             name: 'Clinic A',
@@ -108,7 +106,7 @@ describe("getClinicById", () => {
             specialties: [],
             translations: [],
             favoritedBy: []
-        }) as any);
+        }) as unknown);
 
         const result = await getClinicById('1');
         expect(mockFindUnique).toHaveBeenCalled();

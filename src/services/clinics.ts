@@ -12,7 +12,7 @@ import type {
     User,
     InsuranceTranslation,
     SpecialtyTranslation,
-    CategoryTranslation
+    // CategoryTranslation
 } from '@prisma/client';
 
 // Fallback Mock Data
