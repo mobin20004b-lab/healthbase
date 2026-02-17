@@ -8,15 +8,17 @@
 *   [x] 3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 *   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
+*   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
 
 ## Recent Achievements
+*   Implemented `getClinicById` in `src/services/clinics.ts` with full relation fetching (services, reviews, insurances) and localization support.
+*   Updated Clinic Detail Page to use direct service calls, improving performance and SEO.
+*   Added "Insurances" section to the Clinic Detail Page using Bento card layout.
+*   Enhanced `ClinicCard` navigation with typed routes.
+*   Verified Clinic Detail Page UI with Playwright tests and screenshots.
 *   Enhanced Search & Discovery with Multi-select Filters (Specialty, Insurance) and Pagination.
 *   Created `Checkbox` and `Pagination` UI components.
 *   Updated `src/services/clinics.ts` to support array filters with OR logic.
-*   Verified Search UI with Playwright tests.
-*   Implemented Search page with Server Component data fetching.
-*   Created `src/services/clinics.ts` with robust filtering and mock fallback.
-*   Implemented `SearchContent` client component for interactive map/list toggle.
 
 ## Next Steps
-1.  Implement Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`).
+1.  Implement User Authentication Flows (`src/app/[locale]/auth/login/page.tsx`).

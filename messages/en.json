@@ -108,7 +108,9 @@
         "website": "Website",
         "address": "Address",
         "save": "Save",
-        "saved": "Saved"
+        "saved": "Saved",
+        "insurances": "Insurances",
+        "noInsurances": "No insurances listed"
     },
     "Navigation": {
         "clinics": "Clinics",
