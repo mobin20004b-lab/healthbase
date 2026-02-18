@@ -4,11 +4,11 @@ import React from "react";
 import Image from "next/image";
 import type { Clinic } from "@prisma/client";
 import { Card } from "@/web/components/ui/card";
-import { Button, buttonVariants } from "@/web/components/ui/button";
+import { buttonVariants } from "@/web/components/ui/button";
 import { Checkbox } from "@/web/components/ui/checkbox";
+import { Link } from "@/routing";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Link } from '@/routing';
 
 interface ClinicCardProps {
     clinic: Clinic;

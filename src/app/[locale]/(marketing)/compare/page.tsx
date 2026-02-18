@@ -1,7 +1,6 @@
 
 import { getClinicsByIds } from '@/services/clinics';
 import CompareTable from '@/web/components/clinics/CompareTable';
-import { getTranslations } from 'next-intl/server';
 import { Link } from '@/routing';
 import { ArrowLeft } from 'lucide-react';
 import { Metadata } from 'next';
@@ -11,9 +10,9 @@ interface ComparePageProps {
     searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export async function generateMetadata({ params }: ComparePageProps): Promise<Metadata> {
-    const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: 'Clinics' });
+export async function generateMetadata({ }: ComparePageProps): Promise<Metadata> {
+    // const { locale } = await params;
+    // const t = await getTranslations({ locale, namespace: 'Clinics' });
     return {
         title: `Compare Clinics - Topmedica`, // Should be localized ideally
     };

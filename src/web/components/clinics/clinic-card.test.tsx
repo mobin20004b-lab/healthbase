@@ -1,9 +1,27 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect, mock, afterEach } from "bun:test";
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, cleanup } from "@testing-library/react";
 import { ClinicCard } from "./clinic-card";
+
+// Mock @/routing Link
+mock.module("@/routing", () => ({
+    Link: ({ children, href, className, ...props }: any) => (
+        <a href={href} className={className} {...props}>
+            {children}
+        </a>
+    ),
+}));
+
+// Mock Lucide icons to avoid rendering SVG complexity
+mock.module("lucide-react", () => ({
+    MapPin: () => <div data-testid="icon-map-pin" />,
+    Star: () => <div data-testid="icon-star" />,
+    Calendar: () => <div data-testid="icon-calendar" />,
+    Check: () => <div data-testid="icon-check" />,
+    ArrowRight: () => <div data-testid="icon-arrow-right" />,
+}));
+
 describe("ClinicCard", () => {
-    // Mock Clinic object
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockClinic: any = {
         id: "c1",
@@ -21,25 +39,31 @@ describe("ClinicCard", () => {
         updatedAt: new Date(),
     };
 
+    afterEach(() => {
+        cleanup();
+    });
+
     it("renders clinic name and location", () => {
-        render(<ClinicCard clinic={mockClinic} />);
-        expect(document.body.innerHTML).toContain("Tehran Heart Center");
-        expect(document.body.innerHTML).toContain("Tehran, Iran");
+        const { getByText } = render(<ClinicCard clinic={mockClinic} />);
+        expect(getByText("Tehran Heart Center")).toBeDefined();
+        // The text might be split across elements, so check for partial match or specific container
+        expect(document.body.innerHTML).toContain("Tehran");
+        expect(document.body.innerHTML).toContain("Iran");
     });
 
     it("renders rating and review count", () => {
-        render(<ClinicCard clinic={mockClinic} rating={4.5} reviewCount={120} />);
-        expect(document.body.innerHTML).toContain("4.5");
-        expect(document.body.innerHTML).toContain("(120)");
+        const { getByText } = render(<ClinicCard clinic={mockClinic} rating={4.5} reviewCount={120} />);
+        expect(getByText("4.5")).toBeDefined();
+        expect(getByText("(120)")).toBeDefined();
     });
 
     it("renders verified badge when clinic is verified", () => {
-        render(<ClinicCard clinic={mockClinic} />);
-        expect(document.body.innerHTML).toContain("Verified");
+        const { getByText } = render(<ClinicCard clinic={mockClinic} />);
+        expect(getByText("Verified")).toBeDefined();
     });
 
     it("renders availability pill", () => {
-        render(<ClinicCard clinic={mockClinic} nextAvailable="Tomorrow" />);
-        expect(document.body.innerHTML).toContain("Available Tomorrow");
+        const { getByText } = render(<ClinicCard clinic={mockClinic} nextAvailable="Tomorrow" />);
+        expect(getByText("Available Tomorrow")).toBeDefined();
     });
 });

@@ -97,9 +97,7 @@
         "website": "وب‌سایت",
         "address": "آدرس",
         "save": "ذخیره",
-        "saved": "ذخیره شده",
-        "insurances": "بیمه‌های طرف قرارداد",
-        "noInsurances": "بیمه‌ای ثبت نشده است"
+        "saved": "ذخیره شده"
     },
     "Navigation": {
         "clinics": "کلینیک‌ها",
