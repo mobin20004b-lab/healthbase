@@ -1,4 +1,4 @@
-import { describe, it, expect, mock, beforeEach, afterEach } from "bun:test";
+import { describe, it, expect, mock, beforeEach } from "bun:test";
 import { submitInquiry } from "@/app/actions/inquiry";
 
 // Mock auth

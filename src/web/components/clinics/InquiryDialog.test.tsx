@@ -1,5 +1,5 @@
 import { describe, it, expect, mock, afterEach } from "bun:test";
-import { render, screen, cleanup, fireEvent } from "@testing-library/react";
+import { render, screen, cleanup } from "@testing-library/react";
 import { InquiryDialog } from "./InquiryDialog";
 import * as React from "react";
 
@@ -11,11 +11,17 @@ mock.module("@/app/actions/inquiry", () => ({
 // Mock useDialog hook and components from UI library
 const mockSetOpen = mock(() => {});
 mock.module("@/web/components/ui/dialog", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Dialog: ({ children }: any) => <div>{children}</div>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DialogContent: ({ children }: any) => <div data-testid="dialog-content">{children}</div>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DialogHeader: ({ children }: any) => <div>{children}</div>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DialogTitle: ({ children }: any) => <h1>{children}</h1>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DialogDescription: ({ children }: any) => <p>{children}</p>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   DialogTrigger: ({ children, asChild }: any) => (
     asChild ? children : <button data-testid="dialog-trigger">{children}</button>
   ),
