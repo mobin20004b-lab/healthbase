@@ -2,13 +2,14 @@ import { describe, it, expect, mock, beforeEach } from "bun:test";
 import { submitInquiry } from "@/app/actions/inquiry";
 
 // Mock auth
-const mockAuth = mock(() => Promise.resolve({ user: { id: "user-123" } }));
+const mockAuth = mock(() => Promise.resolve({ user: { id: "user-123" } } as { user: { id: string } } | null));
 mock.module("@/auth", () => ({
   auth: mockAuth,
 }));
 
 // Mock prisma
-const mockCreate = mock(() => Promise.resolve({ id: "inquiry-123" }));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mockCreate = mock((args: any) => Promise.resolve({ id: "inquiry-123", ...args.data }));
 mock.module("@/lib/prisma", () => ({
   default: {
     inquiry: {
@@ -64,7 +65,11 @@ describe("submitInquiry", () => {
 
     expect(result.success).toBe(true);
     expect(mockCreate).toHaveBeenCalled();
-    const callArg = mockCreate.mock.calls[0][0];
+    // Use optional chaining and casting or simpler check to satisfy TS
+    const calls = mockCreate.mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const callArg = calls[0][0] as any;
 
     // Check data
     expect(callArg.data.clinicId).toBe("clinic-123");
