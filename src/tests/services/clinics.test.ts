@@ -1,11 +1,13 @@
 
 import { describe, it, expect, mock, beforeEach } from "bun:test";
-import { getClinics } from "@/services/clinics";
+import { getClinics, getClinicById } from "@/services/clinics";
 
 // Explicitly type the mock return to match expected structure loosely or use any
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mockFindMany = mock(async () => [] as any[]);
 const mockCount = mock(async () => 0);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mockFindUnique = mock(async () => null as any);
 
 // Mocking @/lib/prisma
 mock.module("@/lib/prisma", () => ({
@@ -13,6 +15,7 @@ mock.module("@/lib/prisma", () => ({
         clinic: {
             findMany: mockFindMany,
             count: mockCount,
+            findUnique: mockFindUnique,
         }
     }
 }));
@@ -21,6 +24,7 @@ describe("getClinics", () => {
     beforeEach(() => {
         mockFindMany.mockClear();
         mockCount.mockClear();
+        mockFindUnique.mockClear();
     });
 
     it("should call findMany with correct pagination", async () => {
@@ -67,8 +71,8 @@ describe("getClinics", () => {
             reviews: [{ rating: 5 }, { rating: 4 }],
             favoritedBy: []
         }];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        mockFindMany.mockImplementation(async () => mockClinics as any[]);
+
+        mockFindMany.mockImplementation(async () => mockClinics as unknown[]);
         mockCount.mockImplementation(async () => 1);
 
         const result = await getClinics({});
@@ -80,8 +84,7 @@ describe("getClinics", () => {
 
     it("should apply multi-select specialty filter", async () => {
         await getClinics({ specialty: ['Dentistry', 'Cardiology'] });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const callArgs = (mockFindMany.mock.calls[0] as any[])[0];
+        const callArgs = (mockFindMany.mock.calls[0] as unknown[])[0] as { where: Record<string, unknown> };
         const where = callArgs.where;
         const json = JSON.stringify(where);
         expect(json).toContain('Dentistry');
@@ -89,5 +92,39 @@ describe("getClinics", () => {
         // Check for OR logic within the specialty filter block
         // The exact structure depends on implementation, but it should be present
         expect(json).toContain('OR');
+    });
+});
+
+describe("getClinicById", () => {
+    it("should fetch clinic with relations", async () => {
+        mockFindUnique.mockImplementation(async () => ({
+            id: '1',
+            name: 'Clinic A',
+            services: [],
+            reviews: [],
+            insurances: [],
+            specialties: [],
+            translations: [],
+            favoritedBy: []
+        }) as unknown);
+
+        const result = await getClinicById('1');
+        expect(mockFindUnique).toHaveBeenCalled();
+        expect(result).not.toBeNull();
+        expect(result?.id).toBe('1');
+    });
+
+    it("should return null if not found", async () => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        mockFindUnique.mockImplementation(async () => null as any);
+        const result = await getClinicById('non-existent');
+        expect(result).toBeNull();
+    });
+
+    it("should return mock data on error if id matches mock", async () => {
+        mockFindUnique.mockImplementation(async () => { throw new Error("DB Error"); });
+        const result = await getClinicById('mock-1');
+        expect(result).not.toBeNull();
+        expect(result?.name).toContain('Mock');
     });
 });

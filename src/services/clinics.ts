@@ -1,13 +1,26 @@
 
 import prisma from '@/lib/prisma';
-import type { Clinic, Service, ClinicTranslation, ServiceTranslation } from '@prisma/client';
+import type {
+    Clinic,
+    Service,
+    ClinicTranslation,
+    ServiceTranslation,
+    Insurance,
+    Specialty,
+    Category,
+    Review,
+    User,
+    InsuranceTranslation,
+    SpecialtyTranslation,
+    // CategoryTranslation
+} from '@prisma/client';
 
 // Fallback Mock Data
 const MOCK_CLINICS = [
   {
     id: 'mock-1',
     name: 'Tehran Heart Center (Mock)',
-    description: 'A leading heart center in Tehran.',
+    description: 'A leading heart center in Tehran. Specializing in cardiovascular diseases and surgery.',
     address: 'North Kargar Street',
     city: 'Tehran',
     province: 'Tehran',
@@ -20,15 +33,28 @@ const MOCK_CLINICS = [
     updatedAt: new Date(),
     averageRating: 4.5,
     reviewCount: 120,
-    services: [],
+    services: [
+        { id: 'srv-1', name: 'Cardiology Consultation', description: 'Expert consultation', priceMin: 500000, priceMax: 1000000, currency: 'IRR', clinicId: 'mock-1', createdAt: new Date(), updatedAt: new Date(), categoryId: null, category: { id: 'cat-1', name: 'Consultation', createdAt: new Date(), updatedAt: new Date() }, translations: [] }
+    ],
     translations: [],
-    reviews: [],
-    favoritedBy: []
+    reviews: [
+        { id: 'rev-1', rating: 5, comment: 'Excellent service and caring staff.', status: 'APPROVED', userId: 'user-1', clinicId: 'mock-1', createdAt: new Date(), updatedAt: new Date(), user: { id: 'user-1', name: 'Ali Rezaei', image: null, email: null, emailVerified: null, role: 'USER', createdAt: new Date(), updatedAt: new Date(), password: null, clinicId: null } },
+        { id: 'rev-2', rating: 4, comment: 'Very busy but great doctors.', status: 'APPROVED', userId: 'user-2', clinicId: 'mock-1', createdAt: new Date(), updatedAt: new Date(), user: { id: 'user-2', name: 'Sara Kamali', image: null, email: null, emailVerified: null, role: 'USER', createdAt: new Date(), updatedAt: new Date(), password: null, clinicId: null } }
+    ],
+    favoritedBy: [],
+    insurances: [
+        { id: 'ins-1', name: 'Tamin Ejtemaei', createdAt: new Date(), updatedAt: new Date(), translations: [] },
+        { id: 'ins-2', name: 'Salamat', createdAt: new Date(), updatedAt: new Date(), translations: [] }
+    ],
+    specialties: [
+        { id: 'spec-1', name: 'Cardiology', createdAt: new Date(), updatedAt: new Date(), translations: [] },
+        { id: 'spec-2', name: 'Heart Surgery', createdAt: new Date(), updatedAt: new Date(), translations: [] }
+    ]
   },
   {
     id: 'mock-2',
     name: 'Milad Hospital (Mock)',
-    description: 'Large specialized hospital.',
+    description: 'Large specialized hospital offering a wide range of medical services.',
     address: 'Hemmat Expressway',
     city: 'Tehran',
     province: 'Tehran',
@@ -41,15 +67,24 @@ const MOCK_CLINICS = [
     updatedAt: new Date(),
     averageRating: 3.8,
     reviewCount: 45,
-    services: [],
+    services: [
+        { id: 'srv-2', name: 'General Checkup', description: 'Complete body checkup', priceMin: 2000000, priceMax: 5000000, currency: 'IRR', clinicId: 'mock-2', createdAt: new Date(), updatedAt: new Date(), categoryId: null, category: null, translations: [] }
+    ],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [
+        { id: 'ins-1', name: 'Tamin Ejtemaei', createdAt: new Date(), updatedAt: new Date(), translations: [] }
+    ],
+    specialties: [
+        { id: 'spec-3', name: 'General Medicine', createdAt: new Date(), updatedAt: new Date(), translations: [] },
+        { id: 'spec-4', name: 'Orthopedics', createdAt: new Date(), updatedAt: new Date(), translations: [] }
+    ]
   },
   {
     id: 'mock-3',
     name: 'Shiraz Central Clinic (Mock)',
-    description: 'Central clinic in Shiraz.',
+    description: 'Central clinic in Shiraz providing top-notch healthcare services.',
     address: 'Zand Street',
     city: 'Shiraz',
     province: 'Fars',
@@ -65,7 +100,11 @@ const MOCK_CLINICS = [
     services: [],
     translations: [],
     reviews: [],
-    favoritedBy: []
+    favoritedBy: [],
+    insurances: [],
+    specialties: [
+        { id: 'spec-5', name: 'Dermatology', createdAt: new Date(), updatedAt: new Date(), translations: [] }
+    ]
   }
 ];
 
@@ -79,6 +118,27 @@ export type ClinicWithRelations = Clinic & {
     reviews?: { rating: number }[];
     favoritedBy?: { id: string }[];
     isFavorited?: boolean;
+};
+
+export type ClinicDetail = Clinic & {
+    averageRating: number;
+    reviewCount: number;
+    isFavorited?: boolean;
+    favoritedBy?: { id: string }[];
+    services: (Service & {
+        translations?: ServiceTranslation[];
+        category?: Category | null;
+    })[];
+    translations?: ClinicTranslation[];
+    reviews: (Review & {
+        user?: User;
+    })[];
+    insurances: (Insurance & {
+        translations?: InsuranceTranslation[];
+    })[];
+    specialties: (Specialty & {
+        translations?: SpecialtyTranslation[];
+    })[];
 };
 
 export type PaginationMeta = {
@@ -371,5 +431,116 @@ export async function getClinicsByIds(
     } catch (error) {
         console.warn("Database operation failed in getClinicsByIds, returning mock data.", error);
         return MOCK_CLINICS.filter(c => ids.includes(c.id)) as ClinicWithRelations[];
+    }
+}
+
+export async function getClinicById(
+    id: string,
+    locale: string = 'fa',
+    userId?: string
+): Promise<ClinicDetail | null> {
+    try {
+        const clinic = await prisma.clinic.findUnique({
+            where: { id },
+            include: {
+                services: {
+                    include: {
+                        translations: { where: { locale } },
+                        category: {
+                            include: {
+                                translations: { where: { locale } }
+                            }
+                        }
+                    }
+                },
+                reviews: {
+                    include: {
+                        user: true
+                    },
+                    orderBy: { createdAt: 'desc' }
+                },
+                insurances: {
+                    include: {
+                        translations: { where: { locale } }
+                    }
+                },
+                specialties: {
+                    include: {
+                        translations: { where: { locale } }
+                    }
+                },
+                translations: {
+                    where: { locale }
+                },
+                favoritedBy: userId ? { where: { id: userId }, select: { id: true } } : false
+            }
+        });
+
+        if (!clinic) return null;
+
+        // Process translations
+        const translation = clinic.translations[0];
+
+        const services = clinic.services.map((service) => {
+            const sTranslation = service.translations[0];
+            const cTranslation = service.category?.translations[0];
+            return {
+                ...service,
+                name: sTranslation?.name || service.name,
+                description: sTranslation?.description || service.description,
+                category: service.category ? {
+                    ...service.category,
+                    name: cTranslation?.name || service.category.name
+                } : null,
+                translations: undefined
+            };
+        });
+
+        const insurances = clinic.insurances.map((insurance) => {
+            const iTranslation = insurance.translations[0];
+            return {
+                ...insurance,
+                name: iTranslation?.name || insurance.name,
+                translations: undefined
+            };
+        });
+
+        const specialties = clinic.specialties.map((specialty) => {
+            const spTranslation = specialty.translations[0];
+            return {
+                ...specialty,
+                name: spTranslation?.name || specialty.name,
+                translations: undefined
+            };
+        });
+
+        const totalRating = clinic.reviews.reduce((acc, review) => acc + review.rating, 0);
+        const averageRating = clinic.reviews.length > 0 ? totalRating / clinic.reviews.length : 0;
+        const reviewCount = clinic.reviews.length;
+        const isFavorited = clinic.favoritedBy && clinic.favoritedBy.length > 0;
+
+        return {
+            ...clinic,
+            name: translation?.name || clinic.name,
+            description: translation?.description || clinic.description,
+            address: translation?.address || clinic.address,
+            city: translation?.city || clinic.city,
+            province: translation?.province || clinic.province,
+            services,
+            insurances,
+            specialties,
+            averageRating,
+            reviewCount,
+            isFavorited,
+            translations: undefined,
+            favoritedBy: undefined
+        };
+
+    } catch (error) {
+        console.warn(`Error fetching clinic ${id}:`, error);
+        // Find mock clinic
+        const mock = MOCK_CLINICS.find(c => c.id === id);
+        if (mock) return mock as unknown as ClinicDetail;
+        return null;
     }
 }
