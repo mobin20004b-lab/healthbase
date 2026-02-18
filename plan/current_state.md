@@ -9,8 +9,10 @@
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 *   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
+*   [x] 4.4. Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`)
 
 ## Recent Achievements
+*   Implemented Comparison Tool with side-by-side table view and visualizers for Availability, Rating, and Cost.
 *   Implemented Clinic Detail Page with comprehensive data fetching (`getClinicById`), including full relations (reviews, insurances, specialties).
 *   Added UI sections for Specialties and Insurances to the Clinic Detail sidebar.
 *   Verified Clinic Detail Page with unit tests and frontend screenshots.
