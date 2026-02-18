@@ -4,8 +4,9 @@ import React from "react";
 import Image from "next/image";
 import type { Clinic } from "@prisma/client";
 import { Card } from "@/web/components/ui/card";
-import { Button } from "@/web/components/ui/button";
+import { buttonVariants } from "@/web/components/ui/button";
 import { Checkbox } from "@/web/components/ui/checkbox";
+import { Link } from "@/routing";
 import { MapPin, Star, Calendar, Check, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -117,10 +118,13 @@ export function ClinicCard({
                         <label htmlFor={`compare-${clinic.id}`} className="cursor-pointer select-none">Compare</label>
                     </div>
 
-                    <Button variant="tonal" size="sm" className="ml-auto group/btn">
+                    <Link
+                        href={`/clinics/${clinic.id}`}
+                        className={cn(buttonVariants({ variant: "tonal", size: "sm" }), "ml-auto group/btn")}
+                    >
                         View Profile
                         <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
-                    </Button>
+                    </Link>
                 </div>
             </div>
         </Card>
