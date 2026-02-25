@@ -9,8 +9,12 @@
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 *   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
+*   [x] 5.2. Inquiry System (`src/app/actions/inquiry.ts`, `src/web/components/clinics/InquiryDialog.tsx`)
 
 ## Recent Achievements
+*   Implemented Inquiry System with database schema update (`Inquiry` model), Server Action, and frontend dialog.
+*   Added "Request Info" button to Clinic Detail Page.
+*   Verified Inquiry System with Playwright test and screenshot.
 *   Implemented Clinic Detail Page with comprehensive data fetching (`getClinicById`), including full relations (reviews, insurances, specialties).
 *   Added UI sections for Specialties and Insurances to the Clinic Detail sidebar.
 *   Verified Clinic Detail Page with unit tests and frontend screenshots.
@@ -23,4 +27,4 @@
 *   Implemented `SearchContent` client component for interactive map/list toggle.
 
 ## Next Steps
-1.  Implement Inquiry System (Lead Generation).
+1.  Implement Educational Content for Services.
