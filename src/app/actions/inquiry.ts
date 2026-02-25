@@ -8,7 +8,7 @@ const inquirySchema = z.object({
   clinicId: z.string().min(1, 'Clinic ID is required'),
   serviceInterest: z.string().optional(),
   contactMethod: z.enum(['Phone', 'WhatsApp', 'Email'], {
-    errorMap: () => ({ message: 'Please select a contact method' }),
+    message: 'Please select a contact method',
   }),
   message: z.string().min(10, 'Message must be at least 10 characters long'),
 });
