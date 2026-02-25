@@ -1,0 +1,40 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+- Environments: .env.local
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 3.9s
+○ Compiling /[locale]/compare ...
+Database operation failed in getClinicsByIds, returning mock data. Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__9de4c713._.js:621:166
+
+  618 async function getClinicsByIds(ids, locale = 'fa') {
+  619     if (!ids || ids.length === 0) return [];
+  620     try {
+→ 621         const clinics = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findMany(
+
+    at <unknown> (src/services/clinics.ts:378:45)
+    at async getClinicsByIds (src/services/clinics.ts:378:25)
+    at async ComparePage (src/app/[locale]/(marketing)/compare/page.tsx:37:21)
+  376 |
+  377 |     try {
+> 378 |         const clinics = await prisma.clinic.findMany({
+      |                                             ^
+  379 |             where: {
+  380 |                 id: { in: ids }
+  381 |             }, {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/compare?ids=mock-1,mock-2 200 in 10.0s (compile: 8.2s, proxy.ts: 278ms, generate-params: 1341ms, render: 1580ms)
+[?25h

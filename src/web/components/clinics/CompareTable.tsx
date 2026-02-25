@@ -35,11 +35,11 @@ export default function CompareTable({ clinics }: CompareTableProps) {
                 style={{ gridTemplateColumns }}
             >
                 {/* Header Row: Clinic Info */}
-                <div className="font-bold text-on-surface p-4 flex items-center bg-surface/50 sticky left-0 backdrop-blur-sm z-30 border-b border-outline-variant/20">
+                <div className="font-bold text-on-surface p-4 flex items-center bg-surface/80 sticky left-0 top-0 backdrop-blur-sm z-40 border-b border-outline-variant/20">
                     Clinic
                 </div>
                 {clinicsWithDetails.map(clinic => (
-                    <div key={clinic.id} className="p-4 flex flex-col gap-3 border-b border-outline-variant/10">
+                    <div key={clinic.id} className="p-4 flex flex-col gap-3 border-b border-outline-variant/10 sticky top-0 z-30 bg-surface/80 backdrop-blur-sm">
                         <div className="relative h-40 w-full rounded-2xl overflow-hidden bg-surface-container-highest shadow-sm group">
                              {clinic.image ? (
                                 <Image src={clinic.image} alt={clinic.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="300px" />

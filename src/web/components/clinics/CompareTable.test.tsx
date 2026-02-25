@@ -8,7 +8,7 @@ import CompareTable from "./CompareTable";
 mock.module("next/image", () => ({
     __esModule: true,
     // eslint-disable-next-line
-    default: (props: any) => <img {...props} />
+    default: ({ fill, ...props }: any) => <img {...props} />
 }));
 
 // Mock clinic data
