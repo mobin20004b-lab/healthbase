@@ -32,7 +32,11 @@ export function InquiryDialog({ clinicId, clinicName }: InquiryDialogProps) {
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
-      setOpen(false);
+      // Wait for toast to appear before closing to avoid sync state update warning
+      const timer = setTimeout(() => {
+        setOpen(false);
+      }, 0);
+      return () => clearTimeout(timer);
     } else if (state.message && !state.success) {
         // Only show error toast if it's not a validation error (which are shown inline)
         // or maybe show generic error
