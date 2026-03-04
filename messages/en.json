@@ -110,7 +110,20 @@
         "save": "Save",
         "saved": "Saved",
         "specialties": "Specialties",
-        "insurances": "Accepted Insurances"
+        "insurances": "Accepted Insurances",
+        "requestInformation": "Request Information"
+    },
+    "Inquiry": {
+        "serviceInterest": "Service of Interest (Optional)",
+        "serviceInterestPlaceholder": "e.g., General Consultation",
+        "contactMethod": "Preferred Contact Method",
+        "phone": "Phone Call",
+        "whatsapp": "WhatsApp",
+        "email": "Email",
+        "message": "Your Message",
+        "messagePlaceholder": "Please describe what you are looking for...",
+        "submitting": "Submitting...",
+        "submit": "Request Information"
     },
     "Navigation": {
         "clinics": "Clinics",

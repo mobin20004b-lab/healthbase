@@ -136,3 +136,24 @@ This document outlines the backend development tasks for the Yazd Health Transpa
     - Test with common typos (fuzzy search if enabled).
 - **Test Scenario:**
     - Search "Ghalb" (Heart) -> Returns Cardiology clinics.
+
+## 7. Inquiry System
+
+- **Task:** Implement the "Request Info" lead generation system.
+- **Steps:**
+    1.  Add `Inquiry` model to Prisma schema connecting `User` and `Clinic`.
+    2.  Implement a Server Action (`submitInquiry`) using `zod` for validation and Prisma to save the inquiry to the database.
+    3.  Create an `InquiryForm` UI component for the clinic details page.
+- **Checks:**
+    - Authenticated users can submit inquiries successfully.
+    - Unauthenticated requests are rejected.
+- **Acceptance Criteria:**
+    - Database stores `serviceInterest`, `message`, `contactMethod`, and `status`.
+    - Correctly displays success or error messages.
+- **Plan to Docs:**
+    - Update OpenAPI spec to include Inquiry endpoints.
+- **QC:**
+    - Verify form validations catch errors properly (e.g. invalid contact method, message length).
+- **Test Scenario:**
+    - Attempt to submit form without auth -> Error message.
+    - Submit valid form -> Success message and Inquiry created in database.

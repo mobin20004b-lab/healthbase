@@ -1,9 +1,10 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { MapPin, Phone, Globe, BadgeCheck, Star, Edit } from 'lucide-react';
+import { MapPin, Phone, Globe, BadgeCheck, Star, Edit, Send } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
+import { InquiryForm } from '@/web/components/clinic/InquiryForm';
 import Link from 'next/link';
 import { getClinicById } from '@/services/clinics';
 
@@ -258,6 +259,15 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                                 </ul>
                             </Card>
                         )}
+
+                        {/* Inquiry Form */}
+                        <Card variant="bento" className="p-10 bg-surface-container-low border-outline-variant/20">
+                            <h3 className="text-2xl font-black text-on-surface mb-6 border-b border-outline-variant/20 pb-4 flex items-center gap-2">
+                                <Send className="h-6 w-6 text-primary" />
+                                {t('requestInformation')}
+                            </h3>
+                            <InquiryForm clinicId={clinic.id} />
+                        </Card>
                     </aside>
                 </div>
             </div>
