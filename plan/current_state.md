@@ -9,8 +9,13 @@
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 *   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
+*   [x] 4.3. Comparison Tool (`src/app/[locale]/(marketing)/compare/page.tsx`)
+*   [x] 4.4. About & Blog
 
 ## Recent Achievements
+*   Implemented About page (`/about`) with Framer Motion timeline animations.
+*   Added Team Grid component with simulated cinemagraph hover effects.
+*   Verified that the Comparison Tool and its subcomponents (Availability, Rating, Cost visualizers) are fully implemented.
 *   Implemented Clinic Detail Page with comprehensive data fetching (`getClinicById`), including full relations (reviews, insurances, specialties).
 *   Added UI sections for Specialties and Insurances to the Clinic Detail sidebar.
 *   Verified Clinic Detail Page with unit tests and frontend screenshots.
