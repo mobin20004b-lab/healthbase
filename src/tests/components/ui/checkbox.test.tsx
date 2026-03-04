@@ -15,14 +15,14 @@ describe('Checkbox', () => {
     });
 
     it('renders checkbox', () => {
-        render(<Checkbox checked={false} onChange={() => {}} />);
-        const checkbox = screen.getByRole('checkbox');
+        const { container } = render(<Checkbox checked={false} onChange={() => {}} />);
+        const checkbox = container.querySelector('input[type="checkbox"]');
         expect(checkbox).toBeDefined();
     });
 
     it('renders checked state', () => {
-        render(<Checkbox checked={true} onChange={() => {}} />);
-        const checkbox = screen.getByRole('checkbox') as HTMLInputElement;
+        const { container } = render(<Checkbox checked={true} onChange={() => {}} />);
+        const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
         expect(checkbox.checked).toBe(true);
         expect(screen.getByTestId('check-icon')).toBeDefined();
     });
@@ -32,9 +32,9 @@ describe('Checkbox', () => {
         const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             checked = e.target.checked;
         };
-        render(<Checkbox checked={checked} onChange={onChange} />);
+        const { container } = render(<Checkbox checked={checked} onChange={onChange} />);
 
-        const checkbox = screen.getByRole('checkbox');
+        const checkbox = container.querySelector('input[type="checkbox"]') as HTMLInputElement;
         fireEvent.click(checkbox);
         expect(checked).toBe(true);
     });

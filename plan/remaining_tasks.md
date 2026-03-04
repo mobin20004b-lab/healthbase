@@ -10,7 +10,7 @@ This document consolidates all tasks and features identified in the `plan/` dire
 - [ ] **Deployment Strategy:** Finalize production deployment setup (Vercel or VPS with Nginx and SSL) (`plan/devops.md`).
 
 ## 2. Product Features
-- [ ] **Inquiry System:** Implement a "Request Info" lead generation system to replace direct booking in MVP (`plan/pr.md`, `plan/plan.md`).
+- [x] **Inquiry System:** Implement a "Request Info" lead generation system to replace direct booking in MVP (`plan/pr.md`, `plan/plan.md`).
 - [ ] **Educational Content:** Add structured educational content for services (Preparation instructions, Recovery info, FAQs) (`plan/plan.md`, `plan/backend.md`).
 - [ ] **Equipment & Facilities:** Add ability for clinics to list medical equipment (MRI, CT, etc.) as quality signals (`plan/pr.md`).
 - [ ] **Geo-Search:** Implement "Clinics Near Me" functionality using PostGIS (`plan/pr.md`).

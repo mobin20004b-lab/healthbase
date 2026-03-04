@@ -99,7 +99,20 @@
         "save": "ذخیره",
         "saved": "ذخیره شده",
         "specialties": "تخصص‌ها",
-        "insurances": "بیمه‌های طرف قرارداد"
+        "insurances": "بیمه‌های طرف قرارداد",
+        "requestInformation": "درخواست اطلاعات"
+    },
+    "Inquiry": {
+        "serviceInterest": "خدمت مورد نظر (اختیاری)",
+        "serviceInterestPlaceholder": "مثال: مشاوره عمومی",
+        "contactMethod": "روش تماس ترجیحی",
+        "phone": "تماس تلفنی",
+        "whatsapp": "واتس‌اپ",
+        "email": "ایمیل",
+        "message": "پیام شما",
+        "messagePlaceholder": "لطفاً درخواست خود را توضیح دهید...",
+        "submitting": "در حال ارسال...",
+        "submit": "درخواست اطلاعات"
     },
     "Navigation": {
         "clinics": "کلینیک‌ها",
