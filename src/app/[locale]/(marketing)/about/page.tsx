@@ -20,7 +20,7 @@ export default function AboutPage() {
                     </h1>
                     <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto">
                         We believe that distance should never be a barrier to exceptional healthcare.
-                        Topmedica seamlessly bridges the gap between patients and the world's leading medical experts.
+                        Topmedica seamlessly bridges the gap between patients and the world&apos;s leading medical experts.
                     </p>
                 </div>
 
