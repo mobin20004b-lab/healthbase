@@ -3,14 +3,13 @@
 import prisma from '@/lib/prisma';
 import { auth } from '@/auth';
 import { z } from 'zod';
-import { revalidatePath } from 'next/cache';
 
 const inquirySchema = z.object({
   clinicId: z.string().min(1, 'Clinic ID is required'),
   serviceInterest: z.string().optional(),
   message: z.string().min(10, 'Message must be at least 10 characters long').max(1000, 'Message is too long'),
   contactMethod: z.enum(['phone', 'whatsapp', 'email'], {
-    errorMap: () => ({ message: 'Please select a valid contact method' }),
+    message: 'Please select a valid contact method',
   }),
 });
 
