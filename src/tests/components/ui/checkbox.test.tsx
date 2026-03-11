@@ -16,14 +16,14 @@ describe('Checkbox', () => {
 
     it('renders checkbox', () => {
         render(<Checkbox checked={false} onChange={() => {}} />);
-        const checkbox = screen.getByRole('checkbox');
-        expect(checkbox).toBeDefined();
+        const checkboxes = screen.getAllByRole('checkbox');
+        expect(checkboxes[0]).toBeDefined();
     });
 
     it('renders checked state', () => {
         render(<Checkbox checked={true} onChange={() => {}} />);
-        const checkbox = screen.getByRole('checkbox') as HTMLInputElement;
-        expect(checkbox.checked).toBe(true);
+        const checkboxes = screen.getAllByRole('checkbox') as HTMLInputElement[];
+        expect(checkboxes[0].checked).toBe(true);
         expect(screen.getByTestId('check-icon')).toBeDefined();
     });
 
@@ -34,8 +34,8 @@ describe('Checkbox', () => {
         };
         render(<Checkbox checked={checked} onChange={onChange} />);
 
-        const checkbox = screen.getByRole('checkbox');
-        fireEvent.click(checkbox);
+        const checkboxes = screen.getAllByRole('checkbox');
+        fireEvent.click(checkboxes[0]);
         expect(checked).toBe(true);
     });
 });
