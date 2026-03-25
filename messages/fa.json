@@ -99,7 +99,21 @@
         "save": "ذخیره",
         "saved": "ذخیره شده",
         "specialties": "تخصص‌ها",
-        "insurances": "بیمه‌های طرف قرارداد"
+        "insurances": "بیمه‌های طرف قرارداد",
+        "requestInfo": "درخواست اطلاعات",
+        "requestInfoDesc": "یک درخواست مستقیم به این کلینیک ارسال کنید."
+    },
+    "InquiryForm": {
+        "serviceInterestLabel": "خدمت مورد نظر (اختیاری)",
+        "serviceInterestPlaceholder": "مثلا ایمپلنت دندان",
+        "contactMethodLabel": "روش تماس ترجیحی",
+        "contactMethodPhone": "تلفن",
+        "contactMethodWhatsApp": "واتس‌اپ",
+        "contactMethodEmail": "ایمیل",
+        "messageLabel": "پیام",
+        "messagePlaceholder": "چگونه می‌توانیم به شما کمک کنیم؟",
+        "submitButton": "ارسال درخواست",
+        "successMessage": "درخواست شما با موفقیت ارسال شد."
     },
     "Navigation": {
         "clinics": "کلینیک‌ها",

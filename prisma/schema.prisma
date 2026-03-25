@@ -21,6 +21,7 @@ model User {
   accounts      Account[]
   reviews       Review[]
   sessions      Session[]
+  inquiries     Inquiry[]
 
   clinic        Clinic?   @relation(fields: [clinicId], references: [id], onDelete: SetNull)
 
@@ -83,6 +84,7 @@ model Clinic {
   services     Service[]
 
   owners       User[]              // resolved via User.clinicId relation (one clinic -> many users)
+  inquiries    Inquiry[]
 
   insurances   Insurance[]         @relation("ClinicInsurances")
   specialties  Specialty[]         @relation("ClinicSpecialties")
@@ -207,4 +209,18 @@ model CategoryTranslation {
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@unique([categoryId, locale])
+}
+
+model Inquiry {
+  id              String   @id @default(cuid())
+  clinicId        String
+  userId          String?
+  serviceInterest String?
+  message         String
+  contactMethod   String   @default("Phone")
+  status          String   @default("PENDING")
+  createdAt       DateTime @default(now())
+
+  clinic          Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
