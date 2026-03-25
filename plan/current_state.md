@@ -21,6 +21,7 @@
 *   Implemented Search page with Server Component data fetching.
 *   Created `src/services/clinics.ts` with robust filtering and mock fallback.
 *   Implemented `SearchContent` client component for interactive map/list toggle.
+*   Added Next.js standard SEO configurations (`robots.ts`, `sitemap.ts`) including locale alternations.
 
 ## Next Steps
 1.  Implement Inquiry System (Lead Generation).
