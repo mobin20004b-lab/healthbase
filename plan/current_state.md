@@ -21,6 +21,7 @@
 *   Implemented Search page with Server Component data fetching.
 *   Created `src/services/clinics.ts` with robust filtering and mock fallback.
 *   Implemented `SearchContent` client component for interactive map/list toggle.
+*   Implemented Inquiry System (Lead Generation) with form, server actions, and schema updates.
 
 ## Next Steps
-1.  Implement Inquiry System (Lead Generation).
+1.  Add structured educational content for services.

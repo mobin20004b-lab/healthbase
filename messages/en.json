@@ -110,7 +110,21 @@
         "save": "Save",
         "saved": "Saved",
         "specialties": "Specialties",
-        "insurances": "Accepted Insurances"
+        "insurances": "Insurances",
+        "requestInfo": "Request Information",
+        "requestInfoDesc": "Send a direct inquiry to this clinic."
+    },
+    "InquiryForm": {
+        "serviceInterestLabel": "Service of Interest (Optional)",
+        "serviceInterestPlaceholder": "e.g., Dental Implant",
+        "contactMethodLabel": "Preferred Contact Method",
+        "contactMethodPhone": "Phone",
+        "contactMethodWhatsApp": "WhatsApp",
+        "contactMethodEmail": "Email",
+        "messageLabel": "Message",
+        "messagePlaceholder": "How can we help you?",
+        "submitButton": "Send Inquiry",
+        "successMessage": "Your inquiry has been sent successfully."
     },
     "Navigation": {
         "clinics": "Clinics",
