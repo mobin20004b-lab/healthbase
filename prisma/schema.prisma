@@ -25,6 +25,7 @@ model User {
   clinic        Clinic?   @relation(fields: [clinicId], references: [id], onDelete: SetNull)
 
   favorites     Clinic[]  @relation("UserFavorites")
+  inquiries     Inquiry[]
 }
 
 model Account {
@@ -87,6 +88,7 @@ model Clinic {
   insurances   Insurance[]         @relation("ClinicInsurances")
   specialties  Specialty[]         @relation("ClinicSpecialties")
   favoritedBy  User[]              @relation("UserFavorites")
+  inquiries    Inquiry[]
 }
 
 model ClinicTranslation {
@@ -207,4 +209,26 @@ model CategoryTranslation {
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@unique([categoryId, locale])
+}
+
+enum InquiryStatus {
+  PENDING
+  CONTACTED
+  CLOSED
+}
+
+model Inquiry {
+  id              String        @id @default(cuid())
+  clinicId        String
+  clinic          Clinic        @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  serviceInterest String?
+  message         String
+  contactMethod   String
+  status          InquiryStatus @default(PENDING)
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }

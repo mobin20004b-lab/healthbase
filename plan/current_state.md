@@ -11,6 +11,7 @@
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
 
 ## Recent Achievements
+*   Implemented the Inquiry System (Lead Generation) with `Inquiry` Prisma model, Server Action, and `InquiryForm` component.
 *   Implemented Clinic Detail Page with comprehensive data fetching (`getClinicById`), including full relations (reviews, insurances, specialties).
 *   Added UI sections for Specialties and Insurances to the Clinic Detail sidebar.
 *   Verified Clinic Detail Page with unit tests and frontend screenshots.
@@ -23,4 +24,4 @@
 *   Implemented `SearchContent` client component for interactive map/list toggle.
 
 ## Next Steps
-1.  Implement Inquiry System (Lead Generation).
+1.  Implement Educational Content for services.

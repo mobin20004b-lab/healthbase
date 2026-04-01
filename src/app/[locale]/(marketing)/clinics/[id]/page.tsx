@@ -6,6 +6,7 @@ import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
 import Link from 'next/link';
 import { getClinicById } from '@/services/clinics';
+import { InquiryForm } from '@/web/components/clinic/InquiryForm';
 
 export default async function ClinicDetailPage({ params }: { params: Promise<{ id: string, locale: string }> }) {
     const { id, locale } = await params;
@@ -199,7 +200,12 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
 
                     {/* Sidebar Information Card */}
                     <aside className="space-y-8">
-                        <Card variant="bento" className="p-10 bg-surface-container-low sticky top-24 shadow-2xl shadow-on-surface/5 border-outline-variant/20 z-10">
+                        {/* Inquiry Form */}
+                        <div className="sticky top-24 z-10">
+                            <InquiryForm clinicId={clinic.id} services={clinic.services} />
+                        </div>
+
+                        <Card variant="bento" className="p-10 bg-surface-container-low shadow-2xl shadow-on-surface/5 border-outline-variant/20">
                             <h3 className="text-2xl font-black text-on-surface mb-8 border-b border-outline-variant/20 pb-6">{t('address')}</h3>
                             <div className="space-y-6">
                                 <div className="flex gap-4 items-start">

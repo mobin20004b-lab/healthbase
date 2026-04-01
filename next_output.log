@@ -1,0 +1,324 @@
+$ next dev
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 2.8s
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+○ Compiling /[locale]/clinics/[id] ...
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:547:9)
+    at process.processTimers (node:internal/timers:521:7)
+Error fetching clinic mock-1: Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__8388bc2c._.js:893:165
+
+  890 }
+  891 async function getClinicById(id, locale = 'fa', userId) {
+  892     try {
+→ 893         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:443:44)
+    at async getClinicById (src/services/clinics.ts:443:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:18:20)
+  441 | ): Promise<ClinicDetail | null> {
+  442 |     try {
+> 443 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  444 |             where: { id },
+  445 |             include: {
+  446 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+Error: MISSING_MESSAGE: Could not resolve `Inquiry` in messages for locale `en`.
+    at InquiryForm (src/web/components/clinic/InquiryForm.tsx:20:30)
+  18 |
+  19 | export function InquiryForm({ clinicId, services = [] }: InquiryFormProps) {
+> 20 |     const t = useTranslations('Inquiry');
+     |                              ^
+  21 |     const [state, formAction, isPending] = useActionState(submitInquiry, initialState);
+  22 |
+  23 |     useEffect(() => { {
+  code: 'MISSING_MESSAGE',
+  originalMessage: 'Could not resolve `Inquiry` in messages for locale `en`.'
+}
+ GET /en/clinics/mock-1 200 in 15.1s (compile: 7.7s, proxy.ts: 189ms, render: 7.2s)
+✓ Compiled in 83ms
+✓ Compiled in 70ms
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:547:9)
+    at process.processTimers (node:internal/timers:521:7)
+Error fetching clinic mock-1: Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__8388bc2c._.js:893:165
+
+  890 }
+  891 async function getClinicById(id, locale = 'fa', userId) {
+  892     try {
+→ 893         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:443:44)
+    at async getClinicById (src/services/clinics.ts:443:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:18:20)
+  441 | ): Promise<ClinicDetail | null> {
+  442 |     try {
+> 443 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  444 |             where: { id },
+  445 |             include: {
+  446 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 1085ms (compile: 265ms, proxy.ts: 157ms, render: 663ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+ POST /en/clinics/mock-1 200 in 88ms (compile: 42ms, proxy.ts: 13ms, render: 32ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:547:9)
+    at process.processTimers (node:internal/timers:521:7)
+Error fetching clinic mock-1: Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__8388bc2c._.js:893:165
+
+  890 }
+  891 async function getClinicById(id, locale = 'fa', userId) {
+  892     try {
+→ 893         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:443:44)
+    at async getClinicById (src/services/clinics.ts:443:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:18:20)
+  441 | ): Promise<ClinicDetail | null> {
+  442 |     try {
+> 443 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  444 |             where: { id },
+  445 |             include: {
+  446 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 697ms (compile: 39ms, proxy.ts: 12ms, render: 646ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+ POST /en/clinics/mock-1 200 in 68ms (compile: 35ms, proxy.ts: 13ms, render: 20ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:547:9)
+    at process.processTimers (node:internal/timers:521:7)
+Error fetching clinic mock-1: Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__8388bc2c._.js:893:165
+
+  890 }
+  891 async function getClinicById(id, locale = 'fa', userId) {
+  892     try {
+→ 893         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:443:44)
+    at async getClinicById (src/services/clinics.ts:443:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:18:20)
+  441 | ): Promise<ClinicDetail | null> {
+  442 |     try {
+> 443 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  444 |             where: { id },
+  445 |             include: {
+  446 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 479ms (compile: 34ms, proxy.ts: 10ms, render: 435ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+ POST /en/clinics/mock-1 200 in 58ms (compile: 35ms, proxy.ts: 8ms, render: 16ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at listOnTimeout (node:internal/timers:547:9)
+    at process.processTimers (node:internal/timers:521:7)
+Error fetching clinic mock-1: Error [PrismaClientKnownRequestError]:
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique()` invocation in
+/app/.next/dev/server/chunks/ssr/[root-of-the-server]__8388bc2c._.js:893:165
+
+  890 }
+  891 async function getClinicById(id, locale = 'fa', userId) {
+  892     try {
+→ 893         const clinic = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].clinic.findUnique(
+
+    at <unknown> (src/services/clinics.ts:443:44)
+    at async getClinicById (src/services/clinics.ts:443:24)
+    at async ClinicDetailPage (src/app/[locale]/(marketing)/clinics/[id]/page.tsx:18:20)
+  441 | ): Promise<ClinicDetail | null> {
+  442 |     try {
+> 443 |         const clinic = await prisma.clinic.findUnique({
+      |                                            ^
+  444 |             where: { id },
+  445 |             include: {
+  446 |                 services: { {
+  code: 'ECONNREFUSED',
+  meta: [Object],
+  clientVersion: '7.2.0'
+}
+ GET /en/clinics/mock-1 200 in 631ms (compile: 40ms, proxy.ts: 8ms, render: 583ms)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:513:16)
+    at Auth (/app/.next/dev/server/edge/chunks/node_modules_@auth_core_a56a313d._.js:5331:210)
+[31m[auth][error][0m MissingSecret: Please define a `secret`. Read more at https://errors.authjs.dev#missingsecret
+    at assertConfig (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:513:16)
+    at Auth (/app/.next/dev/server/chunks/ssr/node_modules_@auth_core_e00e322b._.js:5330:202)
+ POST /en/clinics/mock-1 200 in 63ms (compile: 38ms, proxy.ts: 10ms, render: 16ms)

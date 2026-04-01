@@ -121,6 +121,21 @@
         "register": "Register",
         "language": "English"
     },
+    "Inquiry": {
+        "requestInfo": "Request Information",
+        "description": "Interested in a service? Send an inquiry and the clinic will reach out to you.",
+        "serviceInterest": "Service of Interest",
+        "selectService": "Select a service (optional)",
+        "generalInquiry": "General Inquiry",
+        "message": "Message",
+        "messagePlaceholder": "Hello, I would like to know more about...",
+        "preferredContact": "Preferred Contact Method",
+        "submitInquiry": "Submit Inquiry",
+        "sending": "Sending...",
+        "sent": "Sent!",
+        "privacyNote": "Your information is securely sent directly to the clinic.",
+        "successMessage": "Your inquiry has been sent successfully. The clinic will contact you soon."
+    },
     "Footer": {
         "links": "Quick Links",
         "legal": "Legal",
