@@ -228,6 +228,21 @@
                 "delete": "Delete"
             }
         }
+  },
+  "Inquiry": {
+    "requestInfo": "Request Info",
+    "description": "Send a direct message to this clinic. They will contact you via your preferred method.",
+    "serviceInterest": "Service of Interest",
+    "selectService": "Select a service...",
+    "contactMethod": "Preferred Contact Method",
+    "methodPhone": "Phone Call",
+    "methodWhatsApp": "WhatsApp",
+    "methodEmail": "Email",
+    "message": "Message",
+    "messagePlaceholder": "Tell us what you are looking for...",
+    "submit": "Send Inquiry",
+    "sending": "Sending...",
+    "successMessage": "Your inquiry has been sent successfully."
     },
     "Auth": {
         "signin": "Sign In",

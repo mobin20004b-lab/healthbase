@@ -18,13 +18,14 @@ model User {
   password      String?
   clinicId      String?
 
-  accounts      Account[]
-  reviews       Review[]
-  sessions      Session[]
+  accounts Account[]
+  reviews  Review[]
+  sessions Session[]
 
-  clinic        Clinic?   @relation(fields: [clinicId], references: [id], onDelete: SetNull)
+  clinic Clinic? @relation(fields: [clinicId], references: [id], onDelete: SetNull)
 
-  favorites     Clinic[]  @relation("UserFavorites")
+  favorites Clinic[]  @relation("UserFavorites")
+  inquiries Inquiry[]
 }
 
 model Account {
@@ -41,7 +42,7 @@ model Account {
   id_token          String?
   session_state     String?
 
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -52,7 +53,7 @@ model Session {
   userId       String
   expires      DateTime
 
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -64,29 +65,30 @@ model VerificationToken {
 }
 
 model Clinic {
-  id           String              @id @default(cuid())
-  name         String
-  description  String?
-  address      String?
-  city         String?
-  province     String?
-  country      String?             @default("Iran")
-  phone        String?
-  image        String?
-  website      String?
-  isVerified   Boolean             @default(false)
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  address     String?
+  city        String?
+  province    String?
+  country     String?  @default("Iran")
+  phone       String?
+  image       String?
+  website     String?
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   translations ClinicTranslation[]
   reviews      Review[]
   services     Service[]
 
-  owners       User[]              // resolved via User.clinicId relation (one clinic -> many users)
+  owners User[] // resolved via User.clinicId relation (one clinic -> many users)
 
-  insurances   Insurance[]         @relation("ClinicInsurances")
-  specialties  Specialty[]         @relation("ClinicSpecialties")
-  favoritedBy  User[]              @relation("UserFavorites")
+  insurances  Insurance[] @relation("ClinicInsurances")
+  specialties Specialty[] @relation("ClinicSpecialties")
+  favoritedBy User[]      @relation("UserFavorites")
+  inquiries   Inquiry[]
 }
 
 model ClinicTranslation {
@@ -100,25 +102,25 @@ model ClinicTranslation {
   country     String?
   clinicId    String
 
-  clinic      Clinic  @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 
   @@unique([clinicId, locale])
 }
 
 model Service {
-  id           String               @id @default(cuid())
-  name         String
-  description  String?
-  priceMin     Float?
-  priceMax     Float?
-  currency     String               @default("IRR")
-  clinicId     String
-  createdAt    DateTime             @default(now())
-  updatedAt    DateTime             @updatedAt
-  categoryId   String?
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  priceMin    Float?
+  priceMax    Float?
+  currency    String   @default("IRR")
+  clinicId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  categoryId  String?
 
-  category     Category?            @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  clinic       Clinic               @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  clinic   Clinic    @relation(fields: [clinicId], references: [id], onDelete: Cascade)
 
   translations ServiceTranslation[]
 }
@@ -130,7 +132,7 @@ model ServiceTranslation {
   description String?
   serviceId   String
 
-  service     Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 
   @@unique([serviceId, locale])
 }
@@ -145,8 +147,8 @@ model Review {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  clinic    Clinic   @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Specialty {
@@ -159,12 +161,12 @@ model Specialty {
 }
 
 model SpecialtyTranslation {
-  id          String    @id @default(cuid())
+  id          String @id @default(cuid())
   locale      String
   name        String
   specialtyId String
 
-  specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+  specialty Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
 
   @@unique([specialtyId, locale])
 }
@@ -179,12 +181,12 @@ model Insurance {
 }
 
 model InsuranceTranslation {
-  id          String    @id @default(cuid())
+  id          String @id @default(cuid())
   locale      String
   name        String
   insuranceId String
 
-  insurance   Insurance @relation(fields: [insuranceId], references: [id], onDelete: Cascade)
+  insurance Insurance @relation(fields: [insuranceId], references: [id], onDelete: Cascade)
 
   @@unique([insuranceId, locale])
 }
@@ -199,12 +201,27 @@ model Category {
 }
 
 model CategoryTranslation {
-  id         String   @id @default(cuid())
+  id         String @id @default(cuid())
   locale     String
   name       String
   categoryId String
 
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@unique([categoryId, locale])
+}
+
+model Inquiry {
+  id              String   @id @default(cuid())
+  clinicId        String
+  userId          String
+  serviceInterest String?
+  message         String
+  contactMethod   String
+  status          String   @default("PENDING") // PENDING, CONTACTED, CLOSED
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -221,6 +221,21 @@
                 "delete": "حذف"
             }
         }
+  },
+  "Inquiry": {
+    "requestInfo": "درخواست اطلاعات",
+    "description": "به این کلینیک پیام مستقیم ارسال کنید. آنها از طریق روش ترجیحی شما با شما تماس خواهند گرفت.",
+    "serviceInterest": "خدمت مورد نظر",
+    "selectService": "یک خدمت را انتخاب کنید...",
+    "contactMethod": "روش تماس ترجیحی",
+    "methodPhone": "تماس تلفنی",
+    "methodWhatsApp": "واتس‌اپ",
+    "methodEmail": "ایمیل",
+    "message": "پیام",
+    "messagePlaceholder": "به ما بگویید به دنبال چه هستید...",
+    "submit": "ارسال درخواست",
+    "sending": "در حال ارسال...",
+    "successMessage": "درخواست شما با موفقیت ارسال شد."
     },
     "Auth": {
         "signin": "ورود",
