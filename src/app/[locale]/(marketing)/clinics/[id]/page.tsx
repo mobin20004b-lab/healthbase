@@ -4,6 +4,7 @@ import { MapPin, Phone, Globe, BadgeCheck, Star, Edit } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
+import { InquiryDialog } from '@/web/components/clinic/InquiryDialog';
 import Link from 'next/link';
 import { getClinicById } from '@/services/clinics';
 
@@ -72,6 +73,10 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
                                         </Button>
                                     </Link>
                                 )}
+                                <InquiryDialog
+                                    clinicId={clinic.id}
+                                    services={clinic.services.map(s => ({ id: s.id, name: s.name })) || []}
+                                />
                                 <FavoriteButton
                                     clinicId={clinic.id}
                                     initialIsFavorited={clinic.isFavorited}
