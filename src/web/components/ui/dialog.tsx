@@ -37,6 +37,7 @@ export function DialogTrigger({ children, asChild }: { children: React.ReactNode
     const { open } = useDialog();
 
     if (asChild && React.isValidElement(children)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return React.cloneElement(children as React.ReactElement<any>, {
             onClick: (e: React.MouseEvent) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any

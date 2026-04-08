@@ -64,6 +64,7 @@ export async function submitInquiry(prevState: InquiryState, formData: FormData)
             success: true,
             message: 'Your inquiry has been sent successfully. The clinic will contact you soon.',
         };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
         console.error('Error submitting inquiry:', error);
 
