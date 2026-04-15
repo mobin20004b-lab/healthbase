@@ -1,0 +1,21 @@
+import type { MetadataRoute } from 'next';
+
+export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://topmedica.com';
+
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: [
+        '/en/admin',
+        '/fa/admin',
+        '/en/dashboard',
+        '/fa/dashboard',
+        '/admin',
+        '/dashboard',
+      ],
+    },
+    sitemap: `${baseUrl}/sitemap.xml`,
+  };
+}
