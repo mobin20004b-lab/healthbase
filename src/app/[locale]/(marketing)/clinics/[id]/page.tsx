@@ -4,6 +4,7 @@ import { MapPin, Phone, Globe, BadgeCheck, Star, Edit } from 'lucide-react';
 import { Button } from '@/web/components/ui/button';
 import { Card } from '@/web/components/ui/card';
 import { FavoriteButton } from '@/web/components/clinic/FavoriteButton';
+import { InquiryDialog } from '@/web/components/clinic/InquiryDialog';
 import Link from 'next/link';
 import { getClinicById } from '@/services/clinics';
 
@@ -56,9 +57,10 @@ export default async function ClinicDetailPage({ params }: { params: Promise<{ i
 
                             {/* Contact Quick Actions */}
                             <div className="mt-12 flex flex-wrap gap-4">
+                                <InquiryDialog clinicId={clinic.id} />
                                 {clinic.phone && (
                                     <Link href={`tel:${clinic.phone}`}>
-                                        <Button size="lg" className="rounded-2xl shadow-2xl shadow-primary/20 gap-3">
+                                        <Button size="lg" variant="tonal" className="rounded-2xl gap-3">
                                             <Phone className="h-5 w-5" />
                                             {clinic.phone}
                                         </Button>
