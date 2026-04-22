@@ -40,8 +40,8 @@ export function DialogTrigger({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return React.cloneElement(children as React.ReactElement<any>, {
       onClick: (e: React.MouseEvent) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        if ((children.props as any).onClick) (children.props as any).onClick(e);
+        const props = children.props as { onClick?: (e: React.MouseEvent) => void };
+        if (props.onClick) props.onClick(e);
         context.onOpenChange(true);
       },
     });
