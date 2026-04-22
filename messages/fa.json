@@ -55,9 +55,9 @@
             "NiroohayeMosallah": "نیروهای مسلح"
         },
         "locations": {
-        "countries": {
-            "Iran": "ایران"
-        },
+            "countries": {
+                "Iran": "ایران"
+            },
             "provinces": {
                 "Yazd": "یزد",
                 "Tehran": "تهران",
@@ -99,7 +99,24 @@
         "save": "ذخیره",
         "saved": "ذخیره شده",
         "specialties": "تخصص‌ها",
-        "insurances": "بیمه‌های طرف قرارداد"
+        "insurances": "بیمه‌های طرف قرارداد",
+        "inquiry": {
+            "title": "درخواست اطلاعات",
+            "serviceInterest": "خدمات مورد نظر (اختیاری)",
+            "servicePlaceholder": "مثلا معاینه دندان",
+            "contactMethod": "روش تماس ترجیحی",
+            "selectContactMethod": "انتخاب کنید...",
+            "phone": "تماس تلفنی",
+            "whatsapp": "واتس‌اپ",
+            "email": "ایمیل",
+            "message": "پیام",
+            "messagePlaceholder": "می‌خواهم بیشتر بدانم درباره...",
+            "submit": "ارسال درخواست",
+            "submitting": "در حال ارسال...",
+            "successMessage": "درخواست شما با موفقیت ارسال شد!",
+            "successDesc": "کلینیک به زودی با شما تماس خواهد گرفت."
+        },
+        "requestInfo": "درخواست اطلاعات"
     },
     "Navigation": {
         "clinics": "کلینیک‌ها",

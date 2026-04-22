@@ -66,9 +66,9 @@
             "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
         },
         "locations": {
-        "countries": {
-            "Iran": "Iran"
-        },
+            "countries": {
+                "Iran": "Iran"
+            },
             "provinces": {
                 "Yazd": "Yazd",
                 "Tehran": "Tehran",
@@ -110,7 +110,24 @@
         "save": "Save",
         "saved": "Saved",
         "specialties": "Specialties",
-        "insurances": "Accepted Insurances"
+        "insurances": "Accepted Insurances",
+        "inquiry": {
+            "title": "Request Information",
+            "serviceInterest": "Service Interest (Optional)",
+            "servicePlaceholder": "e.g., Dental Checkup",
+            "contactMethod": "Preferred Contact Method",
+            "selectContactMethod": "Select...",
+            "phone": "Phone",
+            "whatsapp": "WhatsApp",
+            "email": "Email",
+            "message": "Message",
+            "messagePlaceholder": "I would like to know more about...",
+            "submit": "Send Inquiry",
+            "submitting": "Sending...",
+            "successMessage": "Inquiry sent successfully!",
+            "successDesc": "The clinic will contact you shortly."
+        },
+        "requestInfo": "Request Info"
     },
     "Navigation": {
         "clinics": "Clinics",
