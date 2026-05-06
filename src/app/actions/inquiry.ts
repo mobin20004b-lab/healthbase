@@ -9,7 +9,7 @@ const InquirySchema = z.object({
   serviceInterest: z.string().optional(),
   message: z.string().min(1, 'Message is required'),
   contactMethod: z.enum(['Phone', 'WhatsApp'], {
-    errorMap: () => ({ message: 'Contact method must be Phone or WhatsApp' }),
+    message: 'Contact method must be Phone or WhatsApp',
   }),
 });
 
