@@ -23,4 +23,4 @@
 *   Implemented `SearchContent` client component for interactive map/list toggle.
 
 ## Next Steps
-1.  Implement Inquiry System (Lead Generation).
+1.  [x] Implement Inquiry System (Lead Generation).

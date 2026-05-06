@@ -232,5 +232,22 @@
     "Auth": {
         "signin": "Sign In",
         "register": "Create Account"
+    },
+    "Inquiry": {
+        "trigger": "Request Info",
+        "title": "Request Information",
+        "description": "Send a message to",
+        "serviceInterest": "Service of Interest (Optional)",
+        "serviceInterestPlaceholder": "e.g. Dental Checkup",
+        "message": "Message",
+        "messagePlaceholder": "How can we help you?",
+        "contactMethod": "Preferred Contact Method",
+        "phone": "Phone",
+        "whatsapp": "WhatsApp",
+        "submit": "Send Inquiry",
+        "submitting": "Sending...",
+        "successTitle": "Inquiry Sent!",
+        "successMessage": "The clinic has received your message and will contact you soon.",
+        "close": "Close"
     }
 }
