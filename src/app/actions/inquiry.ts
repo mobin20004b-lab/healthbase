@@ -67,12 +67,14 @@ export async function submitInquiry(prevState: InquiryState, formData: FormData)
     });
 
     return { success: true };
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error submitting inquiry:', error);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const e = error as any;
     if (
       process.env.NODE_ENV === 'development' &&
-      (error.code === 'ECONNREFUSED' || error.name === 'PrismaClientKnownRequestError' || error.message?.includes('ECONNREFUSED'))
+      (e.code === 'ECONNREFUSED' || e.name === 'PrismaClientKnownRequestError' || e.message?.includes('ECONNREFUSED'))
     ) {
       console.warn('Mocking success response due to database error in development environment.');
       return { success: true };

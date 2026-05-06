@@ -1,9 +1,7 @@
 import { describe, it, expect, mock, afterEach } from 'bun:test';
 import React from 'react';
-import { render, screen, cleanup, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import { InquiryDialog } from '@/web/components/clinic/InquiryDialog';
-import * as formMod from '@/web/components/clinic/InquiryForm';
-import { useActionState } from 'react';
 
 // Mock next-intl
 mock.module('next-intl', () => ({
@@ -25,6 +23,7 @@ mock.module('@/app/actions/inquiry', () => ({
 
 // Mock useActionState since it requires Next.js React experimental bundle in real env
 mock.module('react', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const actual = require('react');
   return {
     ...actual,
@@ -74,6 +73,7 @@ describe('InquiryDialog and InquiryForm', () => {
 
   it('displays success state when useActionState returns success', async () => {
     // Override useActionState mock for this specific test
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { useActionState } = require('react');
     useActionState.mockImplementation(() => [{ success: true }, () => {}, false]);
 
@@ -93,6 +93,7 @@ describe('InquiryDialog and InquiryForm', () => {
 
   it('displays pending state properly', async () => {
     // Override useActionState mock for this specific test
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { useActionState } = require('react');
     useActionState.mockImplementation(() => [{ success: undefined }, () => {}, true]); // isPending = true
 
