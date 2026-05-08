@@ -225,5 +225,22 @@
     "Auth": {
         "signin": "ورود",
         "register": "ایجاد حساب کاربری"
+    },
+    "Inquiry": {
+        "trigger": "درخواست اطلاعات",
+        "title": "درخواست اطلاعات",
+        "description": "ارسال پیام به",
+        "serviceInterest": "خدمت مورد نظر (اختیاری)",
+        "serviceInterestPlaceholder": "مثلاً معاینه دندان",
+        "message": "پیام",
+        "messagePlaceholder": "چگونه می‌توانیم کمک کنیم؟",
+        "contactMethod": "روش تماس ترجیحی",
+        "phone": "تلفن",
+        "whatsapp": "واتس‌اپ",
+        "submit": "ارسال درخواست",
+        "submitting": "در حال ارسال...",
+        "successTitle": "درخواست ارسال شد!",
+        "successMessage": "کلینیک پیام شما را دریافت کرد و به زودی با شما تماس خواهد گرفت.",
+        "close": "بستن"
     }
 }
