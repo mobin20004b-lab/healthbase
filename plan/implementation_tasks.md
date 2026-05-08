@@ -188,7 +188,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
     *   **Tasks**:
         *   Update `src/middleware.ts` to check `auth.user.role`.
         *   If `role !== 'ADMIN'` and path starts with `/admin`, redirect to `/unauthorized`.
-*   [ ] **7.3. Performance & SEO**
+*   [x] **7.3. Performance & SEO**
     *   **Tasks**:
         *   Create `src/app/sitemap.ts`. Logic: Include `/`, `/about`, `/blog/*`, `/search`. Exclude `/dashboard`, `/admin`.
         *   Create `src/app/robots.ts`. Disallow `/admin`, `/dashboard`.

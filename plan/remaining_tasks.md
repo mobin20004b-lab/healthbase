@@ -32,4 +32,4 @@ This document consolidates all tasks and features identified in the `plan/` dire
 ## 5. Launch Readiness
 - [ ] **Seed Data:** Onboard and verify a minimum of 50 pilot clinics (`plan/current_state.md`).
 - [ ] **Usability Testing:** Conduct 5 Persian and 3 English usability tests to de-risk the search-to-detail flow (`plan/plan.md`, `plan/current_state.md`).
-- [ ] **SEO Optimization:** Finalize metadata, sitemaps, and robots.txt for production (`plan/plan.md`).
+- [x] **SEO Optimization:** Finalize metadata, sitemaps, and robots.txt for production (`plan/plan.md`).
