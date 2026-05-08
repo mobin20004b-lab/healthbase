@@ -138,7 +138,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   **Availability**: Green text "Tomorrow" vs Amber "3 weeks".
         *   **Rating**: Star icon + Bar chart (CSS based) for "Wait Time".
         *   **Cost**: Wallet icon + Price range.
-*   [ ] **4.4. About & Blog**
+*   [x] **4.4. About & Blog**
     *   **Timeline (`/about`)**: Vertical line with dots. SVG path drawing animation triggered by scroll.
     *   **Team Grid**: Grid of photos. On hover, switch image src to a GIF/Video (Cinemagraph).
 
