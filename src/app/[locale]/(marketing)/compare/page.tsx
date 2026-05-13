@@ -1,6 +1,7 @@
 
 import { getClinicsByIds } from '@/services/clinics';
 import CompareTable from '@/web/components/clinics/CompareTable';
+import ClinicComparisonAISummary from '@/web/components/clinics/comparison/ClinicComparisonAISummary';
 // import { getTranslations } from 'next-intl/server';
 import { Link } from '@/routing';
 import { ArrowLeft } from 'lucide-react';
@@ -53,6 +54,8 @@ export default async function ComparePage({ params, searchParams }: ComparePageP
                     </div>
                 </div>
             </div>
+
+            <ClinicComparisonAISummary clinics={clinics} />
 
             <CompareTable clinics={clinics} />
         </div>
