@@ -9,6 +9,7 @@
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
 *   [x] 4.2. Search & Discovery (`src/app/[locale]/(marketing)/search/page.tsx`)
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
+*   [x] 5.2. Medical Records (`src/app/[locale]/(patient)/records/page.tsx`)
 
 ## Recent Achievements
 *   Implemented About Page (`/about`) with scrollytelling Timeline component and interactive TeamGrid with hover cinemagraph effects.
