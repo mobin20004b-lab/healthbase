@@ -43,7 +43,7 @@ export default async function PatientDashboard({ params }: { params: Promise<{ l
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
              {[
                  { label: 'Book Appointment', icon: CalendarDays, href: `/${locale}/search` },
-                 { label: 'My Records', icon: FileText, href: `/${locale}/dashboard/records` },
+                 { label: 'My Records', icon: FileText, href: `/${locale}/records` },
                  { label: 'Find a Doctor', icon: Stethoscope, href: `/${locale}/search` },
                  { label: 'Prescriptions', icon: FileText, href: `/${locale}/dashboard/prescriptions` }, // Placeholder
              ].map((action, i) => (
