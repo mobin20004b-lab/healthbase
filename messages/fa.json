@@ -242,5 +242,17 @@
         "successTitle": "درخواست ارسال شد!",
         "successMessage": "کلینیک پیام شما را دریافت کرد و به زودی با شما تماس خواهد گرفت.",
         "close": "بستن"
+    },
+    "PatientRecords": {
+        "title": "سوابق پزشکی من",
+        "subtitle": "دسترسی به گذرنامه سلامت و نتایج آزمایشات.",
+        "healthPassportTitle": "گذرنامه سلامت",
+        "bloodType": "گروه خونی",
+        "allergies": "حساسیت‌ها",
+        "chronicConditions": "بیماری‌های مزمن",
+        "labResultsTitle": "نتایج آزمایشات",
+        "testName": "نام آزمایش",
+        "result": "نتیجه",
+        "normalRange": "محدوده نرمال"
     }
 }
