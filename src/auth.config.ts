@@ -7,12 +7,25 @@ export const authConfig = {
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-            const isOnAdmin = nextUrl.pathname.startsWith('/admin');
+            const pathname = nextUrl.pathname;
+
+            // Allow Next.js internal and API routes to bypass locale parsing in middleware
+            if (pathname.startsWith('/_next') || pathname.startsWith('/api')) {
+                return true;
+            }
+
+            // Using regex to match locale paths like /en/admin or /fa/admin
+            const isOnDashboard = /^\/(en|fa)\/dashboard(\/.*)?$/.test(pathname);
+            const isOnAdmin = /^\/(en|fa)\/admin(\/.*)?$/.test(pathname);
 
             if (isOnDashboard || isOnAdmin) {
-                if (isLoggedIn) return true;
-                return false; // Deny access without redirecting
+                if (!isLoggedIn) return false; // Deny access without redirecting
+
+                if (isOnAdmin && auth?.user?.role !== 'ADMIN') {
+                    return false;
+                }
+
+                return true;
             }
             return true;
         },
