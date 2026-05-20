@@ -249,5 +249,17 @@
         "successTitle": "Inquiry Sent!",
         "successMessage": "The clinic has received your message and will contact you soon.",
         "close": "Close"
+    },
+    "PatientRecords": {
+        "title": "My Medical Records",
+        "subtitle": "Access your health passport and lab results.",
+        "healthPassportTitle": "Health Passport",
+        "bloodType": "Blood Type",
+        "allergies": "Allergies",
+        "chronicConditions": "Chronic Conditions",
+        "labResultsTitle": "Lab Results",
+        "testName": "Test Name",
+        "result": "Result",
+        "normalRange": "Normal Range"
     }
 }
