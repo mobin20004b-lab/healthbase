@@ -3,8 +3,8 @@
 This document consolidates all tasks and features identified in the `plan/` directory that have not yet been implemented or marked as completed in `current_state.md`.
 
 ## 1. Infrastructure & Security
-- [ ] **CI/CD Pipeline:** Setup GitHub Actions for automated linting, type checking, and testing (`plan/devops.md`).
-- [ ] **NextAuth Integration:** Implement NextAuth for secrets management and role-based permissions (`plan/pr.md`).
+- [x] **CI/CD Pipeline:** Setup GitHub Actions for automated linting, type checking, and testing (`plan/devops.md`).
+- [x] **NextAuth Integration:** Implement NextAuth for secrets management and role-based permissions (`plan/pr.md`).
 - [ ] **Security Audit:** Conduct a full RBAC check to ensure proper data isolation between Admin, Clinic, and User roles (`plan/current_state.md`).
 - [ ] **Audit Logs:** Implement an immutable audit log for all administrative and system actions (`plan/plan.md`, `plan/design.md`).
 - [ ] **Deployment Strategy:** Finalize production deployment setup (Vercel or VPS with Nginx and SSL) (`plan/devops.md`).
