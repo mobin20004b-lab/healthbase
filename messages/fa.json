@@ -55,9 +55,9 @@
             "NiroohayeMosallah": "نیروهای مسلح"
         },
         "locations": {
-        "countries": {
-            "Iran": "ایران"
-        },
+            "countries": {
+                "Iran": "ایران"
+            },
             "provinces": {
                 "Yazd": "یزد",
                 "Tehran": "تهران",
@@ -242,5 +242,17 @@
         "successTitle": "درخواست ارسال شد!",
         "successMessage": "کلینیک پیام شما را دریافت کرد و به زودی با شما تماس خواهد گرفت.",
         "close": "بستن"
+    },
+    "Patient": {
+        "records": {
+            "title": "پرونده پزشکی",
+            "healthPassport": "گذرنامه سلامت",
+            "labResults": "نتایج آزمایش",
+            "bloodType": "گروه خونی",
+            "allergies": "آلرژی‌ها",
+            "testName": "نام آزمایش",
+            "result": "نتیجه",
+            "normalRange": "محدوده نرمال"
+        }
     }
 }

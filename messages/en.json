@@ -66,9 +66,9 @@
             "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
         },
         "locations": {
-        "countries": {
-            "Iran": "Iran"
-        },
+            "countries": {
+                "Iran": "Iran"
+            },
             "provinces": {
                 "Yazd": "Yazd",
                 "Tehran": "Tehran",
@@ -249,5 +249,17 @@
         "successTitle": "Inquiry Sent!",
         "successMessage": "The clinic has received your message and will contact you soon.",
         "close": "Close"
+    },
+    "Patient": {
+        "records": {
+            "title": "Medical Records",
+            "healthPassport": "Health Passport",
+            "labResults": "Lab Results",
+            "bloodType": "Blood Type",
+            "allergies": "Allergies",
+            "testName": "Test Name",
+            "result": "Result",
+            "normalRange": "Normal Range"
+        }
     }
 }
