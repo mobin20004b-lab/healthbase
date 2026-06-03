@@ -4,6 +4,7 @@
 **Phase 3: Layouts & Core Pages**
 
 ## Active Tasks
+*   [x] 5.2. Medical Records
 *   [x] 3.1. Public Layout (`src/app/[locale]/(marketing)/layout.tsx`)
 *   [x] 3.2. Patient Layout (`src/app/[locale]/(patient)/layout.tsx`)
 *   [x] 3.3. Admin Layout (`src/app/[locale]/(admin)/layout.tsx`)
@@ -11,6 +12,7 @@
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
 
 ## Recent Achievements
+* Implemented Medical Records page with HealthPassport and LabResultsTable
 *   Implemented About Page (`/about`) with scrollytelling Timeline component and interactive TeamGrid with hover cinemagraph effects.
 *   Implemented Clinic Detail Page with comprehensive data fetching (`getClinicById`), including full relations (reviews, insurances, specialties).
 *   Added UI sections for Specialties and Insurances to the Clinic Detail sidebar.
