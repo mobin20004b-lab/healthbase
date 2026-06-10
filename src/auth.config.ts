@@ -7,11 +7,17 @@ export const authConfig = {
     callbacks: {
         authorized({ auth, request: { nextUrl } }) {
             const isLoggedIn = !!auth?.user;
-            const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-            const isOnAdmin = nextUrl.pathname.startsWith('/admin');
+            const userRole = auth?.user?.role;
+            const isOnDashboard = /^\/(en|fa)\/dashboard/.test(nextUrl.pathname) || nextUrl.pathname.startsWith('/dashboard');
+            const isOnAdmin = /^\/(en|fa)\/admin/.test(nextUrl.pathname) || nextUrl.pathname.startsWith('/admin');
 
             if (isOnDashboard || isOnAdmin) {
-                if (isLoggedIn) return true;
+                if (isLoggedIn) {
+                    if (isOnAdmin && userRole !== 'ADMIN') {
+                        return Response.redirect(new URL('/unauthorized', nextUrl));
+                    }
+                    return true;
+                }
                 return false; // Deny access without redirecting
             }
             return true;

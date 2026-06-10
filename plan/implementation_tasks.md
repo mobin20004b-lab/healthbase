@@ -184,7 +184,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   Verify `src/middleware.ts` handles locale redirection.
         *   Ensure `src/i18n/request.ts` (or equivalent) loads `messages/en.json` and `messages/fa.json`.
         *   Test Admin Nav Rail mirroring in RTL mode (`flex-row-reverse` or equivalent logic).
-*   [ ] **7.2. Middleware & RBAC**
+*   [x] **7.2. Middleware & RBAC**
     *   **Tasks**:
         *   Update `src/middleware.ts` to check `auth.user.role`.
         *   If `role !== 'ADMIN'` and path starts with `/admin`, redirect to `/unauthorized`.
