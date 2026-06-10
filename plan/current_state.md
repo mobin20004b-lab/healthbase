@@ -25,3 +25,4 @@
 
 ## Next Steps
 1.  [x] Implement Inquiry System (Lead Generation).
+2.  [x] 4.4 Favorites Comparison Tool
