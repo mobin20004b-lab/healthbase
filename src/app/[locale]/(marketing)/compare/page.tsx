@@ -1,6 +1,8 @@
 
 import { getClinicsByIds } from '@/services/clinics';
 import CompareTable from '@/web/components/clinics/CompareTable';
+import ClinicComparisonAISummary from '@/web/components/clinics/comparison/ClinicComparisonAISummary';
+import { getClinicComparisonDetails } from '@/web/components/clinics/comparison/mock-data';
 // import { getTranslations } from 'next-intl/server';
 import { Link } from '@/routing';
 import { ArrowLeft } from 'lucide-react';
@@ -37,6 +39,11 @@ export default async function ComparePage({ params, searchParams }: ComparePageP
     const clinics = await getClinicsByIds(clinicIds, locale);
     // const t = await getTranslations({ locale, namespace: 'Clinics' });
 
+    const clinicsWithDetails = clinics.map(clinic => ({
+        ...clinic,
+        details: getClinicComparisonDetails(clinic.id)
+    }));
+
     return (
         <div className="container mx-auto px-4 py-8 min-h-screen">
             <div className="mb-8">
@@ -54,6 +61,7 @@ export default async function ComparePage({ params, searchParams }: ComparePageP
                 </div>
             </div>
 
+            <ClinicComparisonAISummary clinics={clinicsWithDetails} />
             <CompareTable clinics={clinics} />
         </div>
     );
