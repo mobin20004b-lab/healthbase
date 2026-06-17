@@ -233,6 +233,11 @@
         "signin": "Sign In",
         "register": "Create Account"
     },
+    "Unauthorized": {
+        "title": "Unauthorized Access",
+        "message": "You do not have permission to view this page.",
+        "home": "Return Home"
+    },
     "Inquiry": {
         "trigger": "Request Info",
         "title": "Request Information",
