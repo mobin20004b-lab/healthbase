@@ -11,6 +11,7 @@
 *   [x] 4.3. Clinic Detail Page (`src/app/[locale]/(marketing)/clinics/[id]/page.tsx`)
 
 ## Recent Achievements
+*   Implemented Middleware & RBAC by updating auth.config.ts and adding an unauthorized page.
 *   Implemented About Page (`/about`) with scrollytelling Timeline component and interactive TeamGrid with hover cinemagraph effects.
 *   Implemented Clinic Detail Page with comprehensive data fetching (`getClinicById`), including full relations (reviews, insurances, specialties).
 *   Added UI sections for Specialties and Insurances to the Clinic Detail sidebar.
