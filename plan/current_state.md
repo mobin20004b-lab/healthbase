@@ -22,6 +22,7 @@
 *   Implemented Search page with Server Component data fetching.
 *   Created `src/services/clinics.ts` with robust filtering and mock fallback.
 *   Implemented `SearchContent` client component for interactive map/list toggle.
+*   [x] Implemented Favorites Comparison Tool
 
 ## Next Steps
 1.  [x] Implement Inquiry System (Lead Generation).

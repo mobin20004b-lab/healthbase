@@ -26,7 +26,7 @@ This document consolidates all tasks and features identified in the `plan/` dire
 - [ ] **AI Hyper-Personalization:** Implement real-time adaptive layouts and "Recommended for You" sections (`plan/design.md`).
 - [ ] **Explainable AI (XAI):** Add "Why is this recommended?" snippets and confidence scores to search results (`plan/design.md`).
 - [ ] **Glassmorphism 2.0:** Apply "Liquid Glass" materials to navigation rails and floating elements (`plan/mataill3.md`).
-- [ ] **Favorites Comparison Tool:** Build an AI-driven tool to compare 2-3 favorited clinics side-by-side (`plan/design.md`).
+- [x] **Favorites Comparison Tool:** Build an AI-driven tool to compare 2-3 favorited clinics side-by-side (`plan/design.md`).
 - [ ] **Patient Stories:** Implement a dedicated section for video testimonials and detailed patient stories (`plan/design.md`).
 
 ## 5. Launch Readiness
