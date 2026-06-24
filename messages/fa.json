@@ -242,5 +242,17 @@
         "successTitle": "درخواست ارسال شد!",
         "successMessage": "کلینیک پیام شما را دریافت کرد و به زودی با شما تماس خواهد گرفت.",
         "close": "بستن"
+    },
+    "Patient": {
+        "records": {
+            "title": "سوابق پزشکی",
+            "healthPassport": "گذرنامه سلامت",
+            "bloodType": "گروه خونی",
+            "allergies": "حساسیت‌ها",
+            "labResults": "نتایج آزمایش",
+            "testName": "نام آزمایش",
+            "result": "نتیجه",
+            "normalRange": "محدوده نرمال"
+        }
     }
 }
