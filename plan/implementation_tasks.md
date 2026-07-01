@@ -152,7 +152,7 @@ This document synthesizes the vision from `plan/mataill3.md` (Material 3 Express
         *   **ActivityChart**: wrapper around Recharts (Bar/Line).
         *   **CarePlan**: Circular progress bar (SVG `stroke-dasharray`).
         *   **MedicationTracker**: List of checkboxes. On check: trigger Haptic (navigator.vibrate) and a checkmark animation.
-*   [ ] **5.2. Medical Records (`src/app/[locale]/(patient)/records/page.tsx`)**
+*   [x] **5.2. Medical Records (`src/app/[locale]/(patient)/records/page.tsx`)**
     *   **Health Passport**: Card with critical info (Blood Type, Allergies).
     *   **Lab Results Table**:
         *   Row: Test Name | Result | Normal Range (Visual).

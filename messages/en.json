@@ -250,4 +250,8 @@
         "successMessage": "The clinic has received your message and will contact you soon.",
         "close": "Close"
     }
+,    "Patient": {
+        "healthPassport": "Health Passport",
+        "recentLabResults": "Recent Lab Results"
+    }
 }
