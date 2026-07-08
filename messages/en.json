@@ -66,9 +66,9 @@
             "NiroohayeMosallah": "Military (Niroohaye Mosallah)"
         },
         "locations": {
-        "countries": {
-            "Iran": "Iran"
-        },
+            "countries": {
+                "Iran": "Iran"
+            },
             "provinces": {
                 "Yazd": "Yazd",
                 "Tehran": "Tehran",
@@ -249,5 +249,10 @@
         "successTitle": "Inquiry Sent!",
         "successMessage": "The clinic has received your message and will contact you soon.",
         "close": "Close"
+    },
+    "Unauthorized": {
+        "title": "Access Denied",
+        "message": "You do not have permission to access this page.",
+        "backToHome": "Back to Home"
     }
 }

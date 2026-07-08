@@ -55,9 +55,9 @@
             "NiroohayeMosallah": "نیروهای مسلح"
         },
         "locations": {
-        "countries": {
-            "Iran": "ایران"
-        },
+            "countries": {
+                "Iran": "ایران"
+            },
             "provinces": {
                 "Yazd": "یزد",
                 "Tehran": "تهران",
@@ -242,5 +242,10 @@
         "successTitle": "درخواست ارسال شد!",
         "successMessage": "کلینیک پیام شما را دریافت کرد و به زودی با شما تماس خواهد گرفت.",
         "close": "بستن"
+    },
+    "Unauthorized": {
+        "title": "عدم دسترسی",
+        "message": "شما اجازه دسترسی به این صفحه را ندارید.",
+        "backToHome": "بازگشت به صفحه اصلی"
     }
 }
